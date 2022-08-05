@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Mis documentos</h2>
+<mat-dialog-content class="mat-typography" *ngIf="documents">
+    <div id="alert-1" class="flex p-4 mb-4 bg-blue-100 rounded-lg dark:bg-blue-200" role="alert">
+        <svg class="flex-shrink-0 w-5 h-5 text-blue-700 dark:text-blue-800" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+        <div class="ml-3 text-sm font-medium text-blue-700 dark:text-blue-800">
+            {{ documents.length > 0 ? 'Seleccionar entre tus documentos el que requieras para tu trámite' : 'No se encontraron documentos...'}}
+        </div>
+    </div>
+    <div class="grid grid-cols-4 gap-4 mt-5">
+        <a (click)="selectDocument(document)" class="flex block p-2 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 hover:cursor-pointer" *ngFor="let document of documents">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
+            </svg>
+            <div class="space-y-0">
+                <h3 class="text-sm mb-0">{{ document.Tipo.nombre }}</h3>
+                <p class="text-xs">Vigencia: {{ document.vigencia_inicial | date:'shortDate' }} - {{ document.vigencia_final | date:'shortDate' }}</p>
+                <p class="text-xs">{{ document.url }}</p>
+            </div>
+        </a>
+    </div>
+
+</mat-dialog-content>

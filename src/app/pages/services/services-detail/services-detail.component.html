@@ -1,0 +1,155 @@
+<div class="lg:flex lg:items-center lg:justify-between" *ngIf="service">
+    <div class="flex-1 min-w-0">
+        <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Información del trámite</h2>
+        <p>El trámite se encuentra disponible para realizarlo en línea</p>
+    </div>
+    <div class="mt-5 flex lg:mt-0 lg:ml-4">
+        <span class="sm:ml-3">
+          <button type="button" *ngIf="service.en_linea === 1" (click)="createRequest(service.uuid)"
+                  class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                        d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
+                        clip-rule="evenodd"/>
+                  <path
+                      d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"/>
+                </svg>&nbsp;Iniciar trámite
+          </button>
+        </span>
+
+        <span class="sm:ml-3" *ngIf="service.Documento">
+          <button type="button" (click)="getDocument()"
+                  class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-slate-600 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                        d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z"
+                        clip-rule="evenodd"/>
+                </svg>
+              Ver documento de trámite
+          </button>
+        </span>
+    </div>
+</div>
+
+<div class="grid grid-cols-2 gap-5 mt-5" *ngIf="service">
+        <div class="p-6 w-full bg-white rounded-lg border border-gray-200 shadow-md">
+            <div class="flex">
+                <h5 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ service.nombre }}</h5>
+                <svg xmlns="http://www.w3.org/2000/svg" class="-mt-4 w-24 h-24" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                          d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
+                          clip-rule="evenodd"/>
+                </svg>
+            </div>
+            <h5 class="mb-2 text-md font-bold tracking-tight text-gray-600 dark:text-white">{{ service.Area.nombre }}</h5>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ service.descripcion }}</p>
+        </div>
+        <div
+            class=" p-6 w-full bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+            <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">Información general</h5>
+
+            <h5 class="text-sm font-bold tracking-tight text-gray-500">Costo</h5>
+            <p class="mb-1 text-sm font-normal text-blue-400">{{ service.costo }}</p>
+            <h5 class="text-sm font-bold tracking-tight text-gray-500">Ubicación</h5>
+            <p class="mb-1 text-xs font-normal text-gray-700">{{ service.Area.ubicacion }}</p>
+            <h5 class="text-sm font-bold tracking-tight text-gray-500">Teléfono</h5>
+            <p class="mb-1 text-xs font-normal text-gray-700">{{ service.Area.telefono }}</p>
+            <h5 class="text-sm font-bold tracking-tight text-gray-500">Correo electrónico</h5>
+            <p class="mb-1 text-xs font-normal text-gray-700">{{ service.Area.email }}</p>
+            <h5 class="text-sm font-bold tracking-tight text-gray-500">Horario</h5>
+            <p class="mb-1 text-xs font-normal text-gray-700">{{ service.Area.horario }}</p>
+        </div>
+</div>
+<div class="grid grid-cols-1 gap-5 mt-5" *ngIf="service">
+    <div class="col-span-2 bg-white shadow overflow-hidden sm:rounded-lg">
+        <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Requisitos del trámite</h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500">Relación de requerimientos para el proceso de trámite</p>
+        </div>
+        <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="w-full">
+            <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef class="w-3/5"> Nombre</th>
+                <td mat-cell *matCellDef="let element"> {{ element.Requisito.nombre | excerpt:150 }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="original">
+                <th mat-header-cell *matHeaderCellDef> Original</th>
+                <td mat-cell *matCellDef="let element">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-center text-green-500" viewBox="0 0 20 20" fill="currentColor" *ngIf="element.original">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-center text-red-500" viewBox="0 0 20 20" fill="currentColor" *ngIf="!element.original">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                    </svg>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="copias">
+                <th mat-header-cell *matHeaderCellDef> No. Copias</th>
+                <td mat-cell *matCellDef="let element">
+                    <span class="inline-flex items-center p-1 mr-2 text-xs font-semibold text-blue-800 bg-blue-100 rounded-full">
+                      {{ element.no_copias }}
+                    </span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="complementario">
+                <th mat-header-cell *matHeaderCellDef> Complementario</th>
+                <td mat-cell *matCellDef="let element">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-center text-green-500" viewBox="0 0 20 20" fill="currentColor" *ngIf="element.complementario">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-center text-red-500" viewBox="0 0 20 20" fill="currentColor" *ngIf="!element.complementario">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                    </svg>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="obligatorio">
+                <th mat-header-cell *matHeaderCellDef> Obligatorio</th>
+                <td mat-cell *matCellDef="let element">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-center text-green-500" viewBox="0 0 20 20" fill="currentColor" *ngIf="element.obligatorio">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-center text-red-500" viewBox="0 0 20 20" fill="currentColor" *ngIf="!element.obligatorio">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                    </svg>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let element; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>
+<div class="lg:flex lg:items-center lg:justify-between mt-5" *ngIf="service">
+    <div class="flex-1 min-w-0"></div>
+    <div class="mt-5 flex lg:mt-0 lg:ml-4">
+        <span class="sm:ml-3">
+          <button type="button" *ngIf="service.en_linea == 1" (click)="createRequest(service.uuid)"
+                  class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                        d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"
+                        clip-rule="evenodd"/>
+                  <path
+                      d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z"/>
+                </svg>&nbsp;Iniciar trámite
+          </button>
+        </span>
+
+        <span class="sm:ml-3" *ngIf="service.Documento">
+          <button type="button" (click)="getDocument()"
+                  class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-slate-600 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd"
+                        d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z"
+                        clip-rule="evenodd"/>
+                </svg>
+              Ver documento de trámite
+          </button>
+        </span>
+    </div>
+</div>
+
+

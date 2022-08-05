@@ -1,0 +1,16 @@
+<app-navbar></app-navbar>
+<mat-drawer-container class="w-full h-full" autosize>
+    <mat-drawer mode="side" opened>
+        <app-sidebar></app-sidebar>
+    </mat-drawer>
+    <mat-drawer-content class="ml-0 pl-64 bg-slate-100">
+        <main class="relative top-16">
+            <div class="container-xl p-10">
+                <router-outlet></router-outlet>
+            </div>
+        </main>
+    </mat-drawer-content>
+
+</mat-drawer-container>
+
+

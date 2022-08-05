@@ -1,0 +1,27 @@
+<div class="lg:flex lg:items-center lg:justify-between">
+    <div class="flex-1 min-w-0">
+        <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Mis documentos</h2>
+        <p>Carpeta de documentos</p>
+    </div>
+    <div class="mt-5 flex lg:mt-0 lg:ml-4">
+        <span class="sm:ml-3">
+          <button type="button" (click)="openUploadDialog()"
+                  class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+            <mat-icon>description</mat-icon>&nbsp;Subir nuevo documento
+          </button>
+        </span>
+    </div>
+</div>
+
+<div class="grid grid-cols-4 gap-4 mt-5">
+    <a (click)="openDocument(document.id)" class="flex block p-2 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 hover:cursor-pointer" *ngFor="let document of documents">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
+        </svg>
+        <div>
+            <h3 class="text-sm">{{ document.Tipo.nombre }}</h3>
+            <p class="text-xs">Vigencia: {{ document.vigencia_inicial | date:'shortDate' }} - {{ document.vigencia_final | date:'shortDate' }}</p>
+            <p class="text-xs">{{ document.url }}</p>
+        </div>
+    </a>
+</div>

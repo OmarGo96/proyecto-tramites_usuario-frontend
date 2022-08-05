@@ -1,0 +1,128 @@
+<div class="lg:flex lg:items-center lg:justify-between">
+    <div class="flex-1 min-w-0">
+        <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Configuración de perfil</h2>
+        <p>Actualiza la información de tu cuenta</p>
+    </div>
+</div>
+
+<div class="md:grid md:grid-cols-3 md:gap-6 mt-5" *ngIf="user">
+    <div class="mt-5 md:mt-0 md:col-span-2">
+
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+            <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Contraseña</h3>
+                <p class="mt-1 max-w-2xl text-sm text-gray-500">Acualiza tu contraseña</p>
+            </div>
+            <form [formGroup]="userForm" (ngSubmit)="updateUser()" class="border-t border-gray-200">
+                <div class="p-5">
+                    <div class="grid gap-6 mb-6 lg:grid-cols-2">
+                        <div>
+                            <label
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nombre</label>
+                            <input type="text" formControlName="nombre"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        </div>
+                        <div>
+                            <label
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Apellidos</label>
+                            <input type="text" formControlName="apellidos"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Correo
+                                electrónico</label>
+                            <input type="text" formControlName="email"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Phone
+                                number</label>
+                            <input type="text" formControlName="telefono"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        </div>
+                    </div>
+                </div>
+                <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                    <button type="submit"
+                            class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <mat-spinner class="inline w-4 h-4 mr-7" diameter="20" color="accent"
+                                     *ngIf="userSaving"></mat-spinner>
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" [zIndex]="3" color="#fff" type="ball-spin-fade" [fullScreen]="false"><p style="color: white"> Cargando... </p></ngx-spinner>
+</div>
+
+<div class="hidden sm:block" aria-hidden="true">
+    <div class="py-5">
+        <div class="border-t border-gray-200"></div>
+    </div>
+</div>
+
+
+<div class="md:grid md:grid-cols-3 md:gap-6" *ngIf="user">
+    <div class="mt-5 md:mt-0 md:col-span-2">
+
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+            <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Contraseña</h3>
+                <p class="mt-1 max-w-2xl text-sm text-gray-500">Acualiza tu contraseña</p>
+            </div>
+            <form [formGroup]="userForm" (ngSubmit)="updatePassword()" class="border-t border-gray-200">
+                <div class="p-5">
+                    <div class="mb-6">
+                        <label class="block mb-2 text-sm font-medium text-gray-900">Contraseña nueva</label>
+                        <input type="password" placeholder="•••••••••" formControlName="password"
+                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block mb-2 text-sm font-medium text-gray-900">Confirmar contraseña</label>
+                        <input type="password" placeholder="•••••••••" formControlName="re_password"
+                               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    </div>
+                </div>
+                <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                    <button type="submit"
+                            class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <mat-spinner class="inline w-4 h-4 mr-7" diameter="20" color="accent"
+                                     *ngIf="passwordSaving"></mat-spinner>
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="hidden sm:block" aria-hidden="true">
+    <div class="py-5">
+        <div class="border-t border-gray-200"></div>
+    </div>
+</div>
+
+
+<div class="md:grid md:grid-cols-3 md:gap-6">
+    <div class="mt-5 md:mt-0 md:col-span-2">
+
+        <div class="bg-red-400 shadow overflow-hidden sm:rounded-lg">
+            <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg leading-6 font-medium text-white">¿Deseas desactivar tu cuenta?</h3>
+                <p class="mt-1 max-w-2xl text-sm text-white">Esta acción no se puede revertir y se perdera toda la
+                    información.</p>
+            </div>
+            <div class="p-5">
+                <button (click)="dropUser()"
+                        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-700 hover:bg-red-800">
+                    Desactivar
+                </button>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
