@@ -30,7 +30,7 @@ export class RequestHistoryModalComponent implements OnInit {
                 this.records = res.history;
             },
             error: err => {
-                this.messagesService.printStatus(err.error.errors, 'error');
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         })
     }

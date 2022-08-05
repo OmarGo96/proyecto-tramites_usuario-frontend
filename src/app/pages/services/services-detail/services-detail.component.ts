@@ -62,7 +62,7 @@ export class ServicesDetailComponent implements OnInit {
                 this.getRequirements();
             },
             error: err => {
-                this.messagesService.printStatus(err.error.errors, 'error');
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });
     }
@@ -91,7 +91,7 @@ export class ServicesDetailComponent implements OnInit {
                     },
                     error: err => {
                         this.loading = false;
-                        this.messagesService.printStatus(err.error.errors, 'error');
+                        this.messagesService.printStatusArrayNew(err.error.errors, 'error');
                     }
                 });
             }
@@ -106,7 +106,7 @@ export class ServicesDetailComponent implements OnInit {
                 // this.dataSource.paginator = this.paginator;
             },
             error: err => {
-                this.messagesService.printStatus(err.error.errors, 'error');
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         })
     }
@@ -119,7 +119,7 @@ export class ServicesDetailComponent implements OnInit {
                 window.open(url, '_blank');
             },
             error: err => {
-                this.messagesService.printStatus(err.error.errors, 'error');
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });
     }

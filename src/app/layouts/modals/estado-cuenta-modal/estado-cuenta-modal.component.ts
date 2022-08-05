@@ -55,7 +55,7 @@ export class EstadoCuentaModalComponent implements OnInit {
             },
             error: err => {
                 this.caja = false;
-                this.messagesService.printStatus(err.error.errors, 'error');
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });
     }
@@ -78,7 +78,7 @@ export class EstadoCuentaModalComponent implements OnInit {
             },
             err => {
                 this.pago = false;
-                this.messagesService.printStatus(err.error.errors[0].message, 'error');
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         );
     }
@@ -97,7 +97,7 @@ export class EstadoCuentaModalComponent implements OnInit {
             },
             error: err => {
                 this.caja = false;
-                this.messagesService.printStatus(err.error.errors, 'error');
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });
     }
@@ -119,7 +119,7 @@ export class EstadoCuentaModalComponent implements OnInit {
             },
             error: err => {
                 this.pago = false;
-                this.messagesService.printStatus(err.error.errors[0].message, 'error');
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });
     }

@@ -27,7 +27,7 @@ export class PublicComponent implements OnInit {
                 this.services = res.servicios;
             },
             error: err => {
-                this.messagesServices.printStatus(err.error.message, 'warning');
+                this.messagesServices.printStatusArrayNew(err.error.errors, 'warning');
             }
         })
     }

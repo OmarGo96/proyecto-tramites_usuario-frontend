@@ -44,7 +44,7 @@ export class ServicesComponent implements OnInit {
                 this.getServicesByArea(res.area.uuid);
             },
             error: err => {
-                this.messagesService.printStatus(err.error.errors, 'error');
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });
     }
@@ -55,7 +55,7 @@ export class ServicesComponent implements OnInit {
                 this.services = res.servicios;
             },
             error: err => {
-                this.messagesService.printStatus(err.error.errors, 'error');
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });
     }

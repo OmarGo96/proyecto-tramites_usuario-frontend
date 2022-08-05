@@ -30,7 +30,7 @@ export class MessagesModalComponent implements OnInit {
                 this.records = res.mensajes;
             },
             error: err => {
-                this.messagesService.printStatus(err.error.errors, 'error');
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         })
     }

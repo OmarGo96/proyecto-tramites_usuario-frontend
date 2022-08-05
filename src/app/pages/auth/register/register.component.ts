@@ -47,7 +47,6 @@ export class RegisterComponent implements OnInit {
     onRegister(){
         this.loading = true;
         const data = this.registerForm.value;
-        console.log(data);
         this.usersService.register(data).subscribe({
             next: res => {
                 this.loading = false;
@@ -56,7 +55,7 @@ export class RegisterComponent implements OnInit {
             },
             error: err => {
                 this.loading = false;
-                this.messagesService.printStatus(err.error.errors[0].message, 'warning');
+                this.messagesService.printStatusArrayNew(err.error.errors, 'warning');
             },
             complete: () => {
                 console.log('Se completo el registro.')

@@ -68,7 +68,7 @@ export class UploadModalComponent implements OnInit {
             },
             error: err => {
                 this.loading = false;
-                this.messagesService.printStatus(err.error.errors, 'error');
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         })
     }
@@ -79,7 +79,7 @@ export class UploadModalComponent implements OnInit {
                 this.documentTypes = res.documentos;
             },
             error: err => {
-                this.messagesService.printStatus(err.error.errors, 'error');
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         })
     }

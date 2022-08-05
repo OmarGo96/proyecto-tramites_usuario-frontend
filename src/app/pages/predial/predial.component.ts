@@ -54,7 +54,7 @@ export class PredialComponent implements OnInit {
                     this.dataSource = new MatTableDataSource(res.claves);
                 },
                 error: err => {
-                    this.messagesService.printStatus(err.error.errors, 'error');
+                    this.messagesService.printStatusArrayNew(err.error.errors, 'error');
                 }
             }
         );
@@ -74,7 +74,7 @@ export class PredialComponent implements OnInit {
             },
             error: err => {
                 this.creating = false;
-                this.messagesService.printStatus(err.error.errors, 'error');
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });
     }
@@ -101,7 +101,7 @@ export class PredialComponent implements OnInit {
                     },
                     err => {
                         this.loading = false;
-                        this.messagesService.printStatus(err.error.errors, 'error');
+                        this.messagesService.printStatusArrayNew(err.error.errors, 'error');
                     }
                 )
             }
@@ -118,7 +118,7 @@ export class PredialComponent implements OnInit {
             },
             error: err => {
                 this.loading = false;
-                this.messagesService.printStatus(err.error.errors, 'error');
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });
     }

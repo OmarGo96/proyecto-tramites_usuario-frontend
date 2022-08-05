@@ -40,6 +40,7 @@ export class MessageService {
 
 
     printStatusArray(message: [], status: any, mailed?: any) {
+        console.log(message);
         let msg;
         for (let i = 0; i < message.length; i++) {
             msg = message[i] + '<br>';
@@ -59,6 +60,41 @@ export class MessageService {
                 html: '' + msg,
                 icon: this.status,
                 timer: 5000
+            });
+        } else if (this.status === 'warning') {
+            Swal.fire({
+                html: '' + msg,
+                icon: this.status,
+                timer: 4000
+            });
+        }
+    }
+
+    printStatusArrayNew(errors: [], status: any, mailed?: any) {
+        console.log(errors);
+        let msg;
+        errors.forEach((error: any, index) => {
+            if (index === 0) {
+                msg = error.message;
+            }
+        });
+
+        console.log(msg);
+
+        this.status = status;
+
+        if (this.status === 'success') {
+            Swal.fire({
+                html: '' + msg,
+                icon: this.status,
+                showConfirmButton: false,
+                timer: mailed ? 4000 : 2500,
+            });
+
+        } else if (this.status === 'error') {
+            Swal.fire({
+                html: '' + msg,
+                icon: this.status
             });
         } else if (this.status === 'warning') {
             Swal.fire({

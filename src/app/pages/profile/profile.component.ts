@@ -73,7 +73,7 @@ export class ProfileComponent implements OnInit {
             },
             error: err => {
                 this.userSaving = false;
-                this.messagesService.printStatus(err.error.message, 'warning');
+                this.messagesService.printStatusArrayNew(err.error.errors, 'warning');
             }
         })
     }
@@ -90,7 +90,7 @@ export class ProfileComponent implements OnInit {
             },
             error: err => {
                 this.passwordSaving = false;
-                this.messagesService.printStatus(err.error.message, 'warning');
+                this.messagesService.printStatusArrayNew(err.error.errors, 'warning');
             }
         })
     }
@@ -109,7 +109,7 @@ export class ProfileComponent implements OnInit {
                         }, 2500);
                     },
                     error: err => {
-                        this.messagesService.printStatus(err.error.message, 'warning');
+                        this.messagesService.printStatusArrayNew(err.error.errors, 'warning');
                     }
                 });
             }
