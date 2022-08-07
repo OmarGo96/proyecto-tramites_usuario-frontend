@@ -25,7 +25,7 @@ export class ServicesService {
     }
 
     public getRecord(uuid: any): Observable<any> {
-        return this.httpClient.get(`${this.urlApi}/servicio/${uuid}`, { headers: this.headers });
+        return this.httpClient.get(`${this.urlApi}/servicio/${uuid}`);
     }
 
     public getPublicServices(): Observable <any> {

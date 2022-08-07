@@ -16,6 +16,7 @@ import { RequestsComponent } from './requests/requests.component';
 import {RequestsDetailComponent} from "./requests/requests-detail/requests-detail.component";
 import { ProfileComponent } from './profile/profile.component';
 import {NgxSpinnerModule} from "ngx-spinner";
+import { ServiceDetailComponent } from './service-detail/service-detail.component';
 
 const routes: Routes = [
     {path: '', component: DependenciesComponent},
@@ -27,6 +28,7 @@ const routes: Routes = [
     {path: 'licencia-funcionamiento', component: LicencesComponent},
     {path: 'documentos', component: DocumentsComponent},
     {path: 'perfil', component: ProfileComponent},
+    {path: 'tramite/:uuid', component: ServiceDetailComponent},
 ]
 
 @NgModule({
@@ -41,7 +43,8 @@ const routes: Routes = [
         DocumentsComponent,
         RequestsComponent,
         RequestsDetailComponent,
-        ProfileComponent
+        ProfileComponent,
+        ServiceDetailComponent
     ],
     imports: [
         CommonModule,
