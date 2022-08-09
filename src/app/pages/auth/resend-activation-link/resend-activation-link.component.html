@@ -4,26 +4,15 @@
     </div>
     <div class="max-w-md w-full bg-white rounded-lg border border-gray-200 shadow-md p-8">
         <div class="mb-5">
-            <h3 class="text-2xl font-extrabold text-gray-900">Bienvenido</h3>
-            <p class="text-sm text-gray-600">Ingresa tus credenciales para iniciar sesión</p>
+            <h3 class="text-2xl font-extrabold text-gray-900">Reenviar link de activacion</h3>
+            <p class="text-sm text-gray-600">Ingresa tu correo electronico para enviar la informacion de tu cuenta.</p>
         </div>
-        <form [formGroup]="loginForm" (submit)="onLogin()" class="space-y-4">
+        <form [formGroup]="resendForm" (ngSubmit)="sendEmail()" class="space-y-4">
             <div>
-                <label for="email-address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Correo
-                    electrónico</label>
+                <label for="email-address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                    Correo electrónico</label>
                 <input id="email-address" formControlName="email" type="email" placeholder="Correo electrónico"
                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
-            </div>
-            <div>
-                <label for="password"
-                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Contraseña</label>
-                <input id="password" formControlName="password" type="password" placeholder="Contraseña"
-                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
-            </div>
-            <div class="flex items-start">
-                <a [routerLink]="['/restaurar-contraseña']" class="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500">
-                    ¿Olvidaste tu contraseña?
-                </a>
             </div>
             <button type="submit"
                     class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -36,8 +25,8 @@
                                 clip-rule="evenodd"/>
                         </svg>
                         <svg role="status" *ngIf="loading"
-                               class="inline w-4 h-4 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
-                               viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                             class="inline w-4 h-4 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                             viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
                                 fill="currentColor"/>
@@ -46,24 +35,9 @@
                                 fill="currentFill"/>
                         </svg>
                     </span>
-                Iniciar Sesión
+                Enviar solicitud
             </button>
-            <div class="text-sm font-medium text-gray-500 dark:text-gray-300 mb-0">
-                ¿No te has registrado?
-                <a [routerLink]="['/registrarse']" class="text-blue-700 hover:underline dark:text-blue-500">
-                    Crea tu cuenta
-                </a>
-            </div>
-            <div class="text-sm text-gray-500">
-                <a [routerLink]="['/restaurar-contraseña']" class="ml-auto text-sm text-blue-700 hover:underline dark:text-blue-500">
-                    Reenviar link de activacion
-                </a>
-            </div>
         </form>
     </div>
 </div>
-
-
-
-
 
