@@ -6,6 +6,9 @@ import {AuthComponent} from "./auth.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MaterialModule} from "../../material/material.module";
 import {RegisterComponent} from './register/register.component';
+import { ActivateAccountComponent } from './activate-account/activate-account.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 const routes: Routes = [
     {
@@ -15,14 +18,29 @@ const routes: Routes = [
     {
         path: 'registrarse',
         component: RegisterComponent
-    }
+    },
+    {
+        path: 'activar/:codigo',
+        component: ActivateAccountComponent
+    },
+    {
+        path: 'restaurar-contraseña',
+        component: ResetPasswordComponent
+    },
+    {
+        path: 'restablecer/:codigo',
+        component: ChangePasswordComponent
+    },
 ]
 
 @NgModule({
     declarations: [
         LoginComponent,
         AuthComponent,
-        RegisterComponent
+        RegisterComponent,
+        ActivateAccountComponent,
+        ResetPasswordComponent,
+        ChangePasswordComponent
     ],
     imports: [
         CommonModule,

@@ -10,6 +10,7 @@ export class UsersService {
     public urlApi: string = environment.urlApi;
     public headers = new HttpHeaders().set('Content-Type', 'application/json');
     public token: any;
+
     constructor(
         private httpClient: HttpClient
     ) {
@@ -25,17 +26,29 @@ export class UsersService {
         return this.httpClient.post(`${this.urlApi}/session/contribuyente`, data);
     }
 
-    public getContribuyente(token: any): Observable <any> {
+    public getContribuyente(token: any): Observable<any> {
         const headers = new HttpHeaders().set('Authorization', token);
-        return this.httpClient.get(`${this.urlApi}/contribuyentes`, { headers });
+        return this.httpClient.get(`${this.urlApi}/contribuyentes`, {headers});
     }
 
-    public updateRecord(uuid: any, data: any): Observable <any> {
-        return this.httpClient.put(`${this.urlApi}/contribuyentes/${uuid}`, data,{ headers: this.headers });
+    public updateRecord(uuid: any, data: any): Observable<any> {
+        return this.httpClient.put(`${this.urlApi}/contribuyentes/${uuid}`, data, {headers: this.headers});
     }
 
-    public deleteRecord(uuid: any): Observable <any> {
-        return this.httpClient.get(`${this.urlApi}/contribuyentes/${uuid}`,{ headers: this.headers });
+    public deleteRecord(uuid: any): Observable<any> {
+        return this.httpClient.get(`${this.urlApi}/contribuyentes/${uuid}`, {headers: this.headers});
+    }
+
+    public activarCuenta(codigo: any) {
+        return this.httpClient.get(`${this.urlApi}/activar_cuenta/${codigo}`);
+    }
+
+    public requestRestorePassword(contribuyente: any): Observable <any> {
+        return this.httpClient.post(`${this.urlApi}/solicitud_restauracion`, contribuyente);
+    }
+
+    public restorePassword(data: any): Observable <any>{
+        return this.httpClient.post(`${this.urlApi}/restaurar_cuenta`, data);
     }
 
     public getToken() {
