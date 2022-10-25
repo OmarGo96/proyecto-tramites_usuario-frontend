@@ -64,7 +64,7 @@ export const ROUTES = [
         icon: 'folder',
         class: ''
     },
-    {path: 'predial', module: 'predial', title: 'Impusto Predial', icon: 'receipt', class: ''},
+    {path: 'predial', module: 'predial', title: 'Impuesto Predial', icon: 'receipt', class: ''},
     {path: 'licencia-funcionamiento', module: 'licencia', title: 'Lic. de Funcionamiento', icon: 'badge', class: ''}
 ];
 
