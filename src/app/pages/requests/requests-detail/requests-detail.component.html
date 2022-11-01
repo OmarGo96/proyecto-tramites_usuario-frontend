@@ -39,17 +39,10 @@
                 <ng-container matColumnDef="seleccionar">
                     <th mat-header-cell *matHeaderCellDef class="text-center"> Seleccionar</th>
                     <td mat-cell *matCellDef="let element">
-                        <svg xmlns="http://www.w3.org/2000/svg" *ngIf="element.Requisito.Documento"
-                             class="block m-auto text-center text-emerald-600 h-8 w-8" viewBox="0 0 20 20"
-                             fill="currentColor">
-                            <path fill-rule="evenodd"
-                                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                  clip-rule="evenodd"/>
-                        </svg>
-                        <button type="button" (click)="selectDocument(element.Requisito.id)"
-                                *ngIf="!element.Requisito.Documento"
-                                class="block m-auto items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600">
-                            Seleccionar
+                        <i class="block m-auto text-emerald-600 fa-solid fa-circle-check fa-2x" *ngIf="element.Requisito.Documento"></i>
+                        <button mat-flat-button color="primary" (click)="selectDocument(element.Requisito.id)"
+                                class="block m-auto rounded-md" *ngIf="!element.Requisito.Documento">
+                            Examinar archivos
                         </button>
                     </td>
                 </ng-container>
