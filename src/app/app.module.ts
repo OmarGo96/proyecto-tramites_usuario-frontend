@@ -25,7 +25,7 @@ registerLocaleData(localeEsMX, 'mx');
         LayoutsModule,
         PagesModule,
         BrowserAnimationsModule,
-        NgxSpinnerModule
+        NgxSpinnerModule.forRoot({ type: 'ball-beat' }),
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [ { provide: LOCALE_ID, useValue: 'mx' } ],
