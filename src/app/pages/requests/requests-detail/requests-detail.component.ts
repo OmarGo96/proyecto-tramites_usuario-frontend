@@ -11,7 +11,8 @@ import {MessagesModalComponent} from "../../../layouts/modals/messages-modal/mes
 import {MatDialog} from "@angular/material/dialog";
 import {DocumentsModalComponent} from "../../../layouts/modals/documents-modal/documents-modal.component";
 import {DocumentsService} from "../../../services/documents.service";
-import {UntypedFormBuilder} from "@angular/forms";
+import {FormBuilder, UntypedFormBuilder} from "@angular/forms";
+import {NgxSpinner, NgxSpinnerService} from "ngx-spinner";
 
 @Component({
     selector: 'app-requests-detail',
@@ -39,8 +40,9 @@ export class RequestsDetailComponent implements OnInit {
         private messagesService: MessageService,
         private documentsService: DocumentsService,
         private activatedRoute: ActivatedRoute,
-        private formBuilder: UntypedFormBuilder,
+        private formBuilder: FormBuilder,
         private router: Router,
+        private spinner: NgxSpinnerService,
         public dialog: MatDialog
     ) {
     }
@@ -87,22 +89,20 @@ export class RequestsDetailComponent implements OnInit {
     }
 
     saveRequest(status: any){
-        status === '1' ? this.saving = true : this.sending = true;
+        this.spinner.show();
         this.solicitudForm.controls.estatus_solicitud_id.setValue(status);
         this.solicitudForm.controls.solicitud_id.setValue(this.request.id.toString());
         const data = this.solicitudForm.value;
         this.requestsService.updateRecord(data).subscribe({
             next: res => {
-                this.saving = false;
-                this.sending = false;
+                this.spinner.hide();
                 this.messagesService.printStatus(res.message, 'success');
                 setTimeout(()=>{
                     this.router.navigate(['escritorio/solicitudes']);
                 }, 2500);
             },
             error: err => {
-                this.saving = false;
-                this.sending = false;
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         })
