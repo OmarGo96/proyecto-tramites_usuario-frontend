@@ -47,7 +47,7 @@
                             Examinar archivos
                         </button>
                         <button mat-flat-button color="primary" (click)="reSelectDocumentToUpdate(element.Requisito.id, element.Requisito.Documento.id)"
-                                class="block m-auto rounded-md" *ngIf="element.Requisito.Documento.estatus === -1">
+                                class="block m-auto rounded-md" *ngIf="element.Requisito.Documento && element.Requisito.Documento.estatus === -1">
                             Adjuntar nuevamente
                         </button>
 

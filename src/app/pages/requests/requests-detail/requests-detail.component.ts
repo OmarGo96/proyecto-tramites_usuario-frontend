@@ -219,7 +219,7 @@ export class RequestsDetailComponent implements OnInit {
                 window.open(url, '_blank');
             },
             error: err => {
-                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+                this.messagesService.printStatus('Algo salio mal al obtener el documento. Intente mas tarde.', 'warning');
             }
         });
     }
