@@ -13,7 +13,7 @@
             </svg>
             <div class="space-y-0">
                 <h3 class="text-sm mb-0">{{ document.Tipo.nombre }}</h3>
-                <p class="text-xs">Vigencia: {{ document.vigencia_inicial | date:'shortDate' }} - {{ document.vigencia_final | date:'shortDate' }}</p>
+                <p class="text-xs">Vigencia al {{ document.vigencia_final | date:'shortDate' }}</p>
                 <p class="text-xs">{{ document.url }}</p>
             </div>
         </a>

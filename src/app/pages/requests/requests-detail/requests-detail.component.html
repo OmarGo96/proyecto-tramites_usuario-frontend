@@ -39,11 +39,18 @@
                 <ng-container matColumnDef="seleccionar">
                     <th mat-header-cell *matHeaderCellDef class="text-center"> Seleccionar</th>
                     <td mat-cell *matCellDef="let element">
-                        <i class="block m-auto text-emerald-600 fa-solid fa-circle-check fa-2x" *ngIf="element.Requisito.Documento"></i>
+                        <i class="block m-auto text-emerald-600 fa-solid fa-circle-check fa-2x"
+                           *ngIf="element.Requisito.Documento && element.Requisito.Documento.estatus === 0">
+                        </i>
                         <button mat-flat-button color="primary" (click)="selectDocument(element.Requisito.id)"
                                 class="block m-auto rounded-md" *ngIf="!element.Requisito.Documento">
                             Examinar archivos
                         </button>
+                        <button mat-flat-button color="primary" (click)="reSelectDocumentToUpdate(element.Requisito.id, element.Requisito.Documento.id)"
+                                class="block m-auto rounded-md" *ngIf="element.Requisito.Documento.estatus === -1">
+                            Adjuntar nuevamente
+                        </button>
+
                     </td>
                 </ng-container>
 
@@ -66,9 +73,10 @@
         <form [formGroup]="solicitudForm">
             <div class="mb-4 w-full bg-gray-50 rounded-lg border border-gray-200">
                 <div class="py-2 px-4 bg-white rounded-t-lg dark:bg-gray-800">
-                    <textarea rows="4" formControlName="comentario"
-                              class="px-0 w-full text-sm text-gray-900 bg-white border-0"
-                              placeholder="Escribe un comentario..."></textarea>
+                    <mat-form-field appearance="outline" class="w-full text-xs">
+                        <mat-label>Escribe un comentario</mat-label>
+                        <textarea matInput formControlName="comentario" rows="4"></textarea>
+                    </mat-form-field>
                 </div>
                 <div class="flex items-center py-2 px-3 space-x-5 border-t">
                     <button mat-stroked-button (click)="saveRequest('1')" class="rounded-md" *ngIf="request.estatus_solicitud_id === 1">
@@ -77,7 +85,7 @@
                     </button>
 
                     <button mat-flat-button (click)="saveRequest('2')" class="rounded-md" color="primary"
-                            [disabled]="(reqWithDocuments.length !== requeriments.length) || (request.estatus_solicitud_id !== 1 && request.estatus_solicitud_id !== 5)">
+                            [disabled]="(reqWithDocuments.length !== requeriments.length) || (request.estatus_solicitud_id !== 1 && request.estatus_solicitud_id !== 5 && request.estatus_solicitud_id !== 12)">
                         <mat-spinner class="inline w-4 h-4 mr-7" diameter="20" color="accent" *ngIf="sending"></mat-spinner>
                         Finalizar y enviar
                     </button>

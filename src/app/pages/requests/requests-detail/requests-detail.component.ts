@@ -56,7 +56,7 @@ export class RequestsDetailComponent implements OnInit {
         this.solicitudForm = this.formBuilder.group({
             estatus_solicitud_id: [''],
             solicitud_id: [''],
-            comentario: this.request.comentario
+            comentario: this.request.comentario ? this.request.comentario : ['']
         });
     }
 
@@ -74,11 +74,11 @@ export class RequestsDetailComponent implements OnInit {
     getSolicitud(id: any) {
         this.requestsService.getRecord(id).subscribe({
             next: res => {
-                console.log(res.requisitos);
                 this.request = res.solicitud;
                 const requeriments = res.requisitos.filter((req: any) => req.Requisito.Documento);
                 this.reqWithDocuments = requeriments;
                 this.requeriments = res.requisitos;
+                console.log(res.requisitos);
                 this.dataSource = new MatTableDataSource(res.requisitos);
                 this.initSolicitudForm();
             },
@@ -139,7 +139,6 @@ export class RequestsDetailComponent implements OnInit {
     }
 
     selectDocument(requisitoId: any): void {
-        console.log(requisitoId);
         const config = {
             width: '100%',
             data: {
@@ -152,6 +151,23 @@ export class RequestsDetailComponent implements OnInit {
         dialogRef.afterClosed().subscribe(document => {
             if (document) {
                 this.setDocument(document, requisitoId);
+            }
+        });
+    }
+
+    reSelectDocumentToUpdate(requisitoId: any, documentoSolicitudRequisitoId: any){
+        const config = {
+            width: '100%',
+            data: {
+                title: ''
+            },
+        }
+
+        const dialogRef = this.dialog.open(DocumentsModalComponent, config);
+
+        dialogRef.afterClosed().subscribe(document => {
+            if (document) {
+                this.updateDocument(document, requisitoId, documentoSolicitudRequisitoId);
             }
         });
     }
@@ -173,7 +189,27 @@ export class RequestsDetailComponent implements OnInit {
                 this.loading = false;
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
-        })
+        });
+    }
+
+    updateDocument(document: any, requisitoId:any, documentoSolicitudRequisitoId: any){
+        this.loading = true;
+        const data = {
+            documentacion_id: document.id,
+            solicitud_id: this.request.id,
+            requisito_id: requisitoId
+        }
+
+        this.documentsService.updateDocumentSolicitudRequisito(documentoSolicitudRequisitoId, data).subscribe({
+            next: res => {
+                this.loading = false;
+                this.getId();
+            },
+            error: err => {
+                this.loading = false;
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
+        });
     }
 
     openDocument(documentId: any) {
