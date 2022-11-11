@@ -19,8 +19,8 @@
         <!-- Cost Column -->
         <ng-container matColumnDef="costo">
             <th mat-header-cell *matHeaderCellDef> Costo </th>
-            <td mat-cell *matCellDef="let element"> {{ element.proImporte | currency }} </td>
-            <td mat-footer-cell *matFooterCellDef> {{ getTotalCost() | currency }} </td>
+            <td mat-cell *matCellDef="let element"> {{ element.proImporte | currency: 'MXN' }} </td>
+            <td mat-footer-cell *matFooterCellDef> {{ getTotalCost() | currency: 'MXN'  }} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
