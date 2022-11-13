@@ -4,22 +4,23 @@
     <form [formGroup]="documentsForm" (ngSubmit)="uploadFiles()">
         <div class="grid gap-6 mb-6 lg:grid-cols-2">
             <div>
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Tipo de Documento</label>
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Documento</label>
                 <select formControlName="tipos_documentos_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-                    <option selected="" disabled>Selecciona una opción</option>
+                    <option [selected]="true" disabled>Selecciona el tipo de documento</option>
                     <option *ngFor="let documentType of documentTypes" value="{{ documentType.id }}">{{ documentType.nombre }}</option>
                 </select>
             </div>
             <div>
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Anexo/Pase a Caja</label>
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Tipos de documentos</label>
                 <select formControlName="tipo_documento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-                    <option selected="" disabled>Selecciona una opción</option>
+                    <option [selected]="true" disabled>Selecciona una opción</option>
                     <option value="0">Anexo</option>
                     <option value="1">Pase a Caja</option>
+                    <option value="3">No Aplica</option>
                 </select>
             </div>
         </div>
-        <mat-form-field appearance="outline" class="w-full">
+        <mat-form-field appearance="outline" class="w-full" (click)="picker.open()">
             <mat-label>Vigencia del Documento</mat-label>
             <input matInput [matDatepicker]="picker" formControlName="vigencia_final">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

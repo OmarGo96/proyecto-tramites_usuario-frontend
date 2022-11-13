@@ -25,6 +25,7 @@ export class DependenciesComponent implements OnInit {
         this.dependenciesService.getRecords().subscribe({
             next: res => {
                 this.dependencies = res.areas;
+                console.log(this.dependencies);
             },
             error: err => {
                 console.log(err);

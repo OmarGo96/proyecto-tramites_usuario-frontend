@@ -173,7 +173,7 @@ export class RequestsDetailComponent implements OnInit {
     }
 
     setDocument(document: any, requisitoId: any) {
-        this.loading = true;
+        this.spinner.show();
         const data = {
             documentacion_id: document.id,
             solicitud_id: this.request.id,
@@ -182,18 +182,18 @@ export class RequestsDetailComponent implements OnInit {
 
         this.documentsService.createDocumentoSolicitud(data).subscribe({
             next: res => {
-                this.loading = false;
+                this.spinner.hide();
                 this.getId();
             },
             error: err => {
-                this.loading = false;
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });
     }
 
     updateDocument(document: any, requisitoId:any, documentoSolicitudRequisitoId: any){
-        this.loading = true;
+        this.spinner.show();
         const data = {
             documentacion_id: document.id,
             solicitud_id: this.request.id,
@@ -202,11 +202,11 @@ export class RequestsDetailComponent implements OnInit {
 
         this.documentsService.updateDocumentSolicitudRequisito(documentoSolicitudRequisitoId, data).subscribe({
             next: res => {
-                this.loading = false;
+                this.spinner.hide();
                 this.getId();
             },
             error: err => {
-                this.loading = false;
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });

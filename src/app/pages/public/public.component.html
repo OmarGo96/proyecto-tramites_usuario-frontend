@@ -71,11 +71,14 @@
 
         <div class="grid grid-cols-3 gap-4 py-10">
 
-            <a *ngFor="let service of services" [routerLink]="['tramite', service.uuid]"
-               class="block p-3 w-ful bg-slate-50 rounded-lg border-2">
-                <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">{{ service.nombre }}</h5>
-                <p class="font-normal text-gray-700 dark:text-gray-400">{{ service.descripcion | excerpt:90}}</p>
-            </a>
+            <ng-container *ngFor="let service of services">
+                <a *ngIf="service.activo" [routerLink]="['tramite', service.uuid]"
+                   class="block p-3 w-ful bg-slate-50 rounded-lg border-2">
+                    <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900">{{ service.nombre }}</h5>
+                    <p class="font-normal text-gray-700 dark:text-gray-400">{{ service.descripcion | excerpt:90}}</p>
+                </a>
+            </ng-container>
+
 
             <a [routerLink]="['login']"
                class="block p-3 w-ful bg-indigo-400 rounded-lg text-white">

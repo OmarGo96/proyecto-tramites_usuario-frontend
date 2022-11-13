@@ -73,7 +73,7 @@ export class ServicesDetailComponent implements OnInit {
 
         Swal.fire({
             title: '¿Estás seguro de iniciar este trámite?',
-            icon: 'warning',
+            icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#264395',
             cancelButtonColor: '#a2a2a2',
@@ -85,7 +85,7 @@ export class ServicesDetailComponent implements OnInit {
                     next: res => {
                         this.loading = false;
                         this.messagesService.printStatus(res.message, 'success')
-                        setTimeout(()=>{
+                        setTimeout(() => {
                             this.router.navigate(['escritorio/solicitud', res.solicitud_id]);
                         }, 2500);
                     },
@@ -124,4 +124,8 @@ export class ServicesDetailComponent implements OnInit {
         });
     }
 
+    isNumber(val: any): boolean {
+        console.log(typeof val);
+        return typeof val === 'number';
+    }
 }

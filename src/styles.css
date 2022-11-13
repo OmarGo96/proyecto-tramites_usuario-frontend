@@ -9,3 +9,26 @@ body { margin: 0; }
 .mat-progress-spinner.mat-accent circle, .mat-spinner.mat-accent circle{
     stroke: #ffffff !important;
 }
+
+/* SweetAlert2 Custom */
+
+.swal2-popup{
+    font-family: 'Inter var' !important;
+    border-radius: 0.5rem !important;
+}
+
+.swal2-icon{
+    margin: 1.5em auto 0.6em !important;
+}
+
+.swal2-title{
+    padding: 0 !important;
+    font-size: 1.125rem !important;
+}
+
+.swal2-html-container{
+    margin: 0 !important;
+    font-size: .875rem !important;
+    color: #eee;
+}
+/* End SweetAlert2 Custom */

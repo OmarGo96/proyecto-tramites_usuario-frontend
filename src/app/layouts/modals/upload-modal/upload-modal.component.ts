@@ -37,8 +37,8 @@ export class UploadModalComponent implements OnInit {
 
     initDocumentForm(){
         this.documentsForm = this.formBuilder.group({
-            tipos_documentos_id: ['', Validators.required],
-            tipo_documento: ['', Validators.required],
+            tipos_documentos_id: ['Selecciona el tipo de documento', Validators.required],
+            tipo_documento: ['Selecciona una opción', Validators.required],
             vigencia_final: ['', Validators.required]
         });
     }
