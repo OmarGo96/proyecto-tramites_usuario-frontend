@@ -16,6 +16,7 @@ export class UploadModalComponent implements OnInit {
 
     public files: File[] = [];
     public documentTypes: any;
+    public documentoTipos: any;
 
     /* Banderas */
     public loading: any;
@@ -35,7 +36,7 @@ export class UploadModalComponent implements OnInit {
         this.initDocumentForm();
     }
 
-    initDocumentForm(){
+    initDocumentForm() {
         this.documentsForm = this.formBuilder.group({
             tipos_documentos_id: ['Selecciona el tipo de documento', Validators.required],
             tipo_documento: ['Selecciona una opción', Validators.required],
@@ -72,7 +73,7 @@ export class UploadModalComponent implements OnInit {
         })
     }
 
-    getDocumentTypes(){
+    getDocumentTypes() {
         this.documentTypesService.getRecords().subscribe({
             next: res => {
                 this.documentTypes = res.documentos;
@@ -81,6 +82,18 @@ export class UploadModalComponent implements OnInit {
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         })
+    }
+
+    getTypeDocuments(event: any) {
+        const documentId = event.target.value;
+        this.documentTypesService.getDocumentTypes(documentId).subscribe({
+            next: res => {
+                this.documentoTipos = res.documentosTipos;
+            },
+            error: err => {
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
+        });
     }
 
     onSelect(event: any) {

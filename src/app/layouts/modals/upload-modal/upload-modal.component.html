@@ -5,7 +5,7 @@
         <div class="grid gap-6 mb-6 lg:grid-cols-2">
             <div>
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Documento</label>
-                <select formControlName="tipos_documentos_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+                <select formControlName="tipos_documentos_id" (change)="getTypeDocuments($event)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
                     <option [selected]="true" disabled>Selecciona el tipo de documento</option>
                     <option *ngFor="let documentType of documentTypes" value="{{ documentType.id }}">{{ documentType.nombre }}</option>
                 </select>
@@ -17,6 +17,7 @@
                     <option value="0">Anexo</option>
                     <option value="1">Pase a Caja</option>
                     <option value="3">No Aplica</option>
+                    <option *ngFor="let documentoTipo of documentoTipos" value="{{ documentoTipo.id }}">{{ documentoTipo.nombre }}</option>
                 </select>
             </div>
         </div>
