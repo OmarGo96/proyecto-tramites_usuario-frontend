@@ -32,3 +32,41 @@ body { margin: 0; }
     color: #eee;
 }
 /* End SweetAlert2 Custom */
+
+/* Primary Button Styling */
+
+.mat-button.mat-primary,
+.mat-stroked-button.mat-primary {
+    @apply text-blue-800;
+}
+.mat-button.mat-primary:hover,
+.mat-stroked-button.mat-primary:hover {
+    @apply bg-white;
+}
+
+.mat-raised-button.mat-primary,
+.mat-flat-button.mat-primary,
+.mat-fab.mat-primary,
+.mat-mini-fab.mat-primary {
+    @apply bg-blue-800 text-white;
+}
+
+.mat-icon-button.mat-primary {
+    @apply text-blue-800;
+}
+/* End Primary Button Styling */
+
+/* Navbar Custom */
+.bg-navbar {
+    @apply bg-blue-800;
+}
+
+/* End Navbar */
+
+/* Sidebar*/
+
+.label-section {
+    @apply text-blue-800;
+}
+
+/* End Sidebar */
