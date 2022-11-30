@@ -13,6 +13,7 @@ import {DocumentsModalComponent} from "../../../layouts/modals/documents-modal/d
 import {DocumentsService} from "../../../services/documents.service";
 import {FormBuilder, UntypedFormBuilder} from "@angular/forms";
 import {NgxSpinner, NgxSpinnerService} from "ngx-spinner";
+import {UploadModalComponent} from "../../../layouts/modals/upload-modal/upload-modal.component";
 
 @Component({
     selector: 'app-requests-detail',
@@ -221,6 +222,24 @@ export class RequestsDetailComponent implements OnInit {
             error: err => {
                 this.messagesService.printStatus('Algo salio mal al obtener el documento. Intente mas tarde.', 'warning');
             }
+        });
+    }
+
+    openUploadDialog(): void {
+        const config = {
+            width: '50%',
+            data: {
+                title: false
+            },
+        }
+
+        const dialogRef = this.dialog.open(UploadModalComponent, config);
+
+        dialogRef.afterClosed().subscribe(document => {
+            console.log(document);
+            /*if (document) {
+                this.setDocument(document, requisitoId);
+            }*/
         });
     }
 

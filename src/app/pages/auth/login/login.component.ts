@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {UntypedFormBuilder, Validators} from "@angular/forms";
 import {UsersService} from "../../../services/users.service";
 import {MessageService} from "../../../services/messages.service";
+import {NgxSpinnerService} from "ngx-spinner";
 
 
 @Component({
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
         private formBuilder: UntypedFormBuilder,
         private usersService: UsersService,
         private messagesService: MessageService,
+        private spinner: NgxSpinnerService,
         private router: Router,
     ) {
     }
@@ -39,7 +41,7 @@ export class LoginComponent implements OnInit {
     }
 
     onLogin() {
-        this.loading = true;
+        this.spinner.show();
         const data = this.loginForm.value;
         this.usersService.login(data).subscribe({
             next: res => {
@@ -47,7 +49,7 @@ export class LoginComponent implements OnInit {
                 this.getIdentity(res.token);
             },
             error: err => {
-                this.loading = false;
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'warning');
             }
         });
@@ -56,15 +58,14 @@ export class LoginComponent implements OnInit {
     getIdentity(token: any) {
         this.usersService.getContribuyente(token).subscribe({
             next: res => {
-                this.loading = false;
+                this.spinner.hide();
                 sessionStorage.setItem('identity', JSON.stringify(res.contribuyente));
                 this.router.navigate(['escritorio']);
             },
             error: err => {
-                this.loading = false;
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'warning');
             }
         });
     }
-
 }

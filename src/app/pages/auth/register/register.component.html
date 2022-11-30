@@ -1,92 +1,73 @@
 <div class="min-h-full flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full py-5">
-        <img class="mx-auto h-12 w-auto" src="assets/logo.png">
+        <img class="mx-auto h-12 w-auto" src="assets/logo-horizontal-moneda.png">
     </div>
-    <div class="max-w-xl w-full bg-white rounded-lg border border-gray-200 shadow-md p-8">
+    <div class="max-w-xl w-full bg-white rounded-xl border border-gray-200 shadow-md p-8">
         <div class="mb-5">
-            <h3 class="text-2xl font-extrabold text-gray-900">Crea tu cuenta</h3>
+            <h3 class="text-2xl font-bold text-gray-900">Crea tu cuenta</h3>
             <p class="text-sm text-gray-600">Ingresa los siguientes datos</p>
         </div>
 
         <form [formGroup]="registerForm" (submit)="onRegister()">
-            <div class="mb-3 flex flex-row space-x-5">
-                <div class="basis-1/2 ">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nombre(s)</label>
-                    <input formControlName="nombre" type="text" placeholder="Ej. Daniel" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                </div>
-                <div class="basis-1/2">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Apellido(s)</label>
-                    <input formControlName="apellidos" type="text" placeholder="Ej. Hernández" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                </div>
-            </div>
-            <div class="mb-3 flex flex-row space-x-5">
-                <div class="basis-full">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Correo electrónico</label>
-                    <input formControlName="email" type="email" placeholder="Correo electrónico" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                </div>
-
-            </div>
-            <div class="mb-3 flex flex-row space-x-5">
-                <div class="basis-full">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Confirma correo electrónico</label>
-                    <input formControlName="re_email" type="email" placeholder="Confirma correo electrónico" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                </div>
-            </div>
-            <div class="mb-3 flex flex-row space-x-5">
-                <div class="basis-1/2 ">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Contraseña</label>
-                    <input formControlName="password" type="password" placeholder="Contraseña" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                </div>
-                <div class="basis-1/2">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Confirma contraseña</label>
-                    <input formControlName="re_password" type="password" placeholder="Confirma contraseña" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                </div>
-            </div>
-            <div class="mb-3 flex flex-row space-x-5">
-                <div class="basis-1/2 ">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Teléfono</label>
-                    <input formControlName="telefono" type="email" placeholder="Teléfono" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                </div>
-                <div class="basis-1/2">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Teléfono de referencia</label>
-                    <input formControlName="telefono_referencia" type="email" placeholder="Teléfono" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                </div>
+            <div class="grid grid-cols-2 gap-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Nombre(s)</mat-label>
+                    <input matInput formControlName="nombre" type="text">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Apellido(s)</mat-label>
+                    <input matInput formControlName="apellidos" type="text">
+                </mat-form-field>
             </div>
 
-            <div class="mb-3 flex flex-row space-x-5">
-                <div class="basis-full">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Rango de edad</label>
-                    <select formControlName="edad" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option value="1">18 - 29 años</option>
-                        <option value="2">30 - 59 años</option>
-                        <option value="3">60 o más</option>
-                    </select>
-                </div>
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Correo electronico</mat-label>
+                <input matInput formControlName="email" type="email">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Confirmar correo electronico</mat-label>
+                <input matInput formControlName="re_email" type="email">
+            </mat-form-field>
+
+            <div class="grid grid-cols-2 gap-3">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Teléfono</mat-label>
+                    <input matInput formControlName="telefono" type="text">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>RFC</mat-label>
+                    <input matInput formControlName="rfc" type="text">
+                </mat-form-field>
             </div>
 
-            <div class="mb-3 flex space-x-5">
-                <div class="flex items-center">
-                    <input id="hombre" formControlName="genero" type="radio" value="1" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="hombre" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Hombre</label>
-                </div>
-                <div class="flex items-center">
-                    <input id="mujer" formControlName="genero" type="radio" value="0"  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                    <label for="mujer" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Mujer</label>
-                </div>
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Rango de Edad</mat-label>
+                <mat-select formControlName="edad" >
+                    <mat-option value="1">18 - 29 años</mat-option>
+                    <mat-option value="2">30 - 59 años</mat-option>
+                    <mat-option value="3">60 o más</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <div class="grid grid-cols-2 gap-3">
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput formControlName="password" type="password">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Confirmar contraseña</mat-label>
+                    <input matInput formControlName="re_password" type="password">
+                </mat-form-field>
             </div>
 
-            <button type="submit"
-                    class="mb-3 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                <svg role="status" *ngIf="loading"
-                     class="inline w-4 h-4 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
-                     viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                        fill="currentColor"/>
-                    <path
-                        d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                        fill="currentFill"/>
-                </svg>
+            <mat-radio-group class="space-x-3" formControlName="genero">
+                <mat-radio-button value="1">Hombre</mat-radio-button>
+                <mat-radio-button value="2">Mujer</mat-radio-button>
+            </mat-radio-group>
+
+            <button type="submit" mat-flat-button color="primary"
+                    class="mb-3 mt-3 rounded-md w-full">
                 Crear cuenta
             </button>
             <div class="text-sm font-medium text-gray-500 dark:text-gray-300">

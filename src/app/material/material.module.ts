@@ -19,6 +19,8 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatSelectModule} from "@angular/material/select";
+import {MatRadioModule} from "@angular/material/radio";
 
 @NgModule({
     declarations: [],
@@ -43,7 +45,9 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
         MatTableModule,
         MatNativeDateModule,
         MatInputModule,
-        MatButtonToggleModule
+        MatButtonToggleModule,
+        MatSelectModule,
+        MatRadioModule
     ],
     exports: [
         MatToolbarModule,
@@ -65,7 +69,9 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
         MatTableModule,
         MatNativeDateModule,
         MatInputModule,
-        MatButtonToggleModule
+        MatButtonToggleModule,
+        MatSelectModule,
+        MatRadioModule
     ],
     providers: [
         MatDatepickerModule,

@@ -5,6 +5,7 @@ import {UntypedFormBuilder, Validators} from "@angular/forms";
 /* Services */
 import {UsersService} from "../../../services/users.service";
 import {MessageService} from "../../../services/messages.service";
+import {NgxSpinnerService} from "ngx-spinner";
 
 
 @Component({
@@ -21,6 +22,7 @@ export class RegisterComponent implements OnInit {
         private formBuilder: UntypedFormBuilder,
         private usersService: UsersService,
         private messagesService: MessageService,
+        private spinner: NgxSpinnerService,
         private router: Router,
     ) {
     }
@@ -39,26 +41,23 @@ export class RegisterComponent implements OnInit {
             re_password: ['', Validators.required],
             edad: ['', Validators.required],
             telefono: ['', Validators.required],
-            telefono_referencia: ['', Validators.required],
+            rfc: ['', Validators.required],
             genero: ['', Validators.required]
         })
     }
 
     onRegister(){
-        this.loading = true;
+        this.spinner.show();
         const data = this.registerForm.value;
         this.usersService.register(data).subscribe({
             next: res => {
-                this.loading = false;
+                this.spinner.hide();
                 this.registerForm.reset();
                 this.router.navigate(['login']);
             },
             error: err => {
-                this.loading = false;
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'warning');
-            },
-            complete: () => {
-                console.log('Se completo el registro.')
             }
         })
     }

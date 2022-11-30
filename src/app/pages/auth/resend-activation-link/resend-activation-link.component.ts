@@ -3,6 +3,7 @@ import {UntypedFormBuilder, Validators} from "@angular/forms";
 import {UsersService} from "../../../services/users.service";
 import {MessageService} from "../../../services/messages.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
     selector: 'app-resend-activation-link',
@@ -20,6 +21,7 @@ export class ResendActivationLinkComponent implements OnInit {
         private usersService: UsersService,
         private messagesService: MessageService,
         private activatedRoute: ActivatedRoute,
+        private spinner: NgxSpinnerService,
         private router: Router
     ) {
     }
@@ -35,15 +37,15 @@ export class ResendActivationLinkComponent implements OnInit {
     }
 
     sendEmail(){
-        this.loading = false;
+        this.spinner.show();
         const data = this.resendForm.value;
         this.usersService.resendActivationLink(data).subscribe({
             next: res => {
-                this.loading = true;
+                this.spinner.hide();
                 this.messagesService.printStatus(res.message, 'success');
             },
             error: err => {
-                this.loading = false;
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'warning');
             }
         })

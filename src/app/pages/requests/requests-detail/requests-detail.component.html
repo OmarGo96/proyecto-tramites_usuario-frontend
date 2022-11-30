@@ -40,16 +40,27 @@
                     <th mat-header-cell *matHeaderCellDef class="text-center"> Seleccionar</th>
                     <td mat-cell *matCellDef="let element">
                         <i class="block m-auto text-emerald-600 fa-solid fa-circle-check fa-2x"
+                           *ngIf="element.Requisito.Documento && element.Requisito.Documento.estatus === 1">
+                        </i>
+
+                        <i class="block m-auto text-slate-400 fa-solid fa-clock fa-2x"
                            *ngIf="element.Requisito.Documento && element.Requisito.Documento.estatus === 0">
                         </i>
-                        <button mat-flat-button color="primary" (click)="selectDocument(element.Requisito.id)"
-                                class="block m-auto rounded-md" *ngIf="!element.Requisito.Documento">
-                            Examinar archivos
-                        </button>
-                        <button mat-flat-button color="primary" (click)="reSelectDocumentToUpdate(element.Requisito.id, element.Requisito.Documento.id)"
-                                class="block m-auto rounded-md" *ngIf="element.Requisito.Documento && element.Requisito.Documento.estatus === -1">
-                            Adjuntar nuevamente
-                        </button>
+
+                        <div class="space-x-3">
+                            <!--<button mat-button color="primary" (click)="openUploadDialog()"
+                                    class="m-auto rounded-md">
+                                Adjuntar documento
+                            </button>-->
+                            <button mat-flat-button color="primary" (click)="selectDocument(element.Requisito.id)"
+                                    class="block m-auto rounded-md" *ngIf="!element.Requisito.Documento">
+                                Examinar archivos
+                            </button>
+                            <button mat-flat-button color="primary" (click)="reSelectDocumentToUpdate(element.Requisito.id, element.Requisito.Documento.id)"
+                                    class="block m-auto rounded-md" *ngIf="element.Requisito.Documento && element.Requisito.Documento.estatus === -1">
+                                Adjuntar nuevamente
+                            </button>
+                        </div>
 
                     </td>
                 </ng-container>

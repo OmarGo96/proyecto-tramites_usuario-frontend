@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {UsersService} from "../../../services/users.service";
 import {MessageService} from "../../../services/messages.service";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
     selector: 'app-reset-password',
@@ -17,7 +18,8 @@ export class ResetPasswordComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private usersService: UsersService,
-        private messagesService: MessageService
+        private messagesService: MessageService,
+        private spinner: NgxSpinnerService
     ) {
     }
 
@@ -32,15 +34,15 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     sendRequest(){
-        this.loading = true;
+        this.spinner.show();
         const data = this.resetPasswordForm.value;
         this.usersService.requestRestorePassword(data).subscribe({
             next: res => {
-                this.loading = false;
+                this.spinner.hide();
                 this.messagesService.printStatus(res.message, 'success');
             },
             error: err => {
-                this.loading = false;
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'warning');
             }
         })
