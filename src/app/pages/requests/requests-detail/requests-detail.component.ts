@@ -27,6 +27,8 @@ export class RequestsDetailComponent implements OnInit {
     public request: any;
     public requeriments: any;
     public reqWithDocuments: any;
+    public records: any;
+    public messages: any;
 
     public dataSource: any;
     public displayedColumns: string[] = ['requisito', 'seleccionar', 'archivo'];
@@ -64,6 +66,7 @@ export class RequestsDetailComponent implements OnInit {
     getId() {
         this.activatedRoute.params.subscribe({
             next: res => {
+                this.spinner.show();
                 this.getSolicitud(res['id']);
             },
             error: err => {
@@ -79,14 +82,41 @@ export class RequestsDetailComponent implements OnInit {
                 const requeriments = res.requisitos.filter((req: any) => req.Requisito.Documento);
                 this.reqWithDocuments = requeriments;
                 this.requeriments = res.requisitos;
-                console.log(res.requisitos);
                 this.dataSource = new MatTableDataSource(res.requisitos);
                 this.initSolicitudForm();
+                this.getHistory(res.solicitud.id);
             },
             error: err => {
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });
+    }
+
+    getHistory(requestId: any){
+        this.requestsService.getHistory(requestId).subscribe({
+            next: res => {
+                this.records = res.history;
+                this.getMessages(requestId);
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
+        });
+    }
+
+    getMessages(requestId: any){
+        this.requestsService.getMessages(requestId).subscribe({
+            next: res => {
+                this.spinner.hide();
+                this.messages = res.mensajes;
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
+        })
     }
 
     saveRequest(status: any){

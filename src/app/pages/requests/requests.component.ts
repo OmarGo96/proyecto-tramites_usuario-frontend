@@ -4,6 +4,8 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {MessageService} from "../../services/messages.service";
+import {MatDialog} from "@angular/material/dialog";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
     selector: 'app-requests',
@@ -14,7 +16,7 @@ export class RequestsComponent implements OnInit {
 
 
     public dataSource: any;
-    public displayedColumns: string[] = ['folio', 'tramite', 'creado', 'estatus', 'accion'];
+    public displayedColumns: string[] = ['folio', 'tramite', 'creado', 'estatus', 'pago', 'accion'];
     public expandedElement: any;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -25,7 +27,9 @@ export class RequestsComponent implements OnInit {
 
     constructor(
         private requestService: RequestService,
-        private messagesService: MessageService
+        private messagesService: MessageService,
+        private spinner: NgxSpinnerService,
+        private dialog: MatDialog
     ) {
     }
 
@@ -34,13 +38,64 @@ export class RequestsComponent implements OnInit {
     }
 
     getSolicitudes(){
+        this.spinner.show();
         this.requestService.getRecords().subscribe({
             next: res => {
+                this.spinner.hide();
                 this.dataSource = new MatTableDataSource(res.solicitudes);
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
             },
             error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
+        })
+    }
+
+    generateCheckout(solicitud: any){
+        this.spinner.show();
+        const data = {
+            solicitud_id: solicitud.id.toString(),
+            grupo_tramite_id: solicitud.Servicio.grupo_tramite_id.toString(),
+            tramite_id: solicitud.Servicio.tramite_id.toString(),
+            importe: '1445'
+        }
+
+        this.requestService.generateCheckout(data).subscribe({
+            next: res => {
+                this.spinner.hide();
+                window.open(res.pase_caja, '_blank');
+                setTimeout(() => {
+                    this.dialog.closeAll();
+                }, 1000);
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
+        })
+    }
+
+    paymentLink(solicitud: any){
+        this.spinner.show();
+        const data = {
+            solicitud_id: solicitud.id.toString(),
+            grupo_tramite_id: solicitud.Servicio.grupo_tramite_id.toString(),
+            tramite_id: solicitud.Servicio.tramite_id.toString(),
+            importe: '1445'
+        }
+
+        this.requestService.paymentLink(data).subscribe({
+            next: res => {
+                this.spinner.hide();
+                window.open(res.link, '_blank');
+                setTimeout(() => {
+                    this.dialog.closeAll();
+                }, 1000);
+            },
+            error: err => {
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         })

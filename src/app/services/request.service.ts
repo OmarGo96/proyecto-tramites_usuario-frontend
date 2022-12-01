@@ -43,4 +43,12 @@ export class RequestService {
     public getMessages(id: any): Observable <any> {
         return this.httpClient.get(`${this.urlApi}/solicitud/messages/${id}`, {headers: this.headers});
     }
+
+    public generateCheckout(data: any): Observable <any> {
+        return this.httpClient.post(`${this.urlApi}/solicitud/pase_caja`, data, { headers: this.headers });
+    }
+
+    public paymentLink(data: any): Observable <any> {
+        return this.httpClient.post(`${this.urlApi}/solicitud/link_pago`, data, { headers: this.headers });
+    }
 }

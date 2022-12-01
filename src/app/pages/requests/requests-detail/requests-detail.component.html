@@ -1,8 +1,9 @@
 <div *ngIf="request">
     <div class="lg:flex lg:items-center lg:justify-between">
         <div class="flex-1 min-w-0">
-            <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Detalle de la Solicitud</h2>
-            <p>Trámite {{ request.Servicio.nombre }}</p>
+            <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Trámite
+                de: {{ request.Servicio.nombre }}</h2>
+            <p class="text-sm text-gray-500">Se creo el: <b>{{ request.fecha_alta | date: 'longDate' }}</b></p>
         </div>
 
         <div class="mt-5 flex lg:mt-0 lg:ml-4">
@@ -22,12 +23,12 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 gap-5 mt-5" *ngIf="request">
-        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-            <div class="px-4 py-5 sm:px-6">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">Requisitos del trámite</h3>
-                <p class="mt-1 max-w-2xl text-sm text-gray-500">Relación de requerimientos para el proceso de
-                    trámite</p>
+    <div class="grid grid-cols-3 gap-5 mt-5" *ngIf="request">
+        <div class="bg-white shadow rounded-xl">
+            <div class="p-5">
+                <h3 class="text-lg font-medium text-gray-900">Requisitos del trámite</h3>
+                <p class="max-w-2xl text-sm text-gray-500">
+                    Adjunta los archivos de los requisitos</p>
             </div>
             <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="w-full">
@@ -56,8 +57,10 @@
                                     class="block m-auto rounded-md" *ngIf="!element.Requisito.Documento">
                                 Examinar archivos
                             </button>
-                            <button mat-flat-button color="primary" (click)="reSelectDocumentToUpdate(element.Requisito.id, element.Requisito.Documento.id)"
-                                    class="block m-auto rounded-md" *ngIf="element.Requisito.Documento && element.Requisito.Documento.estatus === -1">
+                            <button mat-flat-button color="primary"
+                                    (click)="reSelectDocumentToUpdate(element.Requisito.id, element.Requisito.Documento.id)"
+                                    class="block m-auto rounded-md"
+                                    *ngIf="element.Requisito.Documento && element.Requisito.Documento.estatus === -1">
                                 Adjuntar nuevamente
                             </button>
                         </div>
@@ -79,29 +82,53 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let element; columns: displayedColumns;"></tr>
             </table>
+
+            <form [formGroup]="solicitudForm" class="p-4">
+                <mat-form-field appearance="outline" class="w-full text-xs">
+                    <mat-label>Escribe un comentario</mat-label>
+                    <textarea matInput formControlName="comentario" rows="4"></textarea>
+                </mat-form-field>
+                <button mat-stroked-button (click)="saveRequest('1')" class="rounded-md"
+                        *ngIf="request.estatus_solicitud_id === 1">
+                    <mat-spinner class="inline w-4 h-4 mr-7" diameter="20" color="accent" *ngIf="saving"></mat-spinner>
+                    Guardar y enviar despues
+                </button>
+
+                <button mat-flat-button (click)="saveRequest('2')" class="rounded-md" color="primary"
+                        [disabled]="(reqWithDocuments.length !== requeriments.length) || (request.estatus_solicitud_id !== 1 && request.estatus_solicitud_id !== 5 && request.estatus_solicitud_id !== 12)">
+                    <mat-spinner class="inline w-4 h-4 mr-7" diameter="20" color="accent" *ngIf="sending"></mat-spinner>
+                    Finalizar y enviar
+                </button>
+            </form>
         </div>
 
-        <form [formGroup]="solicitudForm">
-            <div class="mb-4 w-full bg-gray-50 rounded-lg border border-gray-200">
-                <div class="py-2 px-4 bg-white rounded-t-lg dark:bg-gray-800">
-                    <mat-form-field appearance="outline" class="w-full text-xs">
-                        <mat-label>Escribe un comentario</mat-label>
-                        <textarea matInput formControlName="comentario" rows="4"></textarea>
-                    </mat-form-field>
-                </div>
-                <div class="flex items-center py-2 px-3 space-x-5 border-t">
-                    <button mat-stroked-button (click)="saveRequest('1')" class="rounded-md" *ngIf="request.estatus_solicitud_id === 1">
-                        <mat-spinner class="inline w-4 h-4 mr-7" diameter="20" color="accent" *ngIf="saving"></mat-spinner>
-                        Guardar y enviar despues
-                    </button>
+        <div class="space-y-5">
+            <div class="p-8 bg-white shadow rounded-xl">
+                <h3 class="text-lg font-medium text-gray-900">Historial del trámite</h3>
+                <ol class="relative border-l border-gray-200">
+                    <li class="mb-3 ml-4" *ngFor="let record of records">
+                        <div class="absolute w-3 h-3 rounded-full mt-1.5 -left-1.5 border border-white" style="background-color: {{ record.Estatus.color }}"></div>
+                        <time class="mb-1 text-xs font-normal leading-none text-gray-400">{{ record.fecha_alta | date: 'medium' }}</time>
+                        <h3 class="text-sm font-semibold text-gray-700">{{ record.comentario }}</h3>
+                    </li>
+                </ol>
+            </div>
 
-                    <button mat-flat-button (click)="saveRequest('2')" class="rounded-md" color="primary"
-                            [disabled]="(reqWithDocuments.length !== requeriments.length) || (request.estatus_solicitud_id !== 1 && request.estatus_solicitud_id !== 5 && request.estatus_solicitud_id !== 12)">
-                        <mat-spinner class="inline w-4 h-4 mr-7" diameter="20" color="accent" *ngIf="sending"></mat-spinner>
-                        Finalizar y enviar
-                    </button>
+            <div class="bg-white shadow rounded-xl">
+                <div class="p-5">
+                    <h3 class="text-lg font-medium text-gray-900">Mensajes recibidos</h3>
+                    <ol class="relative border-l border-gray-200 dark:border-gray-700">
+                        <div *ngIf="records.length <= 0" class="p-4 text-sm text-gray-700 bg-gray-100 rounded-lg dark:bg-gray-700 dark:text-gray-300" role="alert">
+                            No se encontraron mensajes para esta solicitud
+                        </div>
+                        <li class="mb-10 ml-4" *ngFor="let message of messages">
+                            <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"></div>
+                            <time class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{{ message.fecha_alta | date:'medium'}}</time>
+                            <p class="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">{{ message.mensaje }}</p>
+                        </li>
+                    </ol>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>

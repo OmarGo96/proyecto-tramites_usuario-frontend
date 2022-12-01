@@ -50,11 +50,11 @@ export class SidebarComponent implements OnInit {
 export const ROUTES = [
     {
         path: '/escritorio',
-        group: 'DIRECCIONES',
+        group: 'INICIO',
         module: 'servicios',
         action: 'list',
-        title: 'Areas',
-        icon: 'fa-building',
+        title: 'Iniciar trámite',
+        icon: 'fa-folder-open',
         class: ''
     },
     {
