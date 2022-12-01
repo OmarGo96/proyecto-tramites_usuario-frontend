@@ -29,6 +29,7 @@ export class RequestsDetailComponent implements OnInit {
     public reqWithDocuments: any;
     public records: any;
     public messages: any;
+    public files: any;
 
     public dataSource: any;
     public displayedColumns: string[] = ['requisito', 'seleccionar', 'archivo'];
@@ -137,6 +138,18 @@ export class RequestsDetailComponent implements OnInit {
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         })
+    }
+
+    onSelect(event: any) {
+        if (this.files.length >= 1){
+            this.messagesService.printStatus('Solo se puede adjuntar un documento a la vez', 'error');
+        } else {
+            this.files.push(...event.addedFiles);
+        }
+    }
+
+    onRemove(event: any) {
+        this.files.splice(this.files.indexOf(event), 1);
     }
 
     openHistoryDialog(requestId: any): void {

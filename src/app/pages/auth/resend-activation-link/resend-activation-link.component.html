@@ -1,9 +1,7 @@
 <div class="min-h-full flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full py-5">
-        <img class="mx-auto h-12 w-auto" src="assets/logo-horizontal-moneda.png">
-    </div>
-    <div class="max-w-md w-full bg-white rounded-lg border border-gray-200 shadow-md p-8">
-        <div class="mb-5">
+    <div class="max-w-md w-full bg-white rounded-lg border border-gray-200 shadow-md p-8 space-y-5">
+        <div class="max-w-md w-full">
+            <img class="mx-auto h-12 w-auto mb-3" src="assets/logo-horizontal-moneda.png">
             <h3 class="text-2xl font-semibold text-gray-900">Reenviar link de activacion</h3>
             <p class="text-sm text-gray-600">Ingresa tu correo electronico para enviar la informacion de tu cuenta.</p>
         </div>
@@ -14,8 +12,7 @@
                 <input id="email-address" formControlName="email" type="email" placeholder="Correo electrónico"
                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
             </div>
-            <button type="submit"
-                    class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <button type="submit" mat-flat-button color="primary" class="w-full rounded-md">
                 Enviar solicitud
             </button>
         </form>

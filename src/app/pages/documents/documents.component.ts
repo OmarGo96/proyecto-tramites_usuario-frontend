@@ -3,6 +3,7 @@ import {UploadModalComponent} from 'src/app/layouts/modals/upload-modal/upload-m
 import {MessageService} from "../../services/messages.service";
 import {MatDialog} from "@angular/material/dialog";
 import {DocumentsService} from "../../services/documents.service";
+import {DocumentTypesService} from "../../services/document-types.service";
 
 @Component({
     selector: 'app-documents',
@@ -12,16 +13,18 @@ import {DocumentsService} from "../../services/documents.service";
 export class DocumentsComponent implements OnInit {
 
     public documents: any;
+    public documentTypes: any;
 
     constructor(
         private documentsService: DocumentsService,
+        private documentTypesService: DocumentTypesService,
         private messagesService: MessageService,
         public dialog: MatDialog
     ) {
     }
 
     ngOnInit(): void {
-        this.getDocuments();
+        this.getDocumentTypes();
     }
 
     openUploadDialog(): void {
@@ -39,10 +42,22 @@ export class DocumentsComponent implements OnInit {
         });
     }
 
+    getDocumentTypes() {
+        this.documentTypesService.getRecords().subscribe({
+            next: res => {
+                this.documentTypes = res.documentos;
+                this.getDocuments();
+            },
+            error: err => {
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
+        })
+    }
+
     getDocuments() {
         this.documentsService.getRecords().subscribe({
             next: res => {
-                this.documents = res.documentacion;
+                this.documents = res.documentacion
             },
             error: err => {
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');

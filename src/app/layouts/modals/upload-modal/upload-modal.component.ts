@@ -1,9 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {MessageService} from "../../../services/messages.service";
 import {DocumentsService} from "../../../services/documents.service";
 import {UntypedFormBuilder, Validators} from "@angular/forms";
 import {DocumentTypesService} from "../../../services/document-types.service";
+import * as moment from 'moment';
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
     selector: 'app-upload-modal',
@@ -27,7 +29,8 @@ export class UploadModalComponent implements OnInit {
         private documentTypesService: DocumentTypesService,
         private messagesService: MessageService,
         private formBuilder: UntypedFormBuilder,
-        public matDialog: MatDialog,
+        private spinner: NgxSpinnerService,
+        public matDialog: MatDialogRef<any>,
     ) {
     }
 
@@ -51,53 +54,64 @@ export class UploadModalComponent implements OnInit {
     }
 
     createDocuments(file: any) {
-        this.loading = true;
+        this.spinner.show();
         let formData = new FormData()
         formData.append('tipos_documentos_id', this.documentsForm.value.tipos_documentos_id);
         formData.append('tipo_documento', this.documentsForm.value.tipo_documento);
         formData.append('vigencia_inicial', this.documentsForm.value.vigencia_inicial);
-        formData.append('vigencia_final', this.documentsForm.value.vigencia_final);
+        formData.append('vigencia_final', moment(this.documentsForm.value.vigencia_final).format('YYYY-MM-DD'));
         formData.append('file', file);
         this.documentsService.createRecord(formData).subscribe({
             next: res => {
-                this.loading = false;
+                this.spinner.hide();
                 this.messagesService.printStatus(res.message, 'success')
                 setTimeout(() => {
-                    this.matDialog.closeAll();
+                    this.matDialog.close();
                 }, 2500);
             },
             error: err => {
-                this.loading = false;
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         })
     }
 
     getDocumentTypes() {
+        this.spinner.show();
         this.documentTypesService.getRecords().subscribe({
             next: res => {
+                this.spinner.hide();
                 this.documentTypes = res.documentos;
             },
             error: err => {
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         })
     }
 
     getTypeDocuments(event: any) {
-        const documentId = event.target.value;
+        this.spinner.show();
+        const documentId = event.value;
         this.documentTypesService.getDocumentTypes(documentId).subscribe({
             next: res => {
+                this.spinner.hide();
                 this.documentoTipos = res.documentosTipos;
             },
             error: err => {
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });
     }
 
     onSelect(event: any) {
-        this.files.push(...event.addedFiles);
+        if (this.files.length >= 1){
+            this.messagesService.printStatus('Solo se puede adjuntar un documento a la vez', 'error');
+        } else {
+            this.files.push(...event.addedFiles);
+        }
+
     }
 
     onRemove(event: any) {

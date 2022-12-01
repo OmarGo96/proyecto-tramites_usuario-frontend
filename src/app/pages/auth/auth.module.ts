@@ -10,6 +10,7 @@ import {ActivateAccountComponent} from './activate-account/activate-account.comp
 import {ResetPasswordComponent} from './reset-password/reset-password.component';
 import {ChangePasswordComponent} from './change-password/change-password.component';
 import {ResendActivationLinkComponent} from './resend-activation-link/resend-activation-link.component';
+import {LayoutsModule} from "../../layouts/layouts.module";
 
 const routes: Routes = [
     {
@@ -52,7 +53,8 @@ const routes: Routes = [
         CommonModule,
         MaterialModule,
         RouterModule.forChild(routes),
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        LayoutsModule
     ]
 })
 export class AuthModule {

@@ -17,6 +17,7 @@ import {RequestsDetailComponent} from "./requests/requests-detail/requests-detai
 import { ProfileComponent } from './profile/profile.component';
 import {NgxSpinnerModule} from "ngx-spinner";
 import { ServiceDetailComponent } from './service-detail/service-detail.component';
+import {NgxDropzoneModule} from "ngx-dropzone";
 
 const routes: Routes = [
     {path: '', component: DependenciesComponent},
@@ -53,6 +54,7 @@ const routes: Routes = [
         LayoutsModule,
         ReactiveFormsModule,
         NgxSpinnerModule,
+        NgxDropzoneModule
     ]
 })
 export class PagesModule {

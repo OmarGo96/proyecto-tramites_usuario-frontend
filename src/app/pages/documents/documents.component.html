@@ -5,23 +5,20 @@
     </div>
     <div class="mt-5 flex lg:mt-0 lg:ml-4">
         <span class="sm:ml-3">
-          <button type="button" (click)="openUploadDialog()"
-                  class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
-            <mat-icon>description</mat-icon>&nbsp;Subir nuevo documento
+          <button type="button" mat-flat-button color="primary" class="rounded-md" (click)="openUploadDialog()">
+            <i class="fa-solid fa-file-arrow-up"></i> Subir nuevo documento
           </button>
         </span>
     </div>
 </div>
 
-<div class="grid grid-cols-4 gap-4 mt-5">
-    <a (click)="openDocument(document.id)" class="flex block p-2 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 hover:cursor-pointer" *ngFor="let document of documents">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
-        </svg>
+<div class="grid grid-cols-4 gap-3 mt-3">
+    <a *ngFor="let document of documents" (click)="openDocument(document.id)" class="flex block p-5 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 hover:cursor-pointer space-x-3">
+        <i class="fa-solid fa-file-invoice fa-3x text-gray-800"></i>
         <div>
-            <h3 class="text-sm">{{ document.Tipo.nombre }}</h3>
-            <p class="text-xs">Vigencia al {{ document.vigencia_final | date:'shortDate' }}</p>
-            <p class="text-xs">{{ document.url }}</p>
+            <h3 class="text-sm font-bold text-gray-900">{{ document.Tipo.nombre }}</h3>
+            <p class="text-xs text-gray-500">Vigencia al {{ document.vigencia_final | date:'shortDate' }}</p>
+            <p class="text-xs text-gray-500">{{ document.url }}</p>
         </div>
     </a>
 </div>

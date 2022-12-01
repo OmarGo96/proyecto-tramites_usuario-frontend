@@ -1,25 +1,22 @@
 <h2 mat-dialog-title>Agregar Documento</h2>
 <div class="space-y-5">
-
     <form [formGroup]="documentsForm" (ngSubmit)="uploadFiles()">
-        <div class="grid gap-6 mb-6 lg:grid-cols-2">
-            <div>
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Documento</label>
-                <select formControlName="tipos_documentos_id" (change)="getTypeDocuments($event)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-                    <option [selected]="true" disabled>Selecciona el tipo de documento</option>
-                    <option *ngFor="let documentType of documentTypes" value="{{ documentType.id }}">{{ documentType.nombre }}</option>
-                </select>
-            </div>
-            <div>
-                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Tipos de documentos</label>
-                <select formControlName="tipo_documento" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-                    <option [selected]="true" disabled>Selecciona una opción</option>
-                    <option value="0">Anexo</option>
-                    <option value="1">Pase a Caja</option>
-                    <option value="3">No Aplica</option>
-                    <option *ngFor="let documentoTipo of documentoTipos" value="{{ documentoTipo.id }}">{{ documentoTipo.nombre }}</option>
-                </select>
-            </div>
+        <div class="grid gap-6 lg:grid-cols-2">
+            <mat-form-field appearance="outline">
+                <mat-label>Documento</mat-label>
+                <mat-select formControlName="tipos_documentos_id" (selectionChange)="getTypeDocuments($event)">
+                    <mat-option *ngFor="let documentType of documentTypes" value="{{ documentType.id }}">{{ documentType.nombre }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Tipos de documentos</mat-label>
+                <mat-select  formControlName="tipo_documento">
+                    <mat-option value="0">Anexo</mat-option>
+                    <mat-option value="1">Pase a Caja</mat-option>
+                    <mat-option value="3">No Aplica</mat-option>
+                    <mat-option *ngFor="let documentoTipo of documentoTipos" value="{{ documentoTipo.id }}">{{ documentoTipo.nombre }}</mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
         <mat-form-field appearance="outline" class="w-full" (click)="picker.open()">
             <mat-label>Vigencia del Documento</mat-label>
@@ -40,7 +37,7 @@
                 <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
             </ngx-dropzone-preview>
         </ngx-dropzone>
-        <button type="submit" [disabled]="loading" class="text-white bg-emerald-600 hover:bg-emerald-700 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+        <button type="submit" mat-flat-button color="primary" class="rounded-md" [disabled]="loading">
             Cargar documento
         </button>
     </form>

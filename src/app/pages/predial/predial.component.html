@@ -4,26 +4,21 @@
         <p>El trámite se encuentra disponible para realizarlo en línea</p>
     </div>
 </div>
-<div class="grid grid-cols-3 gap-5 mt-5">
-    <div class="col-span-1">
+<div class="grid grid-cols-4 items-start gap-5 mt-5">
+    <div class="w-full p-6 space-y-5 bg-white shadow rounded-lg">
+        <h3 class="text-lg leading-6 font-medium text-gray-900">Agregar Clave Catastral</h3>
         <form [formGroup]="predialForm" (ngSubmit)="createClave()">
-            <div class="w-full p-6 space-y-5 bg-white shadow rounded-lg">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">Agregar Clave Catastral</h3>
-                <div>
-                    <label class="block mb-1 text-sm font-medium text-gray-600">Ingresa la Clave Catastral</label>
-                    <input type="text" formControlName="clave" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
-                </div>
-
-                <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2">
-                    <mat-spinner class="inline w-4 h-4 mr-7" diameter="20" color="accent" *ngIf="creating"></mat-spinner>
-                    Agregar
-                </button>
-            </div>
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Ingresa la Clave Catastral</mat-label>
+                <input matInput type="text" formControlName="clave">
+            </mat-form-field>
+            <button type="submit" mat-flat-button color="primary" class="rounded-md w-full">
+                Agregar
+            </button>
         </form>
     </div>
 
-    <div class="col-span-2 bg-white shadow overflow-hidden sm:rounded-lg">
-        <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+    <div class="col-span-3 bg-white shadow overflow-hidden sm:rounded-lg">
         <div class="px-4 py-5 sm:px-6">
             <h3 class="text-lg leading-6 font-medium text-gray-900">Claves Catastrales</h3>
             <p class="mt-1 max-w-2xl text-sm text-gray-500">Tu relación de claves catastrales</p>
@@ -43,7 +38,7 @@
             <ng-container matColumnDef="estado_cuenta">
                 <th mat-header-cell *matHeaderCellDef> Estado de Cuenta</th>
                 <td mat-cell *matCellDef="let element; let i = index">
-                    <button type="button" (click)="getEstadoCuenta(element.clave, i)" class="mt-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    <button type="button" mat-flat-button color="primary" class="rounded-md" (click)="getEstadoCuenta(element.clave, i)">
                         Estado de Cuenta
                     </button>
                 </td>
@@ -52,7 +47,7 @@
             <ng-container matColumnDef="accion">
                 <th mat-header-cell *matHeaderCellDef> Eliminar</th>
                 <td mat-cell *matCellDef="let element">
-                    <button type="button" (click)="deleteClave(element.clave)" class="mt-2 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                    <button type="button" mat-flat-button color="warn" class="rounded-md" (click)="deleteClave(element.clave)" >
                         Eliminar
                     </button>
                 </td>
@@ -65,7 +60,7 @@
             </tr>
         </table>
 
-        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+        <mat-paginator [pageSizeOptions]="[20, 50, 100]" aria-label="Select page of users"></mat-paginator>
     </div>
 </div>
 

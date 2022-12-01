@@ -5,6 +5,7 @@ import {UsersService} from "../../../services/users.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {MessageService} from "../../../services/messages.service";
 import {LicfuncService} from "../../../services/licfunc.service";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
     selector: 'app-estado-cuenta-modal',
@@ -27,7 +28,7 @@ export class EstadoCuentaModalComponent implements OnInit {
         private predialService: PredialService,
         private licfuncService: LicfuncService,
         private messagesService: MessageService,
-        private usersService: UsersService,
+        private spinner: NgxSpinnerService,
         public dialog: MatDialog
     ) {
     }
@@ -35,7 +36,6 @@ export class EstadoCuentaModalComponent implements OnInit {
     ngOnInit(): void {
         this.dataSource = new MatTableDataSource(this.data.content.estado_cuenta);
         this.clave = this.data.clave;
-        console.log(this.clave);
     }
 
     getTotalCost() {
@@ -43,18 +43,18 @@ export class EstadoCuentaModalComponent implements OnInit {
     }
 
     generarPaseCaja() {
-        this.caja = true;
+        this.spinner.show();
         let data = {'clave': this.clave};
         this.predialService.generarPaseCaja(data).subscribe({
             next: res => {
-                this.caja = false;
+                this.spinner.hide();
                 window.open(res.link, '_blank');
                 setTimeout(() => {
                     this.dialog.closeAll();
                 }, 1000);
             },
             error: err => {
-                this.caja = false;
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });
@@ -62,7 +62,7 @@ export class EstadoCuentaModalComponent implements OnInit {
 
     // Generar pase de caja del contribuyente
     realizarPago() {
-        this.pago = true;
+        this.spinner.show();
         var total = this.dataSource.data.map((element: any) => element.proImporte).reduce((acc: any, value: any) => acc + value, 0);
         let data = {
             'clave': this.clave,
@@ -70,33 +70,32 @@ export class EstadoCuentaModalComponent implements OnInit {
         };
         this.predialService.realizarPago(data).subscribe(
             res => {
-                this.pago = false;
+                this.spinner.hide();
                 window.open(res.link, '_blank');
                 setTimeout(() => {
                     this.dialog.closeAll();
                 }, 1000);
             },
             err => {
-                this.pago = false;
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         );
     }
 
     generatePaymentPass(): void {
-        this.caja = true;
+        this.spinner.show();
         const data = {licencia: this.clave.toString()};
-        console.log(data);
         this.licfuncService.generarPaseCaja(data).subscribe({
             next: res => {
-                this.caja = false;
+                this.spinner.hide();
                 window.open(res.pase_caja, '_blank');
                 setTimeout(() => {
                     this.dialog.closeAll();
                 }, 1000);
             },
             error: err => {
-                this.caja = false;
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });
@@ -104,21 +103,21 @@ export class EstadoCuentaModalComponent implements OnInit {
 
     // Generar pase de caja del contribuyente
     makePayment(): void {
-        this.pago = true;
+        this.spinner.show();
         const total: any = this.dataSource.data.map((element: any) => element.proImporte).reduce((acc: any, value: any) => acc + value, 0);
         const data = {
             licencia: this.clave.toString()
         };
         this.licfuncService.realizarPago(data).subscribe({
             next: res => {
-                this.pago = false;
+                this.spinner.hide();
                 window.open(res.link, '_blank');
                 setTimeout(() => {
                     this.dialog.closeAll();
                 }, 1000);
             },
             error: err => {
-                this.pago = false;
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });

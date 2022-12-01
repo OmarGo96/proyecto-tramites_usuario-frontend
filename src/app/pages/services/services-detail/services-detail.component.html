@@ -21,33 +21,42 @@
 </div>
 
 <div class="grid grid-cols-2 gap-5 mt-5" *ngIf="service">
-    <div class="p-6 w-full space-y-3 bg-white rounded-lg border border-gray-200 shadow-md">
-
-        <i class="fa-solid fa-file-lines fa-3x text-blue-600"></i>
+    <div class="p-6 w-full space-y-3 bg-white rounded-lg shadow-md border-l-4 border-blue-800">
         <h5 class="text-2xl font-bold tracking-tight text-gray-900">{{ service.nombre }}</h5>
 
         <div>
-            <h5 class="text-md font-bold tracking-tight text-gray-600">{{ service.Area.nombre }}</h5>
-            <p class="font-normal text-gray-700">{{ service.descripcion }}</p>
+            <h5 class="text-md font-bold text-gray-500">{{ service.Area.nombre }}</h5>
+            <p class="text-sm text-gray-700">{{ service.descripcion }}</p>
         </div>
 
         <div>
-            <h5 class="text-sm font-bold tracking-tight text-gray-600">Correo Electrónico</h5>
-            <p class="mb-1 text-xs font-normal text-gray-700">{{ service.Area.email }}</p>
+            <h5 class="text-md font-bold text-gray-500">Correo Electrónico</h5>
+            <p class="text-sm text-gray-700">{{ service.Area.email }}</p>
+        </div>
+
+        <div>
+            <h5 class="text-md font-bold text-gray-500">Ubicación</h5>
+            <p class="text-sm text-gray-700">{{ service.Area.ubicacion }}</p>
         </div>
     </div>
-    <div
-        class=" p-6 w-full bg-white rounded-lg border border-gray-200 shadow-md">
+    <div class="p-6 w-full space-y-3 bg-white rounded-lg shadow-md border-l-4 border-blue-800">
         <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900">Información general</h5>
 
-        <h5 class="text-sm font-bold tracking-tight text-gray-500">Costo</h5>
-        <p class="mb-1 text-lg font-bold text-gray-700">{{ service.costo }}</p>
-        <h5 class="text-sm font-bold tracking-tight text-gray-500">Ubicación</h5>
-        <p class="mb-1 text-xs font-normal text-gray-700">{{ service.Area.ubicacion }}</p>
-        <h5 class="text-sm font-bold tracking-tight text-gray-500">Teléfono</h5>
-        <p class="mb-1 text-xs font-normal text-gray-700">{{ service.Area.telefono }}</p>
-        <h5 class="text-sm font-bold tracking-tight text-gray-500">Horario</h5>
-        <p class="mb-1 text-xs font-normal text-gray-700">{{ service.Area.horario }}</p>
+        <div>
+            <h5 class="text-md font-bold text-gray-500">Costo</h5>
+            <p class="mb-1 text-lg font-bold text-blue-800">{{ service.costo }}</p>
+        </div>
+
+        <div>
+            <h5 class="text-md font-bold text-gray-500">Teléfono</h5>
+            <p class="text-sm text-gray-700">{{ service.Area.telefono }}</p>
+        </div>
+
+        <div>
+            <h5 class="text-md font-bold text-gray-500">Horario</h5>
+            <p class="text-sm text-gray-700">{{ service.Area.horario }}</p>
+        </div>
+
     </div>
 </div>
 <div class="grid grid-cols-1 gap-5 mt-5" *ngIf="service">

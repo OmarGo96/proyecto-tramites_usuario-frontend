@@ -9,6 +9,8 @@ import {MatTableDataSource} from "@angular/material/table";
 import {LicencesModalComponent} from "../../layouts/modals/licences-modal/licences-modal.component";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
+import {NgxSpinnerService} from "ngx-spinner";
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-licences',
@@ -20,11 +22,13 @@ export class LicencesComponent implements OnInit {
     public licenceForm: any;
 
     public dataSource: any;
-    public displayedColumns: string[] = ['licencia', 'rfc', 'estado_cuenta', 'accion'];
+    public displayedColumns: string[] = ['licencia', 'rfc', 'pago'];
     public expandedElement: any;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
+
+    public currentDate: any;
 
     /* Banderas */
     public creating = false;
@@ -34,11 +38,13 @@ export class LicencesComponent implements OnInit {
         private licfuncService: LicfuncService,
         private messagesService: MessageService,
         private formBuilder: UntypedFormBuilder,
+        private spinner: NgxSpinnerService,
         public dialog: MatDialog,
     ) {
     }
 
     ngOnInit(): void {
+        this.currentDate = moment().format('YYYY')
         this.initLicenceForm();
         this.getLicences();
     }
@@ -50,11 +56,14 @@ export class LicencesComponent implements OnInit {
     }
 
     getLicences() {
+        this.spinner.show();
         this.licfuncService.getRecords().subscribe({
                 next: res => {
+                    this.spinner.hide();
                     this.dataSource = new MatTableDataSource(res.licencias);
                 },
                 error: err => {
+                    this.spinner.hide();
                     this.messagesService.printStatusArrayNew(err.error.errors, 'error');
                 }
             }
@@ -62,11 +71,11 @@ export class LicencesComponent implements OnInit {
     }
 
     createLicence(){
-        this.creating = true;
+        this.spinner.show();
         const data = this.licenceForm.value;
         this.licfuncService.createRecords(data).subscribe({
             next: res => {
-                this.creating = false;
+                this.spinner.hide();
                 this.licenceForm.reset();
                 this.messagesService.printStatus(res.message, 'success')
                 setTimeout(() => {
@@ -74,22 +83,22 @@ export class LicencesComponent implements OnInit {
                 }, 2500);
             },
             error: err => {
-                this.creating = false;
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });
     }
 
     getEstadoCuenta(licencia: any): void {
-        this.loading = true;
+        this.spinner.show();
         const data = {licencia: licencia.toString()};
         this.licfuncService.getEstadoCuenta(data).subscribe({
             next: res => {
-                this.loading = false;
+                this.spinner.hide();
                 this.openDialog(res, licencia);
             },
             error: err => {
-                this.loading = false;
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });

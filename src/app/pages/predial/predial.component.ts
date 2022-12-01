@@ -8,6 +8,7 @@ import {MatDialog} from "@angular/material/dialog";
 import Swal from "sweetalert2";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
     selector: 'app-predial',
@@ -33,6 +34,7 @@ export class PredialComponent implements OnInit {
         private predialService: PredialService,
         private messagesService: MessageService,
         private formBuilder: UntypedFormBuilder,
+        private spinner: NgxSpinnerService,
         public dialog: MatDialog,
     ) {
     }
@@ -49,11 +51,14 @@ export class PredialComponent implements OnInit {
     }
 
     getClaves() {
+        this.spinner.show();
         this.predialService.getRecords().subscribe({
                 next: res => {
+                    this.spinner.hide();
                     this.dataSource = new MatTableDataSource(res.claves);
                 },
                 error: err => {
+                    this.spinner.hide();
                     this.messagesService.printStatusArrayNew(err.error.errors, 'error');
                 }
             }
@@ -61,11 +66,11 @@ export class PredialComponent implements OnInit {
     }
 
     createClave() {
-        this.creating = true;
+        this.spinner.show();
         const data = this.predialForm.value;
         this.predialService.createRecords(data).subscribe({
             next: res => {
-                this.creating = false;
+                this.spinner.hide();
                 this.predialForm.reset();
                 this.messagesService.printStatus(res.message, 'success')
                 setTimeout(() => {
@@ -73,7 +78,7 @@ export class PredialComponent implements OnInit {
                 }, 2500);
             },
             error: err => {
-                this.creating = false;
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });
@@ -90,17 +95,17 @@ export class PredialComponent implements OnInit {
             confirmButtonText: 'Si, eliminar'
         }).then((result) => {
             if (result.isConfirmed) {
-                this.loading = true;
+                this.spinner.show();
                 this.predialService.deleteClave(data).subscribe(
                     res => {
-                        this.loading = false;
+                        this.spinner.hide();
                         this.messagesService.printStatus(res.message, 'success')
                         setTimeout(() => {
                             this.getClaves();
                         }, 2500);
                     },
                     err => {
-                        this.loading = false;
+                        this.spinner.hide();
                         this.messagesService.printStatusArrayNew(err.error.errors, 'error');
                     }
                 )
@@ -109,15 +114,15 @@ export class PredialComponent implements OnInit {
     }
 
     getEstadoCuenta(clave: any, i: number) {
-        this.loading = true;
+        this.spinner.show()
         let data = {'clave': clave};
         this.predialService.getEstadoCuenta(data).subscribe({
             next: res => {
-                this.loading = false;
+                this.spinner.hide();
                 this.openDialog(res, clave);
             },
             error: err => {
-                this.loading = false;
+                this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });

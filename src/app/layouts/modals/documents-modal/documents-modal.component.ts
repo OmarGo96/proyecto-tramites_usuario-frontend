@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {DocumentsService} from "../../../services/documents.service";
 import {MessageService} from "../../../services/messages.service";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {UploadModalComponent} from "../upload-modal/upload-modal.component";
 
 @Component({
     selector: 'app-documents-modal',
@@ -15,12 +16,28 @@ export class DocumentsModalComponent implements OnInit {
     constructor(
         private documentsService: DocumentsService,
         private messagesService: MessageService,
-        public matDialogRef: MatDialogRef<any>,
+        private dialog: MatDialog,
+        public matDialogRef: MatDialogRef<any>
     ) {
     }
 
     ngOnInit(): void {
         this.getDocuments();
+    }
+
+    openUploadDialog(): void {
+        const config = {
+            width: '50%',
+            data: {
+                title: false
+            },
+        }
+
+        const dialogRef = this.dialog.open(UploadModalComponent, config);
+
+        dialogRef.afterClosed().subscribe(res => {
+            this.getDocuments()
+        });
     }
 
     getDocuments(){
