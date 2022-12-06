@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
         this.usersService.login(data).subscribe({
             next: res => {
                 sessionStorage.setItem('token', res.token);
+                this.messagesService.printStatus(res.message, 'success');
                 this.getIdentity(res.token);
             },
             error: err => {
