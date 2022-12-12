@@ -17,6 +17,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { MessagesModalComponent } from './modals/messages-modal/messages-modal.component';
 import { RequestHistoryModalComponent } from './modals/request-history-modal/request-history-modal.component';
 import { DocumentsModalComponent } from './modals/documents-modal/documents-modal.component';
+import { SearcherModalComponent } from './modals/searcher-modal/searcher-modal.component';
 
 @NgModule({
     declarations: [
@@ -31,7 +32,8 @@ import { DocumentsModalComponent } from './modals/documents-modal/documents-moda
         UploadModalComponent,
         MessagesModalComponent,
         RequestHistoryModalComponent,
-        DocumentsModalComponent
+        DocumentsModalComponent,
+        SearcherModalComponent
     ],
     imports: [
         CommonModule,

@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {DependenciesService} from 'src/app/services/dependencies.service';
 import {MessageService} from 'src/app/services/messages.service';
+import {EstadoCuentaModalComponent} from "../../layouts/modals/estado-cuenta-modal/estado-cuenta-modal.component";
+import {MatDialog} from "@angular/material/dialog";
+import {SearcherModalComponent} from "../../layouts/modals/searcher-modal/searcher-modal.component";
 
 @Component({
     selector: 'app-dependencies',
@@ -13,7 +16,8 @@ export class DependenciesComponent implements OnInit {
 
     constructor(
         private dependenciesService: DependenciesService,
-        private messagesService: MessageService,
+        private dialog: MatDialog,
+        private messagesService: MessageService
     ) {
     }
 
@@ -32,6 +36,19 @@ export class DependenciesComponent implements OnInit {
                 // this.messagesService.printStatus(err.error.errors, 'error');
             }
         })
+    }
+
+    activeSearchModal(){
+        const config = {
+            width: '50%',
+            height: '50%'
+        };
+
+        const dialogRef = this.dialog.open(SearcherModalComponent, config);
+
+        dialogRef.afterClosed().subscribe(() => {
+            // this.getClaves();
+        });
     }
 
 }

@@ -8,18 +8,14 @@
                     <img class="hidden lg:block h-8 w-auto" src="assets/logo-horizontal-blanco.png">
                 </div>
             </div>
-            <!--<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <div class="ml-3 relative">
-                    <button mat-button [matMenuTriggerFor]="menu" class="text-white">
-                        <i class="fa-solid fa-circle-user fa-xl"></i>
-                    </button>
-
-                    <mat-menu #menu="matMenu" class="mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Mi perfil</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Salir</a>
-                    </mat-menu>
+            <div class="w-80 relative">
+                <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                    <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
-            </div>-->
+                <input type="text" (click)="activeSearchModal()"
+                       class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5"
+                       placeholder="Buscar servicios...">
+            </div>
         </div>
     </div>
 </nav>

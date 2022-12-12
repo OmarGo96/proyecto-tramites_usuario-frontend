@@ -1,0 +1,25 @@
+<div class="flex justify-between">
+    <h2 mat-dialog-title>Busqueda de servicios</h2>
+    <button mat-icon-button color="primary" mat-dialog-close>
+        <i class="fa-solid fa-xmark fa-xl"></i>
+    </button>
+</div>
+<mat-dialog-content class="mat-typography">
+    <div class="w-full text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200">
+        <div class="relative">
+            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <input type="text" (keyup)="applyFilter($event)"
+                   class="bg-gray-50 border-b border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5"
+                   placeholder="Ingresa el nombre del servicio...">
+        </div>
+        <ng-container *ngIf="showList">
+            <a *ngFor="let service of result" [routerLink]="['/escritorio/servicio', service.uuid]" mat-dialog-close
+               class="block py-2 px-4 w-full border-b border-gray-200 cursor-pointer hover:bg-gray-100 hover:text-blue-700">
+                {{ service.nombre }}
+            </a>
+        </ng-container>
+    </div>
+
+</mat-dialog-content>

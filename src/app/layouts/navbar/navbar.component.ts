@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
+import {SearcherModalComponent} from "../modals/searcher-modal/searcher-modal.component";
+import {Dialog} from "@angular/cdk/dialog";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
     selector: 'app-navbar',
@@ -9,7 +12,8 @@ import {Router} from "@angular/router";
 export class NavbarComponent implements OnInit {
 
     constructor(
-        private router: Router
+        private router: Router,
+        private dialog: MatDialog
     ) {
     }
 
@@ -20,6 +24,19 @@ export class NavbarComponent implements OnInit {
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('identity');
         this.router.navigate(['']);
+    }
+
+    activeSearchModal(){
+        const config = {
+            width: '50%',
+            height: '50%'
+        };
+
+        const dialogRef = this.dialog.open(SearcherModalComponent, config);
+
+        dialogRef.afterClosed().subscribe(() => {
+            // this.getClaves();
+        });
     }
 
 }
