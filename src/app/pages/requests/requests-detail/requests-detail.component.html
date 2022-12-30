@@ -19,7 +19,7 @@
             <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="w-full">
                 <ng-container matColumnDef="requisito">
                     <th mat-header-cell *matHeaderCellDef class="w-3/5"> Requisito</th>
-                    <td mat-cell *matCellDef="let element"> {{ element.Requisito.nombre }} </td>
+                    <td mat-cell *matCellDef="let element"> {{ element.Requisito.nombre }}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="seleccionar">
@@ -53,6 +53,11 @@
                     </td>
                 </ng-container>
 
+                <ng-container matColumnDef="obligatorio">
+                    <th mat-header-cell *matHeaderCellDef> Obligatorio</th>
+                    <td mat-cell *matCellDef="let element"><span class="text-xs text-red-500" *ngIf="element.obligatorio === 1">Obligatorio</span> </td>
+                </ng-container>
+
                 <ng-container matColumnDef="archivo">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let element">
@@ -81,7 +86,7 @@
                     </button>
 
                     <button mat-flat-button (click)="saveRequest('2')" class="rounded-md" color="primary"
-                            [disabled]="(reqWithDocuments.length !== requeriments.length) || (request.estatus_solicitud_id !== 1 && request.estatus_solicitud_id !== 5 && request.estatus_solicitud_id !== 12)">
+                            [disabled]="(reqWithDocuments.length !== reqMandatory.length) || (request.estatus_solicitud_id !== 1 && request.estatus_solicitud_id !== 5 && request.estatus_solicitud_id !== 12)">
                         <mat-spinner class="inline w-4 h-4 mr-7" diameter="20" color="accent" *ngIf="sending"></mat-spinner>
                         Finalizar y enviar
                     </button>
@@ -119,7 +124,7 @@
 
             <div class="p-8 bg-white shadow rounded-xl">
                 <h3 class="text-lg font-medium text-gray-900">Mensajes recibidos</h3>
-                <p *ngIf="messages.length <= 0" class="text-xs text-gray-500" role="alert">
+                <p *ngIf="messages && messages.length <= 0" class="text-xs text-gray-500" role="alert">
                     No se encontraron mensajes para esta solicitud...
                 </p>
                 <ol class="relative border-l border-gray-200">

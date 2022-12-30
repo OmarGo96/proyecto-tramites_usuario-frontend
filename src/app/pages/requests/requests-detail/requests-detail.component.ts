@@ -27,12 +27,13 @@ export class RequestsDetailComponent implements OnInit {
     public request: any;
     public requeriments: any;
     public reqWithDocuments: any;
+    public reqMandatory: any;
     public records: any;
     public messages: any;
     public files: any;
 
     public dataSource: any;
-    public displayedColumns: string[] = ['requisito', 'seleccionar', 'archivo'];
+    public displayedColumns: string[] = ['requisito', 'seleccionar', 'obligatorio', 'archivo'];
 
     /* Banderas */
     public loading = false;
@@ -80,9 +81,10 @@ export class RequestsDetailComponent implements OnInit {
         this.requestsService.getRecord(id).subscribe({
             next: res => {
                 this.request = res.solicitud;
-                const requeriments = res.requisitos.filter((req: any) => req.Requisito.Documento);
-                this.reqWithDocuments = requeriments;
                 this.requeriments = res.requisitos;
+                console.log(res.requisitos);
+                this.reqWithDocuments = res.requisitos.filter((req: any) => req.Requisito.Documento);
+                this.reqMandatory = res.requisitos.filter((req: any) => req.obligatorio === 1);
                 this.dataSource = new MatTableDataSource(res.requisitos);
                 this.initSolicitudForm();
                 this.getHistory(res.solicitud.id);
