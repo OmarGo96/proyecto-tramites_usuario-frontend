@@ -19,9 +19,11 @@ export class UploadModalComponent implements OnInit {
     public files: File[] = [];
     public documentTypes: any;
     public documentoTipos: any;
+    public currentDate = new Date();
 
     /* Banderas */
     public loading: any;
+    public showDocumentName = false;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -42,6 +44,7 @@ export class UploadModalComponent implements OnInit {
     initDocumentForm() {
         this.documentsForm = this.formBuilder.group({
             tipos_documentos_id: ['Selecciona el tipo de documento', Validators.required],
+            nombre_documento: [''],
             tipo_documento: ['Selecciona una opción', Validators.required],
             vigencia_final: ['', Validators.required]
         });
@@ -59,6 +62,7 @@ export class UploadModalComponent implements OnInit {
         formData.append('tipos_documentos_id', this.documentsForm.value.tipos_documentos_id);
         formData.append('tipo_documento', this.documentsForm.value.tipo_documento);
         formData.append('vigencia_inicial', this.documentsForm.value.vigencia_inicial);
+        formData.append('nombre_documento', this.documentsForm.value.nombre_documento);
         formData.append('vigencia_final', moment(this.documentsForm.value.vigencia_final).format('YYYY-MM-DD'));
         formData.append('file', file);
         this.documentsService.createRecord(formData).subscribe({
@@ -93,6 +97,8 @@ export class UploadModalComponent implements OnInit {
     getTypeDocuments(event: any) {
         this.spinner.show();
         const documentId = event.value;
+        documentId === '11' ? this.showDocumentName = true : this.showDocumentName = false;
+
         this.documentTypesService.getDocumentTypes(documentId).subscribe({
             next: res => {
                 this.spinner.hide();

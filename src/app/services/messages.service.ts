@@ -154,15 +154,15 @@ export class MessageService {
     }
 
     // Función para preguntar al usuario si desea continuar con la eliminación de un elemento
-    confirmDelete() {
+    confirmDelete(message: any) {
         this.deletePopOup = Swal.fire({
-            title: 'Are you sure you want to delete the item ?',
-            text: 'This action cannot be undone',
+            title: message,
+            text: 'Esta acción no se puede cancelar',
             icon: 'warning',
             showCancelButton: true,
             focusCancel: true,
-            confirmButtonText: 'Delete',
-            cancelButtonText: 'Cancel',
+            confirmButtonText: 'Confirmar',
+            cancelButtonText: 'Cancelar',
             confirmButtonColor: '#b20909'
         });
         return this.deletePopOup;

@@ -58,6 +58,7 @@ export class DocumentsComponent implements OnInit {
         this.documentsService.getRecords().subscribe({
             next: res => {
                 this.documents = res.documentacion
+                console.log(this.documents);
             },
             error: err => {
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');

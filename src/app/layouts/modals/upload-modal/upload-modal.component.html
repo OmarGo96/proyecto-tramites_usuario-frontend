@@ -8,6 +8,13 @@
                     <mat-option *ngFor="let documentType of documentTypes" value="{{ documentType.id }}">{{ documentType.nombre }}</mat-option>
                 </mat-select>
             </mat-form-field>
+            <mat-form-field appearance="outline" *ngIf="showDocumentName">
+                <mat-label>Nombre de Documento</mat-label>
+                <input formControlName="nombre_documento" matInput>
+            </mat-form-field>
+        </div>
+
+        <div class="grid gap-6 lg:grid-cols-2">
             <mat-form-field appearance="outline">
                 <mat-label>Tipos de documentos</mat-label>
                 <mat-select  formControlName="tipo_documento">
@@ -17,13 +24,15 @@
                     <mat-option *ngFor="let documentoTipo of documentoTipos" value="{{ documentoTipo.id }}">{{ documentoTipo.nombre }}</mat-option>
                 </mat-select>
             </mat-form-field>
+            <mat-form-field appearance="outline" class="w-full" (click)="picker.open()">
+                <mat-label>Vigencia del Documento</mat-label>
+                <input matInput [matDatepicker]="picker" [min]="currentDate" formControlName="vigencia_final">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
         </div>
-        <mat-form-field appearance="outline" class="w-full" (click)="picker.open()">
-            <mat-label>Vigencia del Documento</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="vigencia_final">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+
+
         <ngx-dropzone (change)="onSelect($event)" class="my-3" [multiple]="false" accept="application/pdf">
             <ngx-dropzone-label class="ring-amber-600" autofocus>
                 <svg class="mx-auto h-12 w-12 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

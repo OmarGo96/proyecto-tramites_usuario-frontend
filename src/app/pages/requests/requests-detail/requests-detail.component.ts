@@ -31,14 +31,16 @@ export class RequestsDetailComponent implements OnInit {
     public records: any;
     public messages: any;
     public files: any;
+    public requestId: any;
 
     public dataSource: any;
-    public displayedColumns: string[] = ['requisito', 'seleccionar', 'obligatorio', 'archivo'];
+    public displayedColumns: string[] = ['requisito', 'seleccionar', 'archivo'];
 
     /* Banderas */
     public loading = false;
     public saving = false;
     public sending = false;
+    public reUpload = false;
 
     constructor(
         private requestsService: RequestService,
@@ -82,7 +84,6 @@ export class RequestsDetailComponent implements OnInit {
             next: res => {
                 this.request = res.solicitud;
                 this.requeriments = res.requisitos;
-                console.log(res.requisitos);
                 this.reqWithDocuments = res.requisitos.filter((req: any) => req.Requisito.Documento);
                 this.reqMandatory = res.requisitos.filter((req: any) => req.obligatorio === 1);
                 this.dataSource = new MatTableDataSource(res.requisitos);
@@ -96,7 +97,7 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
-    getHistory(requestId: any){
+    getHistory(requestId: any) {
         this.requestsService.getHistory(requestId).subscribe({
             next: res => {
                 this.records = res.history;
@@ -109,7 +110,7 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
-    getMessages(requestId: any){
+    getMessages(requestId: any) {
         this.requestsService.getMessages(requestId).subscribe({
             next: res => {
                 this.spinner.hide();
@@ -122,7 +123,7 @@ export class RequestsDetailComponent implements OnInit {
         })
     }
 
-    saveRequest(status: any){
+    saveRequest(status: any) {
         this.spinner.show();
         this.solicitudForm.controls.estatus_solicitud_id.setValue(status);
         this.solicitudForm.controls.solicitud_id.setValue(this.request.id.toString());
@@ -131,7 +132,7 @@ export class RequestsDetailComponent implements OnInit {
             next: res => {
                 this.spinner.hide();
                 this.messagesService.printStatus(res.message, 'success');
-                setTimeout(()=>{
+                setTimeout(() => {
                     this.router.navigate(['escritorio/solicitudes']);
                 }, 2500);
             },
@@ -143,7 +144,7 @@ export class RequestsDetailComponent implements OnInit {
     }
 
     onSelect(event: any) {
-        if (this.files.length >= 1){
+        if (this.files.length >= 1) {
             this.messagesService.printStatus('Solo se puede adjuntar un documento a la vez', 'error');
         } else {
             this.files.push(...event.addedFiles);
@@ -201,7 +202,7 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
-    reSelectDocumentToUpdate(requisitoId: any, documentoSolicitudRequisitoId: any){
+    reSelectDocumentToUpdate(requisitoId: any, documentoSolicitudRequisitoId: any) {
         const config = {
             width: '100%',
             data: {
@@ -238,7 +239,7 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
-    updateDocument(document: any, requisitoId:any, documentoSolicitudRequisitoId: any){
+    updateDocument(document: any, requisitoId: any, documentoSolicitudRequisitoId: any) {
         this.spinner.show();
         const data = {
             documentacion_id: document.id,
@@ -248,6 +249,8 @@ export class RequestsDetailComponent implements OnInit {
 
         this.documentsService.updateDocumentSolicitudRequisito(documentoSolicitudRequisitoId, data).subscribe({
             next: res => {
+                this.reUpload = false;
+                this.requestId = null;
                 this.spinner.hide();
                 this.getId();
             },
@@ -285,6 +288,15 @@ export class RequestsDetailComponent implements OnInit {
             /*if (document) {
                 this.setDocument(document, requisitoId);
             }*/
+        });
+    }
+
+    reUploadDocument(requestId: any) {
+        this.messagesService.confirmDelete('¿Estás seguro de eliminar este archivo?').then((result: any) => {
+            if (result.isConfirmed) {
+                this.requestId = requestId;
+                this.reUpload = true;
+            }
         });
     }
 
