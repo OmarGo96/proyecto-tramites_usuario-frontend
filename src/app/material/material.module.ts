@@ -21,6 +21,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatSelectModule} from "@angular/material/select";
 import {MatRadioModule} from "@angular/material/radio";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
     declarations: [],
@@ -47,7 +48,8 @@ import {MatRadioModule} from "@angular/material/radio";
         MatInputModule,
         MatButtonToggleModule,
         MatSelectModule,
-        MatRadioModule
+        MatRadioModule,
+        MatCheckboxModule
     ],
     exports: [
         MatToolbarModule,
@@ -71,7 +73,8 @@ import {MatRadioModule} from "@angular/material/radio";
         MatInputModule,
         MatButtonToggleModule,
         MatSelectModule,
-        MatRadioModule
+        MatRadioModule,
+        MatCheckboxModule
     ],
     providers: [
         MatDatepickerModule,

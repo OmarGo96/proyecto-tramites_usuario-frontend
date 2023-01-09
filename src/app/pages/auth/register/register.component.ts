@@ -17,6 +17,7 @@ export class RegisterComponent implements OnInit {
 
     public registerForm: any;
     public loading = false;
+    public token: any;
 
     constructor(
         private formBuilder: UntypedFormBuilder,
@@ -42,13 +43,16 @@ export class RegisterComponent implements OnInit {
             edad: ['', Validators.required],
             telefono: ['', Validators.required],
             rfc: ['', Validators.required],
-            genero: ['', Validators.required]
+            genero: ['', Validators.required],
+            aviso_privacidad: [1, Validators.required],
+            recaptcha: ['', Validators.required]
         })
     }
 
     onRegister(){
         this.spinner.show();
         const data = this.registerForm.value;
+        console.log(data);
         this.usersService.register(data).subscribe({
             next: res => {
                 this.spinner.hide();

@@ -9,7 +9,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {PagesModule} from "./pages/pages.module";
 
 import localeEsMX from '@angular/common/locales/es-MX';
-import { NgxSpinnerModule } from 'ngx-spinner';
+import {NgxSpinnerModule} from 'ngx-spinner';
+import {RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings} from "ng-recaptcha";
+import {environment} from "../environments/environment";
 
 
 registerLocaleData(localeEsMX, 'mx');
@@ -25,10 +27,12 @@ registerLocaleData(localeEsMX, 'mx');
         LayoutsModule,
         PagesModule,
         BrowserAnimationsModule,
-        NgxSpinnerModule.forRoot({ type: 'ball-beat' }),
+        NgxSpinnerModule.forRoot({type: 'ball-beat'})
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    providers: [ { provide: LOCALE_ID, useValue: 'mx' } ],
+    providers: [
+        {provide: LOCALE_ID, useValue: 'mx'}
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

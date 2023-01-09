@@ -5,6 +5,9 @@
 export const environment = {
     production: false,
     urlApi: 'http://192.168.10.32:8028/api',
+    recaptcha: {
+        siteKey: '6LfWQeQjAAAAALCKcqwYte_HzBS1DJ8hM8XIKybo',
+    },
 };
 
 /*

@@ -43,7 +43,7 @@
 
             <mat-form-field appearance="outline" class="w-full">
                 <mat-label>Rango de Edad</mat-label>
-                <mat-select formControlName="edad" >
+                <mat-select formControlName="edad">
                     <mat-option value="1">18 - 29 años</mat-option>
                     <mat-option value="2">30 - 59 años</mat-option>
                     <mat-option value="3">60 o más</mat-option>
@@ -66,13 +66,22 @@
                 <mat-radio-button value="2">Mujer</mat-radio-button>
             </mat-radio-group>
 
+            <mat-divider class="my-3"></mat-divider>
+
+            <div>
+                <p class="text-xs mb-3">Al hacer clic en <span class="font-bold">"Registrarme"</span> acepto los
+                    términos del <a href="https://gobiernodesolidaridad.gob.mx/avisosdeprivacidad" target="_blank" class="text-blue-700 hover:underline">Aviso de Privacidad</a></p>
+            </div>
+
+            <re-captcha id="recaptcha" formControlName="recaptcha"></re-captcha>
+
             <button type="submit" mat-flat-button color="primary"
                     class="mb-3 mt-3 rounded-md w-full">
-                Crear cuenta
+                Registrarme
             </button>
             <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
                 ¿Ya tienes cuenta?
-                <a [routerLink]="['/login']" class="text-blue-700 hover:underline dark:text-blue-500">Inicia sesión aquí</a>
+                <a [routerLink]="['/login']" class="text-blue-700 hover:underline">Inicia sesión aquí</a>
             </div>
 
         </form>
