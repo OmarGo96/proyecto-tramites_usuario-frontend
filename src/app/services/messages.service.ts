@@ -21,23 +21,25 @@ export class MessageService {
                 icon: this.status,
                 showConfirmButton: false,
                 timer: mailed ? 4000 : 2500,
+                heightAuto: false
             });
 
         } else if (this.status === 'error') {
             Swal.fire({
                 html: '' + this.message,
                 icon: this.status,
-                timer: 5000
+                timer: 5000,
+                heightAuto: false
             });
         } else if (this.status === 'warning') {
             Swal.fire({
                 html: '' + this.message,
                 icon: this.status,
-                timer: 4000
+                timer: 4000,
+                heightAuto: false
             });
         }
     }
-
 
     printStatusArray(message: [], status: any, mailed?: any) {
         console.log(message);
@@ -53,19 +55,22 @@ export class MessageService {
                 icon: this.status,
                 showConfirmButton: false,
                 timer: mailed ? 4000 : 2500,
+                heightAuto: false
             });
 
         } else if (this.status === 'error') {
             Swal.fire({
                 html: '' + msg,
                 icon: this.status,
-                timer: 5000
+                timer: 5000,
+                heightAuto: false
             });
         } else if (this.status === 'warning') {
             Swal.fire({
                 html: '' + msg,
                 icon: this.status,
-                timer: 4000
+                timer: 4000,
+                heightAuto: false
             });
         }
     }
@@ -79,8 +84,6 @@ export class MessageService {
             }
         });
 
-        console.log(msg);
-
         this.status = status;
 
         if (this.status === 'success') {
@@ -89,18 +92,21 @@ export class MessageService {
                 icon: this.status,
                 showConfirmButton: false,
                 timer: mailed ? 4000 : 2500,
+                heightAuto: false
             });
 
         } else if (this.status === 'error') {
             Swal.fire({
                 html: '' + msg,
-                icon: this.status
+                icon: this.status,
+                heightAuto: false
             });
         } else if (this.status === 'warning') {
             Swal.fire({
                 html: '' + msg,
                 icon: this.status,
-                timer: 4000
+                timer: 4000,
+                heightAuto: false
             });
         }
     }

@@ -1,0 +1,13 @@
+<mat-dialog-content class="mat-typography">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">Agregar Licencia Funcionamiento</h3>
+    <form [formGroup]="licenceForm" (ngSubmit)="createLicence()">
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Ingresa número de licencia</mat-label>
+            <input matInput type="text" formControlName="licencia">
+        </mat-form-field>
+
+        <button type="submit" mat-flat-button color="primary" class="rounded-md w-full">
+            Agregar
+        </button>
+    </form>
+</mat-dialog-content>

@@ -11,6 +11,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {NgxSpinnerService} from "ngx-spinner";
 import * as moment from 'moment';
+import {AddLicensesModalComponent} from "../../layouts/modals/add-licenses-modal/add-licenses-modal.component";
 
 @Component({
     selector: 'app-licences',
@@ -18,8 +19,6 @@ import * as moment from 'moment';
     styleUrls: ['./licences.component.css']
 })
 export class LicencesComponent implements OnInit {
-
-    public licenceForm: any;
 
     public dataSource: any;
     public displayedColumns: string[] = ['licencia', 'rfc', 'pago'];
@@ -45,15 +44,10 @@ export class LicencesComponent implements OnInit {
 
     ngOnInit(): void {
         this.currentDate = moment().format('YYYY')
-        this.initLicenceForm();
         this.getLicences();
     }
 
-    initLicenceForm() {
-        this.licenceForm = this.formBuilder.group({
-            licencia: ['', Validators.required]
-        });
-    }
+
 
     getLicences() {
         this.spinner.show();
@@ -70,24 +64,7 @@ export class LicencesComponent implements OnInit {
         );
     }
 
-    createLicence(){
-        this.spinner.show();
-        const data = this.licenceForm.value;
-        this.licfuncService.createRecords(data).subscribe({
-            next: res => {
-                this.spinner.hide();
-                this.licenceForm.reset();
-                this.messagesService.printStatus(res.message, 'success')
-                setTimeout(() => {
-                    this.getLicences();
-                }, 2500);
-            },
-            error: err => {
-                this.spinner.hide();
-                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
-            }
-        });
-    }
+
 
     getEstadoCuenta(licencia: any): void {
         this.spinner.show();
@@ -133,6 +110,20 @@ export class LicencesComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(() => {
             // this.getClaves();
+        });
+    }
+
+    addNewLicense(): void {
+        const config = {
+            data: {
+                name: 'Juan Amaya'
+            },
+        }
+
+        const dialogRef = this.dialog.open(AddLicensesModalComponent, config);
+
+        dialogRef.afterClosed().subscribe(result => {
+            this.getLicences();
         });
     }
 

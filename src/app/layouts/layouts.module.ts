@@ -18,6 +18,7 @@ import { MessagesModalComponent } from './modals/messages-modal/messages-modal.c
 import { RequestHistoryModalComponent } from './modals/request-history-modal/request-history-modal.component';
 import { DocumentsModalComponent } from './modals/documents-modal/documents-modal.component';
 import { SearcherModalComponent } from './modals/searcher-modal/searcher-modal.component';
+import { AddLicensesModalComponent } from './modals/add-licenses-modal/add-licenses-modal.component';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import { SearcherModalComponent } from './modals/searcher-modal/searcher-modal.c
         MessagesModalComponent,
         RequestHistoryModalComponent,
         DocumentsModalComponent,
-        SearcherModalComponent
+        SearcherModalComponent,
+        AddLicensesModalComponent
     ],
     imports: [
         CommonModule,
