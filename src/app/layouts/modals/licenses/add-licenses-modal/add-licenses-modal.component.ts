@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UntypedFormBuilder, Validators} from "@angular/forms";
-import {LicfuncService} from "../../../services/licfunc.service";
-import {MessageService} from "../../../services/messages.service";
+import {LicfuncService} from "../../../../services/licfunc.service";
+import {MessageService} from "../../../../services/messages.service";
 import {NgxSpinnerService} from "ngx-spinner";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 

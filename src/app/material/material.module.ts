@@ -22,6 +22,7 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatSelectModule} from "@angular/material/select";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatStepperModule} from "@angular/material/stepper";
 
 @NgModule({
     declarations: [],
@@ -49,7 +50,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MatButtonToggleModule,
         MatSelectModule,
         MatRadioModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatStepperModule
     ],
     exports: [
         MatToolbarModule,
@@ -74,7 +76,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MatButtonToggleModule,
         MatSelectModule,
         MatRadioModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatStepperModule
     ],
     providers: [
         MatDatepickerModule,

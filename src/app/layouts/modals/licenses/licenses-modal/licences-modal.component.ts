@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 @Component({
-    selector: 'app-licences-modal',
+    selector: 'app-licenses-modal',
     templateUrl: './licences-modal.component.html',
     styleUrls: ['./licences-modal.component.css']
 })

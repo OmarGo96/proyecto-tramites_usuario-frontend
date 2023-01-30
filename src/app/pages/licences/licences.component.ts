@@ -6,12 +6,13 @@ import {LicfuncService} from "../../services/licfunc.service";
 import {EstadoCuentaModalComponent} from "../../layouts/modals/estado-cuenta-modal/estado-cuenta-modal.component";
 import Swal from "sweetalert2";
 import {MatTableDataSource} from "@angular/material/table";
-import {LicencesModalComponent} from "../../layouts/modals/licences-modal/licences-modal.component";
+import {LicencesModalComponent} from "../../layouts/modals/licenses/licenses-modal/licences-modal.component";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {NgxSpinnerService} from "ngx-spinner";
 import * as moment from 'moment';
-import {AddLicensesModalComponent} from "../../layouts/modals/add-licenses-modal/add-licenses-modal.component";
+import {AddLicensesModalComponent} from "../../layouts/modals/licenses/add-licenses-modal/add-licenses-modal.component";
+import {RenewLicensesComponent} from "../../layouts/modals/licenses/renew-licenses/renew-licenses.component";
 
 @Component({
     selector: 'app-licences',
@@ -21,7 +22,7 @@ import {AddLicensesModalComponent} from "../../layouts/modals/add-licenses-modal
 export class LicencesComponent implements OnInit {
 
     public dataSource: any;
-    public displayedColumns: string[] = ['licencia', 'rfc', 'pago'];
+    public displayedColumns: string[] = ['licencia', 'rfc', 'accion'];
     public expandedElement: any;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -48,7 +49,6 @@ export class LicencesComponent implements OnInit {
     }
 
 
-
     getLicences() {
         this.spinner.show();
         this.licfuncService.getRecords().subscribe({
@@ -63,7 +63,6 @@ export class LicencesComponent implements OnInit {
             }
         );
     }
-
 
 
     getEstadoCuenta(licencia: any): void {
@@ -98,7 +97,7 @@ export class LicencesComponent implements OnInit {
         });
     }
 
-    openDetailDialog(licencia: any){
+    openDetailDialog(licencia: any) {
         const config = {
             width: '80%',
             data: {
@@ -127,33 +126,22 @@ export class LicencesComponent implements OnInit {
         });
     }
 
-   /* deleteClave(clave: any){
-        let data = { 'clave': clave };
-        Swal.fire({
-            title: '¿Estás seguro de eliminar esta clave catastral?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#005be1',
-            cancelButtonColor: '#a2a2a2',
-            confirmButtonText: 'Si, eliminar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                this.loading = true;
-                this.predialService.deleteClave(data).subscribe(
-                    res => {
-                        this.loading = false;
-                        this.messagesService.printStatus(res.message, 'success')
-                        setTimeout(() => {
-                            this.getClaves();
-                        }, 2500);
-                    },
-                    err => {
-                        this.loading = false;
-                        this.messagesService.printStatus(err.error.errors, 'error');
-                    }
-                )
-            }
-        });
-    }*/
+    openRenewLicenseForm(){
+        const config = {
+            data: {
+                name: 'Juan Amaya'
+            },
+        }
 
+        const dialogRef = this.dialog.open(RenewLicensesComponent, config);
+
+        dialogRef.afterClosed().subscribe(result => {
+            // this.getLicences();
+        });
+    }
+
+    applyFilter(event: Event) {
+        const filterValue = (event.target as HTMLInputElement).value;
+        this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
 }
