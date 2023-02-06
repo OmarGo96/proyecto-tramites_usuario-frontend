@@ -37,7 +37,7 @@ export class RequestsComponent implements OnInit {
         this.getSolicitudes();
     }
 
-    getSolicitudes(){
+    getSolicitudes() {
         this.spinner.show();
         this.requestService.getRecords().subscribe({
             next: res => {
@@ -53,7 +53,7 @@ export class RequestsComponent implements OnInit {
         })
     }
 
-    generateCheckout(solicitud: any){
+    generateCheckout(solicitud: any) {
         this.spinner.show();
         const data = {
             solicitud_id: solicitud.id.toString(),
@@ -77,7 +77,7 @@ export class RequestsComponent implements OnInit {
         })
     }
 
-    paymentLink(solicitud: any){
+    paymentLink(solicitud: any) {
         this.spinner.show();
         const data = {
             solicitud_id: solicitud.id.toString(),
@@ -106,4 +106,31 @@ export class RequestsComponent implements OnInit {
         this.dataSource.filter = filterValue.trim().toLowerCase();
     }
 
+    deleteRegister(solicitudId: any, statusId: any) {
+        this.messagesService.confirmDelete('¿Estás seguro de eliminar esta solicitud?')
+            .then((result: any) => {
+                console.log(result);
+                if (result.isConfirmed) {
+                    this.spinner.show();
+                    const data = {
+                        estatus_solicitud_id: '13',
+                        solicitud_id: solicitudId.toString()
+                    };
+                    this.requestService.updateRecord(data).subscribe({
+                        next: res => {
+                            this.spinner.hide();
+                            this.messagesService.printStatus(res.message, 'success');
+                            setTimeout(() => {
+                                this.getSolicitudes();
+                            }, 2500)
+                        },
+                        error: err => {
+                            this.spinner.hide();
+                            this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+                        }
+                    });
+                }
+            });
+
+    }
 }

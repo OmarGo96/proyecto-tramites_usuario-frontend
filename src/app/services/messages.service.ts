@@ -78,6 +78,7 @@ export class MessageService {
     printStatusArrayNew(errors: [], status: any, mailed?: any) {
         console.log(errors);
         let msg;
+
         errors.forEach((error: any, index) => {
             if (index === 0) {
                 msg = error.message;

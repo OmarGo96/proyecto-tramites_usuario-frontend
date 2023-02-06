@@ -58,7 +58,7 @@ export class DocumentsComponent implements OnInit {
         this.documentsService.getRecords().subscribe({
             next: res => {
                 this.documents = res.documentacion
-                console.log(this.documents);
+
             },
             error: err => {
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
@@ -73,10 +73,11 @@ export class DocumentsComponent implements OnInit {
                 window.open(url, '_blank');
             },
             error: err => {
-                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+                this.messagesService.printStatus('Ocurrio un error al obtener el documento.', 'error');
             }
         });
     }
+
 
 
 }

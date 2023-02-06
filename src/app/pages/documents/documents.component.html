@@ -12,12 +12,12 @@
     </div>
 </div>
 
-<div class="grid grid-cols-4 gap-3 mt-3">
+<div class="grid grid-cols-3 gap-3 mt-3">
     <a *ngFor="let document of documents" (click)="openDocument(document.id)" class="flex block p-5 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 hover:cursor-pointer space-x-3">
         <i class="fa-solid fa-file-invoice fa-3x text-gray-800"></i>
         <div>
-            <h3 class="text-sm font-bold text-gray-900" *ngIf="!document.nombre_otro">{{ document.Tipo.nombre }}</h3>
-            <h3 class="text-sm font-bold text-gray-900" *ngIf="document.nombre_otro">{{ document.nombre_otro }}</h3>
+            <!--<h3 class="text-sm font-bold text-gray-900" *ngIf="!document.nombre_otro">{{ document.Tipo.nombre }}</h3>-->
+            <h3 class="text-sm font-bold text-gray-900">{{ document.nombre_otro }}</h3>
             <p class="text-xs text-gray-500">Vigencia al {{ document.vigencia_final | date:'shortDate' }}</p>
             <p class="text-xs text-gray-500">{{ document.url }}</p>
         </div>
