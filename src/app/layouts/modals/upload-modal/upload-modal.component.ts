@@ -46,7 +46,7 @@ export class UploadModalComponent implements OnInit {
             tipos_documentos_id: ['Selecciona el tipo de documento', Validators.required],
             nombre_documento: ['', Validators.required],
             tipo_documento: ['Selecciona una opción', Validators.required],
-            vigencia_final: ['', Validators.required]
+            vigencia_final: ['']
         });
     }
 

@@ -25,13 +25,12 @@
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline" class="w-full" (click)="picker.open()">
-                <mat-label>Vigencia del Documento</mat-label>
+                <mat-label>Vigencia (opcional)</mat-label>
                 <input matInput [matDatepicker]="picker" [min]="currentDate" formControlName="vigencia_final">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
         </div>
-
 
         <ngx-dropzone (change)="onSelect($event)" class="my-3" [multiple]="false" accept="application/pdf">
             <ngx-dropzone-label class="ring-amber-600" autofocus>

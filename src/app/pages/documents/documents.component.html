@@ -12,14 +12,27 @@
     </div>
 </div>
 
-<div class="grid grid-cols-3 gap-3 mt-3">
-    <a *ngFor="let document of documents" (click)="openDocument(document.id)" class="flex block p-5 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 hover:cursor-pointer space-x-3">
-        <i class="fa-solid fa-file-invoice fa-3x text-gray-800"></i>
-        <div>
-            <!--<h3 class="text-sm font-bold text-gray-900" *ngIf="!document.nombre_otro">{{ document.Tipo.nombre }}</h3>-->
-            <h3 class="text-sm font-bold text-gray-900">{{ document.nombre_otro }}</h3>
-            <p class="text-xs text-gray-500">Vigencia al {{ document.vigencia_final | date:'shortDate' }}</p>
-            <p class="text-xs text-gray-500">{{ document.url }}</p>
-        </div>
-    </a>
+<div class="grid grid-cols-5 gap-4 mt-3">
+    <div *ngFor="let document of documents" (click)="openDocument(document.id)"
+        class="relative w-full h-40 p-4 shadow rounded-2xl bg-white mx-auto">
+        <a
+            class="absolute z-20 top-1.5 right-1.5 w-8 h-8 min-h-8"
+            (click)="$event.preventDefault()"
+            mat-icon-button>
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+        </a>
+        <a
+            class="z-10 absolute inset-0 flex flex-col p-4 cursor-pointer">
+            <div class="aspect-[9/6]">
+                <div class="flex items-center justify-center h-full text-slate-400">
+                    <!-- Icon -->
+                    <i class="fa-solid fa-file fa-3x"></i>
+                </div>
+            </div>
+            <div class="flex flex-col flex-auto justify-center text-center text-xs">
+                <div class="truncate font-medium">{{ document.nombre_otro }}</div>
+                <div class="text-slate-400 truncate font-normal">Vigencia al {{ document.vigencia_final | date:'shortDate' }}</div>
+            </div>
+        </a>
+    </div>
 </div>
