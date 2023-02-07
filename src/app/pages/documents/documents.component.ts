@@ -4,6 +4,7 @@ import {MessageService} from "../../services/messages.service";
 import {MatDialog} from "@angular/material/dialog";
 import {DocumentsService} from "../../services/documents.service";
 import {DocumentTypesService} from "../../services/document-types.service";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
     selector: 'app-documents',
@@ -18,6 +19,7 @@ export class DocumentsComponent implements OnInit {
     constructor(
         private documentsService: DocumentsService,
         private documentTypesService: DocumentTypesService,
+        private spinner: NgxSpinnerService,
         private messagesService: MessageService,
         public dialog: MatDialog
     ) {
@@ -43,6 +45,7 @@ export class DocumentsComponent implements OnInit {
     }
 
     getDocumentTypes() {
+        this.spinner.show();
         this.documentTypesService.getRecords().subscribe({
             next: res => {
                 this.documentTypes = res.documentos;
@@ -50,6 +53,7 @@ export class DocumentsComponent implements OnInit {
             },
             error: err => {
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+                this.spinner.hide();
             }
         })
     }
@@ -58,26 +62,56 @@ export class DocumentsComponent implements OnInit {
         this.documentsService.getRecords().subscribe({
             next: res => {
                 this.documents = res.documentacion
-
+                this.spinner.hide();
             },
             error: err => {
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+                this.spinner.hide();
             }
         })
     }
 
     openDocument(documentId: any) {
+        this.spinner.show();
         this.documentsService.getUserDocument(documentId).subscribe({
             next: res => {
                 let url = URL.createObjectURL(res);
                 window.open(url, '_blank');
+                this.spinner.hide();
             },
             error: err => {
                 this.messagesService.printStatus('Ocurrio un error al obtener el documento.', 'error');
+                this.spinner.hide();
             }
         });
     }
 
+    deleteFile() {
+        this.messagesService.confirmDelete('¿Estás seguro de eliminar este archivo?')
+            .then((result: any) => {
+                console.log(result);
+                if (result.isConfirmed) {
+                    /*this.spinner.show();
+                    const data = {
+                        estatus_solicitud_id: '13',
+                        solicitud_id: solicitudId.toString()
+                    };
+                    this.requestService.updateRecord(data).subscribe({
+                        next: res => {
+                            this.spinner.hide();
+                            this.messagesService.printStatus(res.message, 'success');
+                            setTimeout(() => {
+                                this.getSolicitudes();
+                            }, 2500)
+                        },
+                        error: err => {
+                            this.spinner.hide();
+                            this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+                        }
+                    });*/
+                }
+            });
 
+    }
 
 }

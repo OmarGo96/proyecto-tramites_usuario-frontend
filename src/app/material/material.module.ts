@@ -23,6 +23,8 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatStepperModule} from "@angular/material/stepper";
+import {MatBadgeModule} from "@angular/material/badge";
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
     declarations: [],
@@ -51,7 +53,9 @@ import {MatStepperModule} from "@angular/material/stepper";
         MatSelectModule,
         MatRadioModule,
         MatCheckboxModule,
-        MatStepperModule
+        MatStepperModule,
+        MatBadgeModule,
+        MatListModule
     ],
     exports: [
         MatToolbarModule,
@@ -77,7 +81,9 @@ import {MatStepperModule} from "@angular/material/stepper";
         MatSelectModule,
         MatRadioModule,
         MatCheckboxModule,
-        MatStepperModule
+        MatStepperModule,
+        MatBadgeModule,
+        MatListModule
     ],
     providers: [
         MatDatepickerModule,
