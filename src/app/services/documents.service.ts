@@ -35,6 +35,10 @@ export class DocumentsService {
         return this.httpClient.get(`${this.urlApi}/archivo_documentacion/${id}`, { responseType: 'blob' });
     }
 
+    public deleteDocument(documentId: any): Observable<any> {
+        return this.httpClient.post(`${this.urlApi}/documentacion/${documentId}`,{headers: this.headers})
+    }
+
     public createDocumentoSolicitud(data: any): Observable<any>{
         return this.httpClient.post(`${this.urlApi}/documentos-solcicitud`, data, {headers: this.headers})
     }

@@ -83,6 +83,7 @@ export class RequestsDetailComponent implements OnInit {
         this.requestsService.getRecord(id).subscribe({
             next: res => {
                 this.request = res.solicitud;
+                console.log(this.request);
                 this.requeriments = res.requisitos;
                 this.reqWithDocuments = res.requisitos.filter((req: any) => req.Requisito.Documento);
                 this.reqMandatory = res.requisitos.filter((req: any) => req.obligatorio === 1);

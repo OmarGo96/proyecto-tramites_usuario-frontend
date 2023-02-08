@@ -86,29 +86,25 @@ export class DocumentsComponent implements OnInit {
         });
     }
 
-    deleteFile() {
+    deleteFile(documentId: any) {
         this.messagesService.confirmDelete('¿Estás seguro de eliminar este archivo?')
             .then((result: any) => {
                 console.log(result);
                 if (result.isConfirmed) {
-                    /*this.spinner.show();
-                    const data = {
-                        estatus_solicitud_id: '13',
-                        solicitud_id: solicitudId.toString()
-                    };
-                    this.requestService.updateRecord(data).subscribe({
+                    this.spinner.show();
+                    this.documentsService.deleteDocument(documentId).subscribe({
                         next: res => {
                             this.spinner.hide();
                             this.messagesService.printStatus(res.message, 'success');
                             setTimeout(() => {
-                                this.getSolicitudes();
+                                this.getDocuments();
                             }, 2500)
                         },
                         error: err => {
                             this.spinner.hide();
                             this.messagesService.printStatusArrayNew(err.error.errors, 'error');
                         }
-                    });*/
+                    });
                 }
             });
 

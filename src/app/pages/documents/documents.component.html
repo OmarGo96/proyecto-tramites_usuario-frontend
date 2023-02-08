@@ -19,7 +19,7 @@
                 <i class="fa-solid fa-ellipsis-vertical fa-lg"></i>
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item class="text-red-500" (click)="deleteFile()">
+                <button mat-menu-item class="text-red-500" (click)="deleteFile(document.id)">
                     <i class="fa-solid fa-trash"></i>
                     Eliminar archivo
                 </button>

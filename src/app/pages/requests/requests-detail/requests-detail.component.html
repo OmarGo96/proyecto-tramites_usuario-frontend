@@ -16,7 +16,7 @@
                         Adjunta los archivos de los requisitos</p>
                 </div>
             </div>
-            <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="w-full">
+            <table *ngIf="request.estatus_solicitud_id === 1 || request.estatus_solicitud_id === 5; else sentRequest" mat-table [dataSource]="dataSource" multiTemplateDataRows class="w-full">
                 <ng-container matColumnDef="requisito">
                     <th mat-header-cell *matHeaderCellDef class="w-3/5"> Requisito</th>
                     <td mat-cell *matCellDef="let element">
@@ -80,7 +80,15 @@
                 <tr mat-row *matRowDef="let element; columns: displayedColumns;"></tr>
             </table>
 
-            <form [formGroup]="solicitudForm" class="p-4">
+            <ng-template #sentRequest>
+                <div class="p-5 flex justify-between">
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-900">Esta solicitud ya esta en proceso</h3>
+                    </div>
+                </div>
+            </ng-template>
+
+            <form [formGroup]="solicitudForm" class="p-4" *ngIf="request.estatus_solicitud_id === 1 || request.estatus_solicitud_id === 5">
                 <mat-form-field appearance="outline" class="w-full text-xs">
                     <mat-label>Escribe un comentario</mat-label>
                     <textarea matInput formControlName="comentario" rows="4"></textarea>
