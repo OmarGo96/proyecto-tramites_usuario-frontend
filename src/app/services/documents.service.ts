@@ -16,11 +16,19 @@ export class DocumentsService {
         private usersService: UsersService
     ) {
         this.token = this.usersService.getToken();
+        console.log(this.token)
         this.headers = new HttpHeaders().set('Authorization', this.token);
     }
 
     public createRecord(data: any): Observable<any> {
         return this.httpClient.post(`${this.urlApi}/documentacion`, data, {headers: this.headers})
+    }
+
+    public deleteDocument(documentId: any,): Observable<any> {
+        const data ={
+            id: ''
+        }
+        return this.httpClient.post(`${this.urlApi}/documentacion/${documentId}`, data,{headers: this.headers})
     }
 
     public getRecords(): Observable <any> {
@@ -33,10 +41,6 @@ export class DocumentsService {
 
     public getUserDocument(id: any): Observable<any> {
         return this.httpClient.get(`${this.urlApi}/archivo_documentacion/${id}`, { responseType: 'blob' });
-    }
-
-    public deleteDocument(documentId: any): Observable<any> {
-        return this.httpClient.post(`${this.urlApi}/documentacion/${documentId}`,{headers: this.headers})
     }
 
     public createDocumentoSolicitud(data: any): Observable<any>{
