@@ -63,7 +63,7 @@ export class UploadModalComponent implements OnInit {
         formData.append('tipo_documento', this.documentsForm.value.tipo_documento);
         formData.append('vigencia_inicial', this.documentsForm.value.vigencia_inicial);
         formData.append('nombre_documento', this.documentsForm.value.nombre_documento);
-        formData.append('vigencia_final', moment(this.documentsForm.value.vigencia_final).format('YYYY-MM-DD'));
+        formData.append('vigencia_final', this.documentsForm.value.vigencia_final ? moment(this.documentsForm.value.vigencia_final).format('YYYY-MM-DD') : '');
         formData.append('file', file);
         this.documentsService.createRecord(formData).subscribe({
             next: res => {

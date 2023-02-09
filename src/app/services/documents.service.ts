@@ -16,7 +16,6 @@ export class DocumentsService {
         private usersService: UsersService
     ) {
         this.token = this.usersService.getToken();
-        console.log(this.token)
         this.headers = new HttpHeaders().set('Authorization', this.token);
     }
 
