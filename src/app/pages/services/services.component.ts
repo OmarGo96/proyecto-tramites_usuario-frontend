@@ -53,6 +53,7 @@ export class ServicesComponent implements OnInit {
         this.servicesService.getServices(uuid).subscribe({
             next: res => {
                 this.services = res.servicios;
+                console.log(this.services);
             },
             error: err => {
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');

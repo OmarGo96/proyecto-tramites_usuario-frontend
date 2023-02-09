@@ -83,7 +83,8 @@
                         <i class="fa-solid fa-eye"></i>
                         Ver detalle
                     </a>
-                    <a mat-menu-item class="text-red-500" (click)="deleteRegister(element.id, element.Estatus.id)">
+                    <a mat-menu-item class="text-red-500" *ngIf="element.Estatus.id === 1"
+                       (click)="deleteRegister(element.id, element.Estatus.id)">
                         <i class="fa-solid fa-trash"></i>
                         Eliminar
                     </a>
