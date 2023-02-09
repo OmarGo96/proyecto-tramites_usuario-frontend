@@ -13,13 +13,20 @@
                <h5 class="text-lg font-bold text-gray-900">{{ service.nombre }}</h5>
                <p class="text-sm text-gray-500">{{ service.descripcion | excerpt: 150 }}</p>
            </div>
-            <a mat-flat-button color="primary" [routerLink]="['/escritorio/servicio', service.uuid]" class="rounded-md">
+            <a mat-flat-button color="primary" *ngIf="service.uuid === 'b4a6905c-8889-4708-bfaf-590e6e86944c' || service.uuid === 'a032833a-2a97-448a-9342-898930c2ba6b'; else tramite" [routerLink]=" service.uuid === 'b4a6905c-8889-4708-bfaf-590e6e86944c' ? ['/escritorio/predial'] : ['/escritorio/licencia-funcionamiento']" class="rounded-md">
                 Ver trámite
                 <i class="fa-solid fa-chevron-right"></i>
             </a>
+
+            <ng-template #tramite>
+                <a mat-flat-button color="primary" [routerLink]="['/escritorio/servicio', service.uuid]" class="rounded-md">
+                    Ver trámite
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+            </ng-template>
         </div>
 
-        <div *ngIf="direction.uuid === '23ecdf3e-2622-4cab-a80b-982b22aba59f'" class="space-y-5">
+        <!--<div *ngIf="direction.uuid === '23ecdf3e-2622-4cab-a80b-982b22aba59f'" class="space-y-5">
             <div class="block p-5 w-ful bg-white rounded-lg shadow-md border-l-4 border-blue-800 space-y-2">
                 <div>
                     <h5 class="text-lg font-bold text-gray-900">Impuesto predial</h5>
@@ -40,6 +47,6 @@
                     <i class="fa-solid fa-chevron-right"></i>
                 </a>
             </div>
-        </div>
+        </div>-->
     </div>
 </ng-container>
