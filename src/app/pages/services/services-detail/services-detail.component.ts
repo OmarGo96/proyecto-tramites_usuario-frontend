@@ -8,6 +8,10 @@ import {MatTableDataSource} from "@angular/material/table";
 import Swal from "sweetalert2";
 import {RequestService} from "../../../services/request.service";
 import {MatDialog} from "@angular/material/dialog";
+import {UploadModalComponent} from "../../../layouts/modals/upload-modal/upload-modal.component";
+import {
+    ValidateBeforeRenewModalComponent
+} from "../../../layouts/modals/licenses/validate-before-renew-modal/validate-before-renew-modal.component";
 
 
 @Component({
@@ -35,7 +39,7 @@ export class ServicesDetailComponent implements OnInit {
         private messagesService: MessageService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
-        public matDialog: MatDialog
+        public dialog: MatDialog
     ) {
     }
 
@@ -80,22 +84,37 @@ export class ServicesDetailComponent implements OnInit {
             confirmButtonText: 'Si, iniciar trámite'
         }).then((result) => {
             if (result.isConfirmed) {
-                this.loading = true;
-                this.requestsService.createRecords(data).subscribe({
-                    next: res => {
-                        this.loading = false;
-                        this.messagesService.printStatus(res.message, 'success')
-                        setTimeout(() => {
-                            this.router.navigate(['escritorio/solicitud', res.solicitud_id]);
-                        }, 2500);
-                    },
-                    error: err => {
-                        this.loading = false;
-                        this.messagesService.printStatusArrayNew(err.error.errors, 'error');
-                    }
-                });
+                if (uuid === 'a032833a-2a97-448a-9342-898930c2ba6b') {
+                    this.openLicenseValidatorModal();
+                } else {
+                    this.loading = true;
+                    this.requestsService.createRecords(data).subscribe({
+                        next: res => {
+                            this.loading = false;
+                            this.messagesService.printStatus(res.message, 'success')
+                            setTimeout(() => {
+                                this.router.navigate(['escritorio/solicitud', res.solicitud_id]);
+                            }, 2500);
+                        },
+                        error: err => {
+                            this.loading = false;
+                            this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+                        }
+                    });
+                }
             }
         })
+    }
+
+    openLicenseValidatorModal(): void {
+        const config = {
+            width: '50%',
+            data: {
+                title: false
+            },
+        }
+
+        const dialogRef = this.dialog.open(ValidateBeforeRenewModalComponent, config);
     }
 
     getRequirements() {

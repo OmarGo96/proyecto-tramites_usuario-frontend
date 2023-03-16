@@ -20,6 +20,7 @@ import { DocumentsModalComponent } from './modals/documents-modal/documents-moda
 import { SearcherModalComponent } from './modals/searcher-modal/searcher-modal.component';
 import { AddLicensesModalComponent } from './modals/licenses/add-licenses-modal/add-licenses-modal.component';
 import { RenewLicensesComponent } from './modals/licenses/renew-licenses/renew-licenses.component';
+import { ValidateBeforeRenewModalComponent } from './modals/licenses/validate-before-renew-modal/validate-before-renew-modal.component';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { RenewLicensesComponent } from './modals/licenses/renew-licenses/renew-l
         DocumentsModalComponent,
         SearcherModalComponent,
         AddLicensesModalComponent,
-        RenewLicensesComponent
+        RenewLicensesComponent,
+        ValidateBeforeRenewModalComponent
     ],
     imports: [
         CommonModule,

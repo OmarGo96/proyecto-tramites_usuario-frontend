@@ -68,14 +68,14 @@ export const ROUTES = [
     },
     {
         path: '/escritorio/predial',
-        group: 'TRAMITES Y SERVICIOS',
+        group: 'PREDIAL',
         module: 'servicios',
         action: 'list',
         title: 'Impuesto Predial',
         icon: 'fa-building-flag',
         class: ''
     },
-    {
+    /*{
         path: '/escritorio/licencia-funcionamiento',
         group: 'TRAMITES Y SERVICIOS',
         module: 'servicios',
@@ -83,7 +83,7 @@ export const ROUTES = [
         title: 'Lic. de Funcionamiento ',
         icon: 'fa-users',
         class: ''
-    },
+    },*/
     {
         path: '/escritorio/documentos',
         group: 'DOCUMENTACIÓN',

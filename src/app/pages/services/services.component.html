@@ -13,7 +13,7 @@
                <h5 class="text-lg font-bold text-gray-900">{{ service.nombre }}</h5>
                <p class="text-sm text-gray-500">{{ service.descripcion | excerpt: 150 }}</p>
            </div>
-            <a mat-flat-button color="primary" *ngIf="service.uuid === 'b4a6905c-8889-4708-bfaf-590e6e86944c' || service.uuid === 'a032833a-2a97-448a-9342-898930c2ba6b'; else tramite" [routerLink]=" service.uuid === 'b4a6905c-8889-4708-bfaf-590e6e86944c' ? ['/escritorio/predial'] : ['/escritorio/licencia-funcionamiento']" class="rounded-md">
+            <a mat-flat-button color="primary" *ngIf="service.uuid === 'b4a6905c-8889-4708-bfaf-590e6e86944c'; else tramite" [routerLink]="['/escritorio/predial']" class="rounded-md">
                 Ver trámite
                 <i class="fa-solid fa-chevron-right"></i>
             </a>
