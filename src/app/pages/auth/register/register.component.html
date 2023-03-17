@@ -1,62 +1,86 @@
+<app-public-navbar></app-public-navbar>
 <div class="min-h-full flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full py-5">
-        <img class="mx-auto h-12 w-auto" src="assets/logo-horizontal-moneda.png">
-    </div>
-    <div class="max-w-xl w-full bg-white rounded-xl border border-gray-200 shadow-md p-8">
-        <div class="mb-5">
+    <div class="max-w-xl w-full bg-white rounded-2xl border border-gray-200 shadow-md p-8">
+        <div class="w-full mb-5">
+            <img class="mx-auto w-1/2" src="assets/logo-horizontal-moneda.png">
+            <p class="mt-2 text-center text-md text-gray-600">
+                Ingresa la información para crear tu cuenta
+            </p>
+        </div>
+        <!--<div class="mb-5">
             <h3 class="text-2xl font-bold text-gray-900">Crea tu cuenta</h3>
             <p class="text-sm text-gray-600">Ingresa los siguientes datos</p>
-        </div>
+        </div>-->
 
         <form [formGroup]="registerForm" (submit)="onRegister()">
-            <div class="grid grid-cols-2 gap-3">
+
+            <div>
+                <mat-label class="block text-sm font-medium text-slate-700">Nombre(s)</mat-label>
                 <mat-form-field appearance="outline">
-                    <mat-label>Nombre(s)</mat-label>
                     <input matInput formControlName="nombre" type="text">
                 </mat-form-field>
+            </div>
+            <div>
+                <mat-label class="block text-sm font-medium text-slate-700">Apellido(s)</mat-label>
                 <mat-form-field appearance="outline">
-                    <mat-label>Apellido(s)</mat-label>
                     <input matInput formControlName="apellidos" type="text">
                 </mat-form-field>
             </div>
 
-            <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Correo electronico</mat-label>
-                <input matInput formControlName="email" type="email">
-            </mat-form-field>
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <mat-label class="block text-sm font-medium text-slate-700">Correo electronico</mat-label>
+                    <mat-form-field appearance="outline" class="w-full">
+                        <input matInput formControlName="email" type="email">
+                    </mat-form-field>
+                </div>
 
-            <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Confirmar correo electronico</mat-label>
-                <input matInput formControlName="re_email" type="email">
-            </mat-form-field>
+                <div>
+                    <mat-label class="block text-sm font-medium text-slate-700">Confirmar correo electronico</mat-label>
+                    <mat-form-field appearance="outline" class="w-full">
+                        <input matInput formControlName="re_email" type="email">
+                    </mat-form-field>
+                </div>
+            </div>
+
+
 
             <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <mat-label class="block text-sm font-medium text-slate-700">Teléfono</mat-label>
+                    <mat-form-field appearance="outline" class="w-full">
+                        <input matInput formControlName="telefono" type="text">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-label class="block text-sm font-medium text-slate-700">RFC</mat-label>
+                    <mat-form-field appearance="outline" class="w-full">
+                        <input matInput formControlName="rfc" type="text">
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div>
+                <mat-label class="block text-sm font-medium text-slate-700">Rango de Edad</mat-label>
                 <mat-form-field appearance="outline" class="w-full">
-                    <mat-label>Teléfono</mat-label>
-                    <input matInput formControlName="telefono" type="text">
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="w-full">
-                    <mat-label>RFC</mat-label>
-                    <input matInput formControlName="rfc" type="text">
+                    <mat-select formControlName="edad">
+                        <mat-option value="1">18 - 29 años</mat-option>
+                        <mat-option value="2">30 - 59 años</mat-option>
+                        <mat-option value="3">60 o más</mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
 
-            <mat-form-field appearance="outline" class="w-full">
-                <mat-label>Rango de Edad</mat-label>
-                <mat-select formControlName="edad">
-                    <mat-option value="1">18 - 29 años</mat-option>
-                    <mat-option value="2">30 - 59 años</mat-option>
-                    <mat-option value="3">60 o más</mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <div class="grid grid-cols-2 gap-3">
+            <div>
+                <mat-label class="block text-sm font-medium text-slate-700">Contraseña</mat-label>
                 <mat-form-field appearance="outline" class="w-full">
-                    <mat-label>Contraseña</mat-label>
                     <input matInput formControlName="password" type="password">
                 </mat-form-field>
+            </div>
+
+            <div>
+                <mat-label class="block text-sm font-medium text-slate-700">Confirmar contraseña</mat-label>
                 <mat-form-field appearance="outline" class="w-full">
-                    <mat-label>Confirmar contraseña</mat-label>
                     <input matInput formControlName="re_password" type="password">
                 </mat-form-field>
             </div>

@@ -33,6 +33,24 @@ body { margin: 0; }
 }
 /* End SweetAlert2 Custom */
 
+/* Custom Input Styling */
+.mat-form-field{
+    @apply w-full;
+}
+.mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.5em 0 1em 0;
+}
+
+.mat-form-field-wrapper {
+    padding-bottom: 1em;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-prefix,
+.mat-form-field-appearance-outline .mat-form-field-suffix {
+    top: 0em !important;
+}
+/* End Custom Input Styling*/
+
 /* Primary Button Styling */
 
 .mat-button.mat-primary,
@@ -70,3 +88,10 @@ body { margin: 0; }
 }
 
 /* End Sidebar */
+
+/* MatDialog Custom */
+.mat-dialog-container{
+    font-family: 'Inter var' !important;
+    border-radius: 0.8rem !important;
+}
+/* End MatDialog Custom */

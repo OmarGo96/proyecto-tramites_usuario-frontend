@@ -72,8 +72,8 @@ export class ServicesDetailComponent implements OnInit {
     }
 
     createRequest(uuid: any) {
-        let data = {'servicio_uuid': uuid};
         let servicioUuid = uuid;
+        let data = {'servicio_uuid': servicioUuid};
 
         Swal.fire({
             title: '¿Estás seguro de iniciar este trámite?',
@@ -84,8 +84,8 @@ export class ServicesDetailComponent implements OnInit {
             confirmButtonText: 'Si, iniciar trámite'
         }).then((result) => {
             if (result.isConfirmed) {
-                if (uuid === 'a032833a-2a97-448a-9342-898930c2ba6b') {
-                    this.openLicenseValidatorModal();
+                if (servicioUuid === 'a032833a-2a97-448a-9342-898930c2ba6b') {
+                    this.openLicenseValidatorModal(servicioUuid);
                 } else {
                     this.loading = true;
                     this.requestsService.createRecords(data).subscribe({
@@ -106,15 +106,15 @@ export class ServicesDetailComponent implements OnInit {
         })
     }
 
-    openLicenseValidatorModal(): void {
+    openLicenseValidatorModal(serviceUuid: any): void {
         const config = {
-            width: '50%',
             data: {
-                title: false
-            },
-        }
+                serviceUuid
+            }
+        };
 
-        const dialogRef = this.dialog.open(ValidateBeforeRenewModalComponent, config);
+        this.dialog.open(ValidateBeforeRenewModalComponent, config);
+
     }
 
     getRequirements() {

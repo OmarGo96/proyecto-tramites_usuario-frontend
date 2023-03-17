@@ -21,6 +21,7 @@ import { SearcherModalComponent } from './modals/searcher-modal/searcher-modal.c
 import { AddLicensesModalComponent } from './modals/licenses/add-licenses-modal/add-licenses-modal.component';
 import { RenewLicensesComponent } from './modals/licenses/renew-licenses/renew-licenses.component';
 import { ValidateBeforeRenewModalComponent } from './modals/licenses/validate-before-renew-modal/validate-before-renew-modal.component';
+import { PublicNavbarComponent } from './public/public-navbar/public-navbar.component';
 
 @NgModule({
     declarations: [
@@ -39,7 +40,8 @@ import { ValidateBeforeRenewModalComponent } from './modals/licenses/validate-be
         SearcherModalComponent,
         AddLicensesModalComponent,
         RenewLicensesComponent,
-        ValidateBeforeRenewModalComponent
+        ValidateBeforeRenewModalComponent,
+        PublicNavbarComponent
     ],
     imports: [
         CommonModule,
@@ -49,7 +51,9 @@ import { ValidateBeforeRenewModalComponent } from './modals/licenses/validate-be
         ReactiveFormsModule
     ],
     exports: [
-        ExcerptPipe
+        ExcerptPipe,
+        NavbarComponent,
+        PublicNavbarComponent
     ],
 })
 export class LayoutsModule {

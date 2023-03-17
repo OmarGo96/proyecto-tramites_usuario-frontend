@@ -1,1 +1,33 @@
-<p>validate-before-renew-modal works!</p>
+<mat-dialog-content>
+    <h3 class="text-lg leading-6 font-medium text-gray-900 mb-3">Validar Licencia Funcionamiento</h3>
+
+    <form [formGroup]="licenceForm" (ngSubmit)="validateLicense()">
+
+        <div>
+            <mat-label class="block text-sm font-medium text-slate-700">Número de Licencia</mat-label>
+            <mat-form-field appearance="outline" class="w-full">
+
+                <input matInput type="text" formControlName="licencia">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-label class="block text-sm font-medium text-slate-700">Folio de Renovación</mat-label>
+            <mat-form-field appearance="outline" class="w-full">
+
+                <input matInput type="text" formControlName="folioRenovacion">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-label class="block text-sm font-medium text-slate-700">Ultimo año de pago</mat-label>
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-select formControlName="ultimoAnoRenovacion">
+                    <mat-option *ngFor="let year of validYears" [value]="year">{{year}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <button type="submit" mat-flat-button color="primary" class="rounded-md w-full">
+            Agregar
+        </button>
+    </form>
+</mat-dialog-content>

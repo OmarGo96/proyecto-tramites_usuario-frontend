@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
 import {CommonModule} from '@angular/common';
-import {HomeComponent} from './home/home.component';
 import {MaterialModule} from "../material/material.module";
 import {PublicComponent} from './public/public.component';
 import {DependenciesComponent} from './dependencies/dependencies.component';
@@ -34,7 +33,6 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [
-        HomeComponent,
         PublicComponent,
         DependenciesComponent,
         ServicesComponent,

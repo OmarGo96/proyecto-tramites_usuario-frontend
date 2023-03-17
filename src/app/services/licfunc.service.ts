@@ -38,4 +38,8 @@ export class LicfuncService {
     public realizarPago(data: any): Observable <any> {
         return this.httpClient.post(`${this.urlApi}/licencia-pago-en-linea`, data, { headers: this.headers });
     }
+
+    public validarLicencia(data: any): Observable <any> {
+        return this.httpClient.post(`${this.urlApi}/licencia-funcionamiento/check`, data, { headers: this.headers });
+    }
 }

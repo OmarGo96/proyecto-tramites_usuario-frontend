@@ -1,42 +1,41 @@
-<div class="min-h-full flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full bg-white rounded-xl border border-gray-200 shadow-md p-8 space-y-5">
+<app-public-navbar></app-public-navbar>
+<div class="flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full bg-white mt-28 rounded-2xl border border-gray-200 p-8 space-y-5">
         <div class="max-w-md w-full">
             <img class="mx-auto w-2/3" src="assets/logo-horizontal-moneda.png">
             <p class="mt-2 text-center text-md text-gray-600">
                 Bienvenido, ingresa tus credenciales
             </p>
         </div>
-        <form [formGroup]="loginForm" (submit)="onLogin()" class="space-y-4">
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
             <div>
-                <input id="email-address" formControlName="email" type="email" placeholder="Correo electrónico"
-                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+                <mat-label>Correo electrónico</mat-label>
+                <mat-form-field appearance="outline" class="w-full">
+                    <input matInput id="email" type="email" formControlName="email">
+                    <mat-error *ngIf="loginForm.get('email').hasError('required')">
+                        El correo electrónico es requerido
+                    </mat-error>
+                    <mat-error *ngIf="loginForm.get('email').hasError('email')">
+                        Ingresa un correo electrónico válido
+                    </mat-error>
+                </mat-form-field>
             </div>
             <div>
-                <input id="password" formControlName="password" type="password" placeholder="Contraseña"
-                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5">
+                <mat-label>Contraseña</mat-label>
+                <mat-form-field appearance="outline" class="w-full">
+                    <input
+                        id="password"
+                        matInput
+                        type="password"
+                        formControlName="password">
+                </mat-form-field>
             </div>
-            <div class="flex items-start">
-                <a [routerLink]="['/restaurar-contraseña']" class="ml-auto text-sm font-medium text-blue-700 hover:underline">
-                    ¿Olvidaste tu contraseña?
-                </a>
-            </div>
-            <button type="submit" mat-flat-button color="primary"
-                    class="w-full rounded-md">
-                Iniciar Sesión
+            <button mat-flat-button color="primary" type="submit" class="w-full text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                Iniciar sesión
             </button>
-            <div class="text-sm font-medium text-gray-500 mb-0">
-                ¿No te has registrado?
-                <a [routerLink]="['/registrarse']" class="text-blue-700 hover:underline">
-                    Crea tu cuenta
-                </a>
-            </div>
-            <div class="text-sm text-gray-500">
-                <a [routerLink]="['/reenviar-link-activacion']" class="ml-auto text-sm font-medium text-blue-700 hover:underline">
-                    Reenviar link de activación
-                </a>
-            </div>
         </form>
     </div>
+    <p class="text-gray-500 mt-3">@ {{ currentYear }}. H. Ayuntamiento de Solidaridad</p>
 </div>
 
 

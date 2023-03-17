@@ -175,6 +175,26 @@ export class MessageService {
         return this.deletePopOup;
     }
 
+    errorAlert(messages: any) {
+        let msg;
+        messages.forEach((m: any) => {
+            msg = m.message;
+        });
+
+        Swal.fire({
+            title: 'Ups, algo salio mal',
+            text: msg,
+            icon: 'error',
+            confirmButtonText: 'Ok',
+            allowOutsideClick: false,
+            customClass: {
+                confirmButton: 'text-white bg-red-500 rounded-lg px-3 py-2 text-center',
+            },
+            buttonsStyling: false,
+            heightAuto: false
+        });
+    }
+
     // Función para mostrar mensaje de cancelación de acción
     dismissDelete() {
         this.deletePopOup = Swal.fire({
