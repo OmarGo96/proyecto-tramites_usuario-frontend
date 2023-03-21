@@ -56,7 +56,7 @@ export class ValidateBeforeRenewModalComponent implements OnInit {
             error: err => {
                 console.log(err);
                 this.spinner.hide();
-                this.messagesService.errorAlert(err.error.message);
+                this.messagesService.errorAlert(err.error.errors);
             }
         })
     }
