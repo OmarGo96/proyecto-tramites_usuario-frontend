@@ -3,6 +3,7 @@ import {MessageService} from "../../../services/messages.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RequestService} from "../../../services/request.service";
 import {MatTableDataSource} from "@angular/material/table";
+import {RequestsStatus} from "../../../const/status";
 
 import {
     RequestHistoryModalComponent
@@ -41,6 +42,7 @@ export class RequestsDetailComponent implements OnInit {
     public saving = false;
     public sending = false;
     public reUpload = false;
+    public statuses = RequestsStatus;
 
     constructor(
         private requestsService: RequestService,
@@ -85,8 +87,10 @@ export class RequestsDetailComponent implements OnInit {
                 this.request = res.solicitud;
                 console.log(this.request);
                 this.requeriments = res.requisitos;
-                this.reqWithDocuments = res.requisitos.filter((req: any) => req.Requisito.Documento);
+
+                this.reqWithDocuments = res.requisitos.filter((req: any) => req.obligatorio === 1 && req.Requisito.Documento);
                 this.reqMandatory = res.requisitos.filter((req: any) => req.obligatorio === 1);
+
                 this.dataSource = new MatTableDataSource(res.requisitos);
                 this.initSolicitudForm();
                 this.getHistory(res.solicitud.id);
@@ -188,10 +192,7 @@ export class RequestsDetailComponent implements OnInit {
 
     selectDocument(requisitoId: any): void {
         const config = {
-            width: '100%',
-            data: {
-                title: ''
-            },
+            width: '100%'
         }
 
         const dialogRef = this.dialog.open(DocumentsModalComponent, config);
@@ -292,10 +293,10 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
-    reUploadDocument(requestId: any) {
+    reUploadDocument(reqId: any) {
         this.messagesService.confirmDelete('¿Estás seguro de eliminar este archivo?').then((result: any) => {
             if (result.isConfirmed) {
-                this.requestId = requestId;
+                this.requestId = reqId;
                 this.reUpload = true;
             }
         });
