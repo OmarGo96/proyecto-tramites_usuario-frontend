@@ -25,6 +25,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatBadgeModule} from "@angular/material/badge";
 import {MatListModule} from "@angular/material/list";
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
     declarations: [],
@@ -55,7 +56,8 @@ import {MatListModule} from "@angular/material/list";
         MatCheckboxModule,
         MatStepperModule,
         MatBadgeModule,
-        MatListModule
+        MatListModule,
+        MatTabsModule
     ],
     exports: [
         MatToolbarModule,
@@ -83,7 +85,8 @@ import {MatListModule} from "@angular/material/list";
         MatCheckboxModule,
         MatStepperModule,
         MatBadgeModule,
-        MatListModule
+        MatListModule,
+        MatTabsModule
     ],
     providers: [
         MatDatepickerModule,

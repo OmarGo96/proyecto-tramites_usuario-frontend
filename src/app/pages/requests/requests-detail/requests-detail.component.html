@@ -1,26 +1,189 @@
-<div *ngIf="request">
-    <div class="lg:flex lg:items-center lg:justify-between">
-        <div class="flex-1 min-w-0">
-            <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Trámite
-                de: {{ request.Servicio.nombre }}</h2>
-            <p class="text-sm text-gray-500">Se creo el: <b>{{ request.fecha_alta | date: 'longDate': 'UTC' }}</b></p>
+<div class="lg:px-5 lg:py-5">
+    <div class="flex flex-col xl:flex-row">
+        <div class="flex flex-col w-full p-6 space-y-5">
+            <div class="flex items-center justify-between w-full">
+                <div>
+                    <div class="text-3xl font-semibold tracking-tight leading-8">Trámite
+                        de: {{ request.Servicio.nombre }}</div>
+                    <div class="font-medium tracking-tight text-slate-500">
+                        Se creo el: <b>{{ request.fecha_alta | date: 'longDate' }}</b>
+                    </div>
+                </div>
+            </div>
+
+            <mat-tab-group animationDuration="0ms">
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fa-solid fa-folder-open"></i>&nbsp;Información y Requisitos
+                    </ng-template>
+
+                    <div class="overflow-hidden bg-white mt-10 rounded-2xl border">
+
+                        <ol class="px-4 py-5 sm:px-6 items-center w-full space-y-4 sm:flex sm:space-x-8 sm:space-y-0">
+                            <li class="flex items-center text-blue-600 dark:text-blue-500 space-x-2.5">
+                                <span class="flex items-center justify-center w-8 h-8 border border-blue-600 rounded-full shrink-0">
+                                    1
+                                </span>
+                                <span>
+                                    <p class="text-sm">Adjuntar requisitos</p>
+                                </span>
+                            </li>
+                            <li class="flex items-center text-gray-300 space-x-2.5">
+                                <span class="flex items-center justify-center w-8 h-8 border border-gray-300 rounded-full shrink-0">
+                                    2
+                                </span>
+                                <span>
+                                    <p class="text-sm">Validación de pago</p>
+                                </span>
+                            </li>
+                            <li class="flex items-center text-gray-300 space-x-2.5">
+                                <span class="flex items-center justify-center w-8 h-8 border border-gray-300 rounded-full shrink-0">
+                                    3
+                                </span>
+                                <span>
+                                    <p class="text-sm">Descargar archivo</p>
+                                </span>
+                            </li>
+                        </ol>
+
+                        <div class="border-t border-gray-200">
+                            <dl class="text-gray-900">
+                                <div class="flex flex-col px-5 pt-5" *ngFor="let requeriment of requeriments">
+                                    <dt class="mb-1 ">
+                                        {{ requeriment.Requisito.nombre }}
+                                    </dt>
+                                    <dd class="font-medium text-gray-500">
+                                        <i class="block m-auto text-emerald-600 fa-solid fa-circle-check fa-2x"
+                                           *ngIf="requeriment.Requisito.Documento && requeriment.Requisito.Documento.estatus === 1">
+                                        </i>
+                                        <div class="flex space-x-2" *ngIf="requestId !== requeriment.Requisito.id">
+                                            <i class="text-slate-400 fa-solid fa-clock fa-2x"
+                                               *ngIf="requeriment.Requisito.Documento && requeriment.Requisito.Documento.estatus === 0">
+                                            </i>
+                                            <button mat-stroked-button color="accent" class="px-3 py-2 text-xs font-medium rounded-md"
+                                               (click)="reUploadDocument(requeriment.Requisito.id)"
+                                               *ngIf="requeriment.Requisito.Documento && requeriment.Requisito.Documento.estatus === 0">
+                                                Adjuntar nuevamente
+                                            </button>
+                                            <button mat-stroked-button color="primary" class="px-3 py-2 text-xs font-medium rounded-md"
+                                                    (click)="openDocument(requeriment.Requisito.Documento.Documentacion.id)"
+                                                    *ngIf="requeriment.Requisito.Documento && requestId !== requeriment.Requisito.id">
+                                                Ver adjunto
+                                            </button>
+                                        </div>
+                                        <button mat-stroked-button color="primary"
+                                                (click)="reSelectDocumentToUpdate(requeriment.Requisito.id, requeriment.Requisito.Documento.id)"
+                                                class="px-3 py-2 text-xs font-medium rounded-md" *ngIf="reUpload && requestId === requeriment.Requisito.id">
+                                            Adjuntar nuevamente
+                                        </button>
+                                        <div class="flex flex-1">
+                                            <button mat-flat-button color="primary" (click)="selectDocument(requeriment.Requisito.id)"
+                                                    class="px-3 py-2 text-xs font-medium rounded-md" *ngIf="!requeriment.Requisito.Documento">
+                                                Examinar archivos
+                                            </button>
+
+                                            <button mat-stroked-button color="primary" class="px-3 py-2 text-xs font-medium rounded-md"
+                                                    (click)="reSelectDocumentToUpdate(requeriment.Requisito.id, requeriment.Requisito.Documento.id)"
+                                                    *ngIf="requeriment.Requisito.Documento && requeriment.Requisito.Documento.estatus === -1">
+                                                Adjuntar nuevamente
+                                            </button>
+
+                                        </div>
+                                    </dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fa-solid fa-envelope"></i>&nbsp;Mensajes
+                    </ng-template>
+                    <div class="overflow-hidden bg-white mt-10 rounded-2xl border">
+                        <div class="px-4 py-5 sm:px-6">
+                            <div class="mb-5">
+                                <h3 class="text-lg font-medium leading-6 text-gray-900">Mensajes al contribuyente</h3>
+                                <p class="mt-1 max-w-2xl text-sm text-gray-500">Historial de mensajes enviado al contribuyente</p>
+                            </div>
+                            <div class="flex flex-col text-center p-6 space-y-4" *ngIf="messages && messages.length <= 0">
+                                <i class="fa-solid fa-message fa-4x mx-auto text-gray-300"></i>
+                                <p class="font-medium text-lg text-gray-400">Aun no hay mensajes para el contribuyente</p>
+                            </div>
+
+                            <ol class="relative border-l border-gray-200 dark:border-gray-700" *ngIf="messages">
+                                <li class="mb-3 ml-4" *ngFor="let record of messages">
+                                    <div
+                                        class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white"></div>
+                                    <time
+                                        class="mb-1 text-xs font-normal leading-none text-gray-400">{{ record.fecha_alta | date: 'medium':'UTC' }}</time>
+                                    <p class="mb-4 text-md font-normal text-gray-500">{{ record.mensaje }}</p>
+                                </li>
+                            </ol>
+
+                            <!--<a (click)="seeDocument()" class="text-sm text-blue-500 underline hover:cursor-pointer"
+                               *ngIf="selectedFile">{{ selectedFile.name }}</a>-->
+                            <!--<p class="text-xs text-gray-400" *ngIf="!selectedFile">Tamaño de archivos maximo: 2MB</p>-->
+
+                            <!--<form [formGroup]="messageForm" (ngSubmit)="createMessage(selectedFile)">
+                                <mat-form-field appearance="outline" class="w-full">
+                                    <mat-label>Mensaje para el contribuyente</mat-label>
+                                    <textarea matInput formControlName="mensaje"></textarea>
+                                </mat-form-field>
+
+                                <div class="flex justify-between">
+                                    <button type="submit" mat-flat-button color="primary" class="rounded-md">
+                                        Enviar mensaje
+                                    </button>
+                                    &lt;!&ndash;<input type="file" class="hidden" #file (change)="getFile($event)" accept="application/pdf">
+                                    <button type="button" (click)="file.click()" mat-stroked-button color="primary" class="rounded-md">
+                                        Adjuntar documento
+                                    </button>&ndash;&gt;
+                                </div>
+                            </form>-->
+                        </div>
+                    </div>
+                </mat-tab>
+
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <i class="fa-solid fa-clock-rotate-left"></i>&nbsp;Historial de Cambios
+                    </ng-template>
+
+                    <div class="overflow-hidden bg-white mt-10 rounded-2xl border">
+                        <div class="px-4 py-5 sm:px-6">
+                            <div class="mb-5">
+                                <h3 class="text-lg font-medium leading-6 text-gray-900">Historial de cambios</h3>
+                                <p class="mt-1 max-w-2xl text-sm text-gray-500">Cambios durante el proceso del trámite de la solicitud</p>
+                            </div>
+                            <ol class="relative border-l border-gray-200 dark:border-gray-700">
+                                <li class="mb-3 ml-4" *ngFor="let history of records">
+                                    <div
+                                        class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white"></div>
+                                    <time
+                                        class="mb-1 text-xs font-normal leading-none text-gray-400">{{ history.fecha_alta | date: 'medium':'UTC' }}</time>
+                                    <p class="mb-4 text-md font-normal text-gray-500">{{ history.comentario }}</p>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
         </div>
     </div>
+</div>
+
+<div *ngIf="request">
 
     <div class="grid grid-cols-3 items-start gap-5 mt-5" *ngIf="request">
         <div class="col-span-2 bg-white shadow overflow-hidden rounded-xl">
-            <div class="p-5 flex justify-between">
-                <div>
-                    <h3 class="text-lg font-medium text-gray-900">Requisitos del trámite</h3>
-                    <p class="max-w-2xl text-sm text-gray-500">
-                        Adjunta los archivos de los requisitos</p>
-                </div>
-            </div>
-            <table *ngIf="request.estatus_solicitud_id === 1 || request.estatus_solicitud_id === 5; else sentRequest" mat-table [dataSource]="dataSource" multiTemplateDataRows class="w-full">
+            <table
+                   mat-table [dataSource]="dataSource" multiTemplateDataRows class="w-full">
                 <ng-container matColumnDef="requisito">
                     <th mat-header-cell *matHeaderCellDef class="w-3/5"> Requisito</th>
                     <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.obligatorio === 1" class="text-red-500 bold">*</span> {{ element.Requisito.nombre }}</td>
+                        <span *ngIf="element.obligatorio === 1"
+                              class="text-red-500 bold">*</span> {{ element.Requisito.nombre }}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="seleccionar">
@@ -34,7 +197,8 @@
                             <i class="block m-auto text-slate-400 fa-solid fa-clock fa-2x"
                                *ngIf="element.Requisito.Documento && element.Requisito.Documento.estatus === 0">
                             </i>
-                            <a mat-button class="block m-auto" color="warn" (click)="reUploadDocument(element.Requisito.id)"
+                            <a mat-button class="block m-auto" color="warn"
+                               (click)="reUploadDocument(element.Requisito.id)"
                                *ngIf="element.Requisito.Documento && element.Requisito.Documento.estatus === 0">
                                 Resubir
                             </a>
@@ -63,13 +227,20 @@
                             </button>
                         </div>
 
+                        <button mat-stroked-button color="primary"
+                           (click)="openDocument(element.Requisito.Documento.Documentacion.id)"
+                           *ngIf="element.Requisito.Documento && requestId !== element.Requisito.id">
+                            Ver adjunto
+                        </button>
+
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="archivo">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let element">
-                        <a mat-button color="primary" (click)="openDocument(element.Requisito.Documento.Documentacion.id)"
+                        <a mat-button color="primary"
+                           (click)="openDocument(element.Requisito.Documento.Documentacion.id)"
                            *ngIf="element.Requisito.Documento && requestId !== element.Requisito.id">
                             Ver adjunto
                         </a>
@@ -89,7 +260,8 @@
                 </div>
             </ng-template>
 
-            <form [formGroup]="solicitudForm" class="p-4" *ngIf="request.estatus_solicitud_id === 1 || request.estatus_solicitud_id === 5">
+            <form [formGroup]="solicitudForm" class="p-4"
+                  *ngIf="request.estatus_solicitud_id === 1 || request.estatus_solicitud_id === 5">
                 <mat-form-field appearance="outline" class="w-full text-xs">
                     <mat-label>Escribe un comentario</mat-label>
                     <textarea matInput formControlName="comentario" rows="4"></textarea>
@@ -98,62 +270,19 @@
                 <div class="space-x-3">
                     <button mat-stroked-button (click)="saveRequest('1')" class="rounded-md"
                             *ngIf="request.estatus_solicitud_id === 1">
-                        <mat-spinner class="inline w-4 h-4 mr-7" diameter="20" color="accent" *ngIf="saving"></mat-spinner>
+                        <mat-spinner class="inline w-4 h-4 mr-7" diameter="20" color="accent"
+                                     *ngIf="saving"></mat-spinner>
                         Guardar y enviar despues
                     </button>
 
                     <button mat-flat-button (click)="saveRequest('2')" class="rounded-md" color="primary"
                             [disabled]="(reqWithDocuments.length !== reqMandatory.length) || (request.estatus_solicitud_id !== 1 && request.estatus_solicitud_id !== 5 && request.estatus_solicitud_id !== 12)">
-                        <mat-spinner class="inline w-4 h-4 mr-7" diameter="20" color="accent" *ngIf="sending"></mat-spinner>
+                        <mat-spinner class="inline w-4 h-4 mr-7" diameter="20" color="accent"
+                                     *ngIf="sending"></mat-spinner>
                         Finalizar y enviar
                     </button>
                 </div>
             </form>
-        </div>
-
-        <div class="space-y-5">
-            <div class="p-8 bg-white shadow rounded-xl" *ngIf="request.estatus_solicitud_id === 10">
-                <h3 class="text-lg font-medium text-gray-900">Adjuntar comprobante de pago</h3>
-                <ngx-dropzone (change)="onSelect($event)" class="my-3" [multiple]="false" accept="application/pdf">
-                    <ngx-dropzone-label class="ring-amber-600" autofocus>
-                        <svg class="mx-auto h-12 w-12 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                        </svg>
-                        Da click aquí o arrastra el documento
-                        <p class="text-xs">Formato PDF no más de 5MB</p>
-                    </ngx-dropzone-label>
-
-                    <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
-                        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-                    </ngx-dropzone-preview>
-                </ngx-dropzone>
-            </div>
-            <div class="p-8 bg-white shadow rounded-xl">
-                <h3 class="text-lg font-medium text-gray-900">Historial del trámite</h3>
-                <ol class="relative border-l border-gray-200">
-                    <li class="mb-3 ml-4" *ngFor="let record of records">
-                        <div class="absolute w-3 h-3 rounded-full mt-1.5 -left-1.5 border border-white" style="background-color: {{ record.Estatus.color }}"></div>
-                        <time class="mb-1 text-xs font-normal leading-none text-gray-400">{{ record.fecha_alta | date: 'medium':'UTC' }}</time>
-                        <h3 class="text-sm font-semibold text-gray-700">{{ record.comentario }}</h3>
-                    </li>
-                </ol>
-            </div>
-
-            <div class="p-8 bg-white shadow rounded-xl">
-                <h3 class="text-lg font-medium text-gray-900">Mensajes recibidos</h3>
-                <p *ngIf="messages && messages.length <= 0" class="text-xs text-gray-500" role="alert">
-                    No se encontraron mensajes para esta solicitud...
-                </p>
-                <ol class="relative border-l border-gray-200">
-
-                    <li class="mb-3 ml-4" *ngFor="let message of messages">
-                        <div class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -left-1.5 border border-white"></div>
-                        <time class="mb-1 text-xs font-normal leading-none text-gray-400 ">{{ message.fecha_alta | date: 'medium':'UTC'}}</time>
-                        <p class="mb-4 text-base font-normal text-gray-500">{{ message.mensaje }}</p>
-                    </li>
-                </ol>
-            </div>
-
         </div>
     </div>
 </div>
