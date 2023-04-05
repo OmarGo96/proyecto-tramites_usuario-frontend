@@ -1,43 +1,41 @@
-<div class="space-y-10">
-    <div class="lg:flex lg:items-center lg:justify-between">
-        <div class="flex-1 min-w-0">
-            <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Mis documentos</h2>
-        </div>
-        <div class="mt-5 flex lg:mt-0 lg:ml-4">
-        <span class="sm:ml-3">
-          <button type="button" mat-flat-button color="primary" class="rounded-md" (click)="openUploadDialog()">
-            <i class="fa-solid fa-file-arrow-up"></i> Subir nuevo documento
-          </button>
-        </span>
-        </div>
-    </div>
+<div class="lg:px-5 lg:py-5">
+    <div class="flex flex-col xl:flex-row">
+        <div class="flex flex-col w-full p-6 space-y-10">
+            <div class="flex items-center justify-between w-full">
+                <div class="text-3xl font-semibold tracking-tight leading-8">Mis documentos</div>
 
-    <div class="grid grid-cols-5 gap-4 mt-3">
-        <div *ngFor="let document of documents"
-             class="relative w-full h-40 p-4 shadow rounded-2xl bg-white mx-auto">
-            <button class="absolute z-20 top-1.5 right-1.5 w-8 h-8" mat-icon-button [matMenuTriggerFor]="menu">
-                <i class="fa-solid fa-ellipsis-vertical fa-lg"></i>
-            </button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item class="text-red-500" (click)="deleteFile(document.id)">
-                    <i class="fa-solid fa-trash"></i>
-                    Eliminar archivo
+                <button type="button" mat-flat-button color="primary" class="rounded-md" (click)="openUploadDialog()">
+                    <i class="fa-solid fa-file-arrow-up"></i> Subir nuevo documento
                 </button>
-            </mat-menu>
-            <a (click)="openDocument(document.id)"
-               class="z-10 absolute inset-0 flex flex-col p-4 cursor-pointer">
-                <div class="aspect-[9/6]">
-                    <div class="flex items-center justify-center h-full text-slate-400">
-                        <!-- Icon -->
-                        <i class="fa-solid fa-file fa-3x"></i>
-                    </div>
+            </div>
+
+            <div class="grid grid-cols-5 gap-4 mt-3">
+                <div *ngFor="let document of documents"
+                     class="relative w-full h-40 p-4 shadow rounded-2xl bg-white mx-auto">
+                    <button class="absolute z-20 top-1.5 right-1.5 w-8 h-8" mat-icon-button [matMenuTriggerFor]="menu">
+                        <i class="fa-solid fa-ellipsis-vertical fa-lg"></i>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item class="text-red-500" (click)="deleteFile(document.id)">
+                            <i class="fa-solid fa-trash"></i>
+                            Eliminar archivo
+                        </button>
+                    </mat-menu>
+                    <a (click)="openDocument(document.id)"
+                       class="z-10 absolute inset-0 flex flex-col p-4 cursor-pointer">
+                        <div class="aspect-[9/6]">
+                            <div class="flex items-center justify-center h-full text-slate-400">
+                                <!-- Icon -->
+                                <i class="fa-solid fa-file fa-3x"></i>
+                            </div>
+                        </div>
+                        <div class="flex flex-col flex-auto justify-center text-center text-xs">
+                            <div class="truncate font-medium">{{ document.nombre_otro }}</div>
+                            <div class="text-slate-400 truncate font-normal" *ngIf="document.vigencia_final">Vigencia al {{ document.vigencia_final | date:'shortDate' }}</div>
+                        </div>
+                    </a>
                 </div>
-                <div class="flex flex-col flex-auto justify-center text-center text-xs">
-                    <div class="truncate font-medium">{{ document.nombre_otro }}</div>
-                    <div class="text-slate-400 truncate font-normal" *ngIf="document.vigencia_final">Vigencia al {{ document.vigencia_final | date:'shortDate' }}</div>
-                </div>
-            </a>
+            </div>
         </div>
     </div>
-
 </div>

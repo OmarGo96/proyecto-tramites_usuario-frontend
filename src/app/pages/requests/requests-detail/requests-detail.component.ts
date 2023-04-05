@@ -15,6 +15,7 @@ import {DocumentsService} from "../../../services/documents.service";
 import {FormBuilder, UntypedFormBuilder} from "@angular/forms";
 import {NgxSpinner, NgxSpinnerService} from "ngx-spinner";
 import {UploadModalComponent} from "../../../layouts/modals/upload-modal/upload-modal.component";
+import {PaymentDocs} from "../../../const/payment-docs";
 
 @Component({
     selector: 'app-requests-detail',
@@ -40,9 +41,11 @@ export class RequestsDetailComponent implements OnInit {
     /* Banderas */
     public loading = false;
     public saving = false;
-    public sending = false;
     public reUpload = false;
+
+    // Constants
     public statuses = RequestsStatus;
+    public paymentDocs = PaymentDocs;
 
     constructor(
         private requestsService: RequestService,
@@ -87,6 +90,16 @@ export class RequestsDetailComponent implements OnInit {
                 this.request = res.solicitud;
                 console.log(this.request);
                 this.requeriments = res.requisitos;
+
+                for (const doc of this.request.DocumentosPago) {
+                    this.paymentDocs.map(docu => {
+                       if (docu.id === doc.documento_pago){
+                           docu.doc = doc;
+                       }
+                    });
+                }
+
+                console.log(this.paymentDocs);
 
                 this.reqWithDocuments = res.requisitos.filter((req: any) => req.obligatorio === 1 && req.Requisito.Documento);
                 this.reqMandatory = res.requisitos.filter((req: any) => req.obligatorio === 1);
@@ -148,47 +161,26 @@ export class RequestsDetailComponent implements OnInit {
         })
     }
 
-    onSelect(event: any) {
-        if (this.files.length >= 1) {
-            this.messagesService.printStatus('Solo se puede adjuntar un documento a la vez', 'error');
-        } else {
-            this.files.push(...event.addedFiles);
-        }
-    }
-
-    onRemove(event: any) {
-        this.files.splice(this.files.indexOf(event), 1);
-    }
-
-    openHistoryDialog(requestId: any): void {
-        const config = {
-            width: '50%',
-            data: {
-                requestId
+    validatePayment(status: any){
+        this.spinner.show();
+        this.solicitudForm.controls.estatus_solicitud_id.setValue(status);
+        this.solicitudForm.controls.solicitud_id.setValue(this.request.id.toString());
+        const data = this.solicitudForm.value;
+        this.requestsService.updateRecord(data).subscribe({
+            next: res => {
+                this.spinner.hide();
+                this.messagesService.printStatus(res.message, 'success');
+                /*setTimeout(() => {
+                    this.router.navigate(['escritorio/solicitudes']);
+                }, 2500);*/
             },
-        }
-
-        const dialogRef = this.dialog.open(RequestHistoryModalComponent, config);
-
-        dialogRef.afterClosed().subscribe(res => {
-            console.log('The dialog was closed');
-        });
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
+        })
     }
 
-    openMessagesDialog(requestId: any): void {
-        const config = {
-            width: '50%',
-            data: {
-                requestId
-            },
-        }
-
-        const dialogRef = this.dialog.open(MessagesModalComponent, config);
-
-        dialogRef.afterClosed().subscribe(res => {
-            console.log('The dialog was closed');
-        });
-    }
 
     selectDocument(requisitoId: any): void {
         const config = {
@@ -200,6 +192,20 @@ export class RequestsDetailComponent implements OnInit {
         dialogRef.afterClosed().subscribe(document => {
             if (document) {
                 this.setDocument(document, requisitoId);
+            }
+        });
+    }
+
+    selectPaymentDocument(documentId: any): void {
+        const config = {
+            width: '100%'
+        }
+
+        const dialogRef = this.dialog.open(DocumentsModalComponent, config);
+
+        dialogRef.afterClosed().subscribe(document => {
+            if (document) {
+                this.setPaymentDocument(document, documentId);
             }
         });
     }
@@ -231,7 +237,25 @@ export class RequestsDetailComponent implements OnInit {
 
         this.documentsService.createDocumentoSolicitud(data).subscribe({
             next: res => {
+                this.getId();
+            },
+            error: err => {
                 this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
+        });
+    }
+
+    setPaymentDocument(document: any, documentId: any){
+        this.spinner.show();
+        const data = {
+            documentacion_id: document.id,
+            solicitud_id: this.request.id,
+            documento_pago: documentId
+        }
+
+        this.documentsService.createDocumentoPago(data).subscribe({
+            next: res => {
                 this.getId();
             },
             error: err => {

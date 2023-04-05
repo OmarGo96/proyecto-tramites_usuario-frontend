@@ -1,9 +1,117 @@
-<div class="lg:flex lg:items-center lg:justify-between" *ngIf="service">
-    <div class="flex-1 min-w-0">
-        <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">Información del trámite</h2>
-        <p>El trámite se encuentra disponible para realizarlo en línea</p>
-    </div>
-    <div class="mt-5 flex lg:mt-0 lg:ml-4">
+<div class="lg:px-5 lg:py-5">
+    <div class="flex flex-col xl:flex-row">
+        <div class="flex flex-col w-full p-6 space-y-10">
+            <div class="flex items-center justify-between w-full">
+                <div>
+                    <div class="text-3xl font-semibold tracking-tight leading-8">Información del trámite</div>
+                    <div class="font-medium tracking-tight text-slate-500">
+                        El trámite se encuentra disponible para realizarlo en línea
+                    </div>
+                </div>
+
+                <div class="mt-5 flex lg:mt-0 lg:ml-4 space-x-2">
+                    <button mat-flat-button color="primary" *ngIf="service.en_linea === 1" (click)="createRequest(service.uuid)"
+                            class="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium">
+                        <i class="fa-solid fa-briefcase"></i>&nbsp;Iniciar trámite
+                    </button>
+
+                    <button type="button" (click)="getDocument()"
+                            class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-slate-600 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <i class="fa-solid fa-file-arrow-down fa-1x text-white"></i>&nbsp;Ver documento de trámite
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-5 mt-5" *ngIf="service">
+                <div class="p-6 w-full space-y-3 bg-white rounded-lg shadow-md border-l-4 border-blue-800">
+                    <h5 class="text-2xl font-bold tracking-tight text-gray-900">{{ service.nombre }}</h5>
+
+                    <div>
+                        <h5 class="text-md font-bold text-gray-500">{{ service.Area.nombre }}</h5>
+                        <p class="text-sm text-gray-700">{{ service.descripcion }}</p>
+                    </div>
+
+                    <div>
+                        <h5 class="text-md font-bold text-gray-500">Correo Electrónico</h5>
+                        <p class="text-sm text-gray-700">{{ service.Area.email }}</p>
+                    </div>
+
+                    <div>
+                        <h5 class="text-md font-bold text-gray-500">Ubicación</h5>
+                        <p class="text-sm text-gray-700">{{ service.Area.ubicacion }}</p>
+                    </div>
+                </div>
+                <div class="p-6 w-full space-y-3 bg-white rounded-lg shadow-md border-l-4 border-blue-800">
+                    <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900">Información general</h5>
+
+                    <div>
+                        <h5 class="text-md font-bold text-gray-500">Costo</h5>
+                        <p class="mb-1 text-lg font-bold text-blue-800">{{ service.costo }}</p>
+                    </div>
+
+                    <div>
+                        <h5 class="text-md font-bold text-gray-500">Teléfono</h5>
+                        <p class="text-sm text-gray-700">{{ service.Area.telefono }}</p>
+                    </div>
+
+                    <div>
+                        <h5 class="text-md font-bold text-gray-500">Horario</h5>
+                        <p class="text-sm text-gray-700">{{ service.Area.horario }}</p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="grid grid-cols-1 gap-5 mt-5" *ngIf="service">
+                <div class="col-span-2 bg-white shadow overflow-hidden sm:rounded-lg">
+                    <div class="px-4 py-5 sm:px-6">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">Requisitos del trámite</h3>
+                        <p class="mt-1 max-w-2xl text-sm text-gray-500">Relación de requerimientos para el proceso de trámite</p>
+                    </div>
+                    <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="w-full">
+                        <ng-container matColumnDef="nombre">
+                            <th mat-header-cell *matHeaderCellDef class="w-3/5"> Nombre</th>
+                            <td mat-cell *matCellDef="let element"> {{ element.Requisito.nombre | excerpt:150 }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="original">
+                            <th mat-header-cell *matHeaderCellDef class="text-center">Original</th>
+                            <td mat-cell *matCellDef="let element" class="text-center">
+                                <i class="fa-solid fa-square-check fa-1x text-green-500" *ngIf="element.original"></i>
+                                <i class="fa-solid fa-square-xmark fa-1x text-red-500" *ngIf="!element.original"></i>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="copias">
+                            <th mat-header-cell *matHeaderCellDef class="text-center">No. Copias</th>
+                            <td mat-cell *matCellDef="let element" class="text-center">
+                                {{ element.no_copias }}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="complementario">
+                            <th mat-header-cell *matHeaderCellDef class="text-center">Complementario</th>
+                            <td mat-cell *matCellDef="let element" class="text-center">
+                                <i class="fa-solid fa-square-check fa-1x text-green-500" *ngIf="element.complementario"></i>
+                                <i class="fa-solid fa-square-xmark fa-1x text-red-500" *ngIf="!element.complementario"></i>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="obligatorio">
+                            <th mat-header-cell *matHeaderCellDef class="text-center">Obligatorio</th>
+                            <td mat-cell *matCellDef="let element" class="text-center">
+                                <i class="fa-solid fa-square-check fa-1x text-green-500" *ngIf="element.obligatorio"></i>
+                                <i class="fa-solid fa-square-xmark fa-1x text-red-500" *ngIf="!element.obligatorio"></i>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let element; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+            </div>
+            <div class="lg:flex lg:items-center lg:justify-between mt-5" *ngIf="service">
+                <div class="flex-1 min-w-0"></div>
+                <div class="mt-5 flex lg:mt-0 lg:ml-4">
         <span class="sm:ml-3">
           <button mat-flat-button color="primary" *ngIf="service.en_linea === 1" (click)="createRequest(service.uuid)"
                   class="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium">
@@ -11,119 +119,19 @@
           </button>
         </span>
 
-        <span class="sm:ml-3" *ngIf="service.Documento">
+                    <span class="sm:ml-3" *ngIf="service.Documento">
           <button type="button" (click)="getDocument()"
                   class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-slate-600 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 <i class="fa-solid fa-file-arrow-down fa-1x text-white"></i>&nbsp;Ver documento de trámite
           </button>
         </span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="grid grid-cols-2 gap-5 mt-5" *ngIf="service">
-    <div class="p-6 w-full space-y-3 bg-white rounded-lg shadow-md border-l-4 border-blue-800">
-        <h5 class="text-2xl font-bold tracking-tight text-gray-900">{{ service.nombre }}</h5>
 
-        <div>
-            <h5 class="text-md font-bold text-gray-500">{{ service.Area.nombre }}</h5>
-            <p class="text-sm text-gray-700">{{ service.descripcion }}</p>
-        </div>
 
-        <div>
-            <h5 class="text-md font-bold text-gray-500">Correo Electrónico</h5>
-            <p class="text-sm text-gray-700">{{ service.Area.email }}</p>
-        </div>
-
-        <div>
-            <h5 class="text-md font-bold text-gray-500">Ubicación</h5>
-            <p class="text-sm text-gray-700">{{ service.Area.ubicacion }}</p>
-        </div>
-    </div>
-    <div class="p-6 w-full space-y-3 bg-white rounded-lg shadow-md border-l-4 border-blue-800">
-        <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900">Información general</h5>
-
-        <div>
-            <h5 class="text-md font-bold text-gray-500">Costo</h5>
-            <p class="mb-1 text-lg font-bold text-blue-800">{{ service.costo }}</p>
-        </div>
-
-        <div>
-            <h5 class="text-md font-bold text-gray-500">Teléfono</h5>
-            <p class="text-sm text-gray-700">{{ service.Area.telefono }}</p>
-        </div>
-
-        <div>
-            <h5 class="text-md font-bold text-gray-500">Horario</h5>
-            <p class="text-sm text-gray-700">{{ service.Area.horario }}</p>
-        </div>
-
-    </div>
-</div>
-<div class="grid grid-cols-1 gap-5 mt-5" *ngIf="service">
-    <div class="col-span-2 bg-white shadow overflow-hidden sm:rounded-lg">
-        <div class="px-4 py-5 sm:px-6">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">Requisitos del trámite</h3>
-            <p class="mt-1 max-w-2xl text-sm text-gray-500">Relación de requerimientos para el proceso de trámite</p>
-        </div>
-        <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="w-full">
-            <ng-container matColumnDef="nombre">
-                <th mat-header-cell *matHeaderCellDef class="w-3/5"> Nombre</th>
-                <td mat-cell *matCellDef="let element"> {{ element.Requisito.nombre | excerpt:150 }} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="original">
-                <th mat-header-cell *matHeaderCellDef class="text-center">Original</th>
-                <td mat-cell *matCellDef="let element" class="text-center">
-                    <i class="fa-solid fa-square-check fa-1x text-green-500" *ngIf="element.original"></i>
-                    <i class="fa-solid fa-square-xmark fa-1x text-red-500" *ngIf="!element.original"></i>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="copias">
-                <th mat-header-cell *matHeaderCellDef class="text-center">No. Copias</th>
-                <td mat-cell *matCellDef="let element" class="text-center">
-                    {{ element.no_copias }}
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="complementario">
-                <th mat-header-cell *matHeaderCellDef class="text-center">Complementario</th>
-                <td mat-cell *matCellDef="let element" class="text-center">
-                    <i class="fa-solid fa-square-check fa-1x text-green-500" *ngIf="element.complementario"></i>
-                    <i class="fa-solid fa-square-xmark fa-1x text-red-500" *ngIf="!element.complementario"></i>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="obligatorio">
-                <th mat-header-cell *matHeaderCellDef class="text-center">Obligatorio</th>
-                <td mat-cell *matCellDef="let element" class="text-center">
-                    <i class="fa-solid fa-square-check fa-1x text-green-500" *ngIf="element.obligatorio"></i>
-                    <i class="fa-solid fa-square-xmark fa-1x text-red-500" *ngIf="!element.obligatorio"></i>
-                </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let element; columns: displayedColumns;"></tr>
-        </table>
-    </div>
-</div>
-<div class="lg:flex lg:items-center lg:justify-between mt-5" *ngIf="service">
-    <div class="flex-1 min-w-0"></div>
-    <div class="mt-5 flex lg:mt-0 lg:ml-4">
-        <span class="sm:ml-3">
-          <button mat-flat-button color="primary" *ngIf="service.en_linea === 1" (click)="createRequest(service.uuid)"
-                  class="inline-flex items-center px-4 py-2 rounded-md text-sm font-medium">
-                <i class="fa-solid fa-briefcase"></i>&nbsp;Iniciar trámite
-          </button>
-        </span>
-
-        <span class="sm:ml-3" *ngIf="service.Documento">
-          <button type="button" (click)="getDocument()"
-                  class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-slate-600 hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                <i class="fa-solid fa-file-arrow-down fa-1x text-white"></i>&nbsp;Ver documento de trámite
-          </button>
-        </span>
-    </div>
-</div>
 
 

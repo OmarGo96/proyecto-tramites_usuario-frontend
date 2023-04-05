@@ -74,6 +74,29 @@ body { margin: 0; }
 }
 /* End Primary Button Styling */
 
+/* Success Styling */
+
+.mat-button.mat-success,
+.mat-stroked-button.mat-success {
+    @apply text-teal-600;
+}
+.mat-button.mat-success:hover,
+.mat-stroked-button.mat-success:hover {
+    @apply bg-white;
+}
+
+.mat-raised-button.mat-success,
+.mat-flat-button.mat-success,
+.mat-fab.mat-success,
+.mat-mini-fab.mat-success {
+    @apply bg-teal-600 text-white;
+}
+
+.mat-icon-button.mat-success {
+    @apply text-teal-600;
+}
+/* End Success Styling */
+
 /* Navbar Custom */
 .bg-navbar {
     @apply bg-blue-800;
