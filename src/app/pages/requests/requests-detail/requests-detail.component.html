@@ -61,6 +61,7 @@
                             </li>
                         </ol>
 
+                        <!-- Adjuntar requisitos -->
                         <ng-container *ngIf="request.estatus_solicitud_id === 1 || request.estatus_solicitud_id === 2">
                             <div class="border-t border-gray-200">
                                 <dl class="pb-5 text-gray-900">
@@ -174,29 +175,30 @@
                                             <dd class="flex items-center justify-between items-center font-medium text-gray-500">
                                                 <div class="flex space-x-2">
                                                     <!-- Subir documentos por primera vez -->
-                                                    <button mat-flat-button color="primary"
+                                                    <button mat-flat-button color="primary" *ngIf="!doc.doc"
                                                             (click)="selectPaymentDocument(doc.id)"
                                                             class="px-3 py-2 text-xs font-medium rounded-md">
                                                         Examinar archivos
                                                     </button>
-                                                    <!-- Ver documento adjunto por contribuyente -->
-                                                    <button mat-stroked-button color="primary"
-                                                            class="px-3 py-2 text-xs font-medium rounded-md"
-                                                            *ngIf="doc.doc">
-                                                        Ver adjunto
-                                                    </button>
-                                                </div>
-                                                <!--<div class="space-x-2" >
-                                                        <span *ngIf="doc.doc && doc.doc.estatus === 0"
-                                                            class="bg-gray-200 text-gray-600 text-xs font-medium px-2.5 py-0.5 rounded">
+                                                    <span *ngIf="doc.doc && doc.doc['estatus'] === 0"
+                                                          class="bg-gray-200 text-gray-600 text-xs font-medium px-2.5 py-0.5 rounded">
                                                               <i class="fa-solid fa-clock fa-sm"></i>
-                                                            En revisión
+                                                            Enviado
                                                         </span>
-                                                    <span
-                                                        class="bg-green-200 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                                                    <span *ngIf="doc.doc && doc.doc['estatus'] === 1"
+                                                          class="bg-green-200 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
                                                             <i class="fa-solid fa-circle-check"></i>
                                                             Aceptado
                                                         </span>
+                                                    <!-- Ver documento adjunto por contribuyente -->
+                                                    <!--<button mat-stroked-button color="primary"
+                                                            class="px-3 py-2 text-xs font-medium rounded-md"
+                                                            *ngIf="doc.doc">
+                                                        Ver adjunto
+                                                    </button>-->
+                                                </div>
+                                                <!--<div class="space-x-2" >
+
                                                 </div>-->
                                             </dd>
                                         </div>
@@ -206,7 +208,7 @@
                                 </dl>
                             </div>
 
-                            <div class="px-4 pb-4 text-right" *ngIf="request.estatus_solicitud_id === 10">
+                            <div class="px-4 pb-4 text-right" *ngIf="request.estatus_solicitud_id === 10 && request.DocumentosPago.length === paymentDocs.length">
                                 <button mat-flat-button (click)="validatePayment('20')" class="rounded-md"
                                         color="success">
                                     Validar pago

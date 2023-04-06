@@ -61,7 +61,6 @@ export class RequestsDetailComponent implements OnInit {
 
     ngOnInit(): void {
         this.getId();
-
     }
 
     initSolicitudForm() {
@@ -88,7 +87,6 @@ export class RequestsDetailComponent implements OnInit {
         this.requestsService.getRecord(id).subscribe({
             next: res => {
                 this.request = res.solicitud;
-                console.log(this.request);
                 this.requeriments = res.requisitos;
 
                 for (const doc of this.request.DocumentosPago) {
@@ -98,8 +96,6 @@ export class RequestsDetailComponent implements OnInit {
                        }
                     });
                 }
-
-                console.log(this.paymentDocs);
 
                 this.reqWithDocuments = res.requisitos.filter((req: any) => req.obligatorio === 1 && req.Requisito.Documento);
                 this.reqMandatory = res.requisitos.filter((req: any) => req.obligatorio === 1);
@@ -170,9 +166,9 @@ export class RequestsDetailComponent implements OnInit {
             next: res => {
                 this.spinner.hide();
                 this.messagesService.printStatus(res.message, 'success');
-                /*setTimeout(() => {
-                    this.router.navigate(['escritorio/solicitudes']);
-                }, 2500);*/
+                setTimeout(() => {
+                    this.getId();
+                }, 2500);
             },
             error: err => {
                 this.spinner.hide();
