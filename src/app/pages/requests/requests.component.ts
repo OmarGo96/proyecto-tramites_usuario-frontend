@@ -6,6 +6,7 @@ import {MatSort} from "@angular/material/sort";
 import {MessageService} from "../../services/messages.service";
 import {MatDialog} from "@angular/material/dialog";
 import {NgxSpinnerService} from "ngx-spinner";
+import {RequestsStatus} from "../../const/status";
 
 @Component({
     selector: 'app-requests',
@@ -21,6 +22,8 @@ export class RequestsComponent implements OnInit {
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
+
+    public statuses = RequestsStatus;
 
     /* Banderas */
     public loading = false;

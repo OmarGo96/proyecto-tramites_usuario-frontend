@@ -30,6 +30,7 @@ export class RequestsDetailComponent implements OnInit {
     public requeriments: any;
     public reqWithDocuments: any;
     public reqMandatory: any;
+    public paymentDocRejected: any;
     public records: any;
     public messages: any;
     public files: any;
@@ -89,13 +90,17 @@ export class RequestsDetailComponent implements OnInit {
                 this.request = res.solicitud;
                 this.requeriments = res.requisitos;
 
-                for (const doc of this.request.DocumentosPago) {
-                    this.paymentDocs.map(docu => {
-                       if (docu.id === doc.documento_pago){
-                           docu.doc = doc;
-                       }
-                    });
+                if (this.request.DocumentosPago.length > 0){
+                    for (const doc of this.request.DocumentosPago) {
+                        this.paymentDocs.map(docu => {
+                            if (docu.id === doc.documento_pago){
+                                docu.doc = doc;
+                            }
+                        });
+                    }
                 }
+
+                console.log(this.paymentDocs);
 
                 this.reqWithDocuments = res.requisitos.filter((req: any) => req.obligatorio === 1 && req.Requisito.Documento);
                 this.reqMandatory = res.requisitos.filter((req: any) => req.obligatorio === 1);
@@ -192,19 +197,6 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
-    selectPaymentDocument(documentId: any): void {
-        const config = {
-            width: '100%'
-        }
-
-        const dialogRef = this.dialog.open(DocumentsModalComponent, config);
-
-        dialogRef.afterClosed().subscribe(document => {
-            if (document) {
-                this.setPaymentDocument(document, documentId);
-            }
-        });
-    }
 
     reSelectDocumentToUpdate(requisitoId: any, documentoSolicitudRequisitoId: any) {
         const config = {
@@ -219,6 +211,34 @@ export class RequestsDetailComponent implements OnInit {
         dialogRef.afterClosed().subscribe(document => {
             if (document) {
                 this.updateDocument(document, requisitoId, documentoSolicitudRequisitoId);
+            }
+        });
+    }
+    selectPaymentDocument(documentId: any): void {
+        const config = {
+            width: '100%'
+        }
+
+        const dialogRef = this.dialog.open(DocumentsModalComponent, config);
+
+        dialogRef.afterClosed().subscribe(document => {
+            if (document) {
+                this.setPaymentDocument(document, documentId);
+            }
+        });
+    }
+
+
+    reSelectPaymentDocumentToUpdate(documentoPagoVal: any, documentacionPagoId: any): void {
+        const config = {
+            width: '100%'
+        }
+
+        const dialogRef = this.dialog.open(DocumentsModalComponent, config);
+
+        dialogRef.afterClosed().subscribe(document => {
+            if (document) {
+                this.updatePaymentDocument(document, documentoPagoVal, documentacionPagoId);
             }
         });
     }
@@ -251,6 +271,25 @@ export class RequestsDetailComponent implements OnInit {
         }
 
         this.documentsService.createDocumentoPago(data).subscribe({
+            next: res => {
+                this.getId();
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
+        });
+    }
+
+    updatePaymentDocument(document: any, documentoPagoVal: any, documentacionPagoId: any){
+        this.spinner.show();
+        const data = {
+            documentacion_id: document.id,
+            solicitud_id: this.request.id,
+            documento_pago: documentoPagoVal
+        }
+
+        this.documentsService.updateDocumentoPago(data, documentacionPagoId).subscribe({
             next: res => {
                 this.getId();
             },

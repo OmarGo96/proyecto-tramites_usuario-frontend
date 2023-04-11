@@ -44,11 +44,12 @@
                     <ng-container matColumnDef="estatus">
                         <th mat-header-cell *matHeaderCellDef> Estatus</th>
                         <td mat-cell *matCellDef="let element; let i = index">
-                            <div class="flex items-center">
-                                <div class="h-2.5 w-2.5 rounded-full mr-2"
-                                     style="background-color: {{ element.Estatus.color }}"></div>
-                                {{ element.Estatus.nombre }}
-                            </div>
+                            <ng-container *ngFor="let status of statuses">
+                                    <span *ngIf="status.value === element.Estatus.id"
+                                          class="inline-flex items-center font-bold px-2.5 py-0.5 rounded-full tracking-wide uppercase {{ status.styles }}">
+                                        <span class="whitespace-nowrap text-xs">{{status.name}}</span>
+                                    </span>
+                            </ng-container>
                         </td>
                     </ng-container>
 

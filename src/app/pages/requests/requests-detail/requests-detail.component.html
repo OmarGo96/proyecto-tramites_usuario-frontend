@@ -29,10 +29,10 @@
 
                         <ol class="px-4 py-5 sm:px-6 items-center w-full space-y-4 sm:flex sm:space-x-8 sm:space-y-0">
                             <li class="flex items-center space-x-2.5"
-                                [ngClass]="request.estatus_solicitud_id === 1 || request.estatus_solicitud_id === 2 ? 'text-blue-600' : 'text-gray-300'">
+                                [ngClass]="request.estatus_solicitud_id === 1 || request.estatus_solicitud_id === 2 || request.estatus_solicitud_id === 5 ? 'text-blue-600' : 'text-gray-300'">
                                 <span
                                     class="flex items-center justify-center w-8 h-8 border rounded-full shrink-0"
-                                    [ngClass]="request.estatus_solicitud_id === 1 || request.estatus_solicitud_id === 2 ? 'border-blue-600' : 'border-gray-300'">
+                                    [ngClass]="request.estatus_solicitud_id === 1 || request.estatus_solicitud_id === 2 || request.estatus_solicitud_id === 5 ? 'border-blue-600' : 'border-gray-300'">
                                     1
                                 </span>
                                 <span>
@@ -40,10 +40,10 @@
                                 </span>
                             </li>
                             <li class="flex items-center space-x-2.5"
-                                [ngClass]="request.estatus_solicitud_id === 10 || request.estatus_solicitud_id === 20? 'text-blue-600' : 'text-gray-300'">
+                                [ngClass]="request.estatus_solicitud_id === 10 || request.estatus_solicitud_id === 20 || request.estatus_solicitud_id === 21 ? 'text-blue-600' : 'text-gray-300'">
                                 <span
                                     class="flex items-center justify-center w-8 h-8 border rounded-full shrink-0"
-                                    [ngClass]="request.estatus_solicitud_id === 10 || request.estatus_solicitud_id === 20 ? 'border-blue-600' : 'border-gray-300'">
+                                    [ngClass]="request.estatus_solicitud_id === 10 || request.estatus_solicitud_id === 20 || request.estatus_solicitud_id === 21 ? 'border-blue-600' : 'border-gray-300'">
                                     2
                                 </span>
                                 <span>
@@ -62,7 +62,8 @@
                         </ol>
 
                         <!-- Adjuntar requisitos -->
-                        <ng-container *ngIf="request.estatus_solicitud_id === 1 || request.estatus_solicitud_id === 2">
+                        <ng-container
+                            *ngIf="request.estatus_solicitud_id === 1 || request.estatus_solicitud_id === 2 || request.estatus_solicitud_id === 5">
                             <div class="border-t border-gray-200">
                                 <dl class="pb-5 text-gray-900">
                                     <div class="border-b flex flex-col px-5 py-5"
@@ -100,7 +101,7 @@
                                                 <button mat-stroked-button color="primary"
                                                         class="px-3 py-2 text-xs font-medium rounded-md"
                                                         (click)="reSelectDocumentToUpdate(requeriment.Requisito.id, requeriment.Requisito.Documento.id)"
-                                                        *ngIf="requeriment.Requisito.Documento && requeriment.Requisito.Documento.estatus === -1">
+                                                        *ngIf="requeriment.Requisito.Documento && (requeriment.Requisito.Documento.estatus === -1)">
                                                     Adjuntar nuevamente
                                                 </button>
                                                 <!-- Ver documento adjunto por contribuyente -->
@@ -117,7 +118,7 @@
                                                 class="bg-gray-200 text-gray-600 text-xs font-medium px-2.5 py-0.5 rounded"
                                                 *ngIf="requeriment.Requisito.Documento && requeriment.Requisito.Documento.estatus === 0">
                                                   <i class="fa-solid fa-clock fa-sm"></i>
-                                                En revisión
+                                                Enviado
                                             </span>
                                                 <span
                                                     class="bg-green-200 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded"
@@ -155,7 +156,7 @@
 
                                     <button mat-flat-button (click)="saveRequest('2')" class="rounded-md"
                                             color="primary"
-                                            *ngIf="request.estatus_solicitud_id !== 5 && request.estatus_solicitud_id !== 12"
+                                            *ngIf="request.estatus_solicitud_id !== 12"
                                             [disabled]="reqWithDocuments.length === 0 || reqMandatory.length !== reqWithDocuments.length">
                                         Finalizar y enviar
                                     </button>
@@ -164,8 +165,17 @@
                         </ng-container>
 
                         <!-- Validación de pago -->
-                        <ng-container *ngIf="request.estatus_solicitud_id === 10">
+                        <ng-container
+                            *ngIf="request.estatus_solicitud_id === 10 || request.estatus_solicitud_id === 21">
                             <div class="border-t border-gray-200">
+                                <div *ngIf="request.estatus_solicitud_id === 21"
+                                     class="flex p-4 mb-4 text-sm text-yellow-800 border border-yellow-300 bg-yellow-50">
+                                    <i class="fa-solid fa-circle-info fa-lg mr-3"></i>
+                                    <div>
+                                        Es probable que alguno de los documentos haya sido rechazado. Revisa y adjunta
+                                        nuevamente el archivo.
+                                    </div>
+                                </div>
                                 <dl class="pb-5 text-gray-900">
                                     <ng-container *ngFor="let doc of paymentDocs">
                                         <div class="border-b flex flex-col px-5 py-5">
@@ -180,16 +190,20 @@
                                                             class="px-3 py-2 text-xs font-medium rounded-md">
                                                         Examinar archivos
                                                     </button>
-                                                    <span *ngIf="doc.doc && doc.doc['estatus'] === 0"
-                                                          class="bg-gray-200 text-gray-600 text-xs font-medium px-2.5 py-0.5 rounded">
-                                                              <i class="fa-solid fa-clock fa-sm"></i>
-                                                            Enviado
-                                                        </span>
-                                                    <span *ngIf="doc.doc && doc.doc['estatus'] === 1"
-                                                          class="bg-green-200 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
-                                                            <i class="fa-solid fa-circle-check"></i>
-                                                            Aceptado
-                                                        </span>
+                                                    <button mat-stroked-button color="primary"
+                                                            *ngIf="doc.doc && (doc.doc['estatus'] === -1)"
+                                                            (click)="reSelectPaymentDocumentToUpdate(doc.id, doc.doc['id'])"
+                                                            class="px-3 py-2 text-xs font-medium rounded-md">
+                                                        Adjuntar nuevamente
+                                                    </button>
+
+                                                    <!-- Ver documento adjunto por contribuyente -->
+                                                    <button mat-stroked-button color="primary"
+                                                            class="px-3 py-2 text-xs font-medium rounded-md"
+                                                            *ngIf="doc.doc && doc.doc['estatus'] === 0"
+                                                            (click)="openDocument(doc.doc['documentacion_id'])">
+                                                        Ver adjunto
+                                                    </button>
                                                     <!-- Ver documento adjunto por contribuyente -->
                                                     <!--<button mat-stroked-button color="primary"
                                                             class="px-3 py-2 text-xs font-medium rounded-md"
@@ -197,9 +211,17 @@
                                                         Ver adjunto
                                                     </button>-->
                                                 </div>
-                                                <!--<div class="space-x-2" >
-
-                                                </div>-->
+                                                <div class="space-x-2">
+                                                    <span *ngIf="doc.doc && doc.doc['estatus'] === 0" class="bg-gray-200 text-gray-600 text-xs font-medium px-2.5 py-0.5 rounded">
+                                                        <i class="fa-solid fa-clock fa-sm"></i>
+                                                        Enviado
+                                                    </span>
+                                                    <span *ngIf="doc.doc && doc.doc['estatus'] === 1"
+                                                          class="bg-green-200 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                                                        <i class="fa-solid fa-circle-check"></i>
+                                                        Aceptado
+                                                    </span>
+                                                </div>
                                             </dd>
                                         </div>
 
@@ -208,7 +230,8 @@
                                 </dl>
                             </div>
 
-                            <div class="px-4 pb-4 text-right" *ngIf="request.estatus_solicitud_id === 10 && request.DocumentosPago.length === paymentDocs.length">
+                            <div class="px-4 pb-4 text-right"
+                                 *ngIf="(request.estatus_solicitud_id === 10 || request.estatus_solicitud_id === 21) && request.DocumentosPago.length === paymentDocs.length">
                                 <button mat-flat-button (click)="validatePayment('20')" class="rounded-md"
                                         color="success">
                                     Validar pago
@@ -222,6 +245,24 @@
                                 <div>
                                     <p class="font-medium text-lg">La solicitud esta en válidación de pago</p>
                                     <p>Este trámite puede tardar aproximadamente entre 3 a 5 días habiles</p>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="request.estatus_solicitud_id === 11 || request.estatus_solicitud_id === 19 || request.estatus_solicitud_id === 16
+                                        || request.estatus_solicitud_id === 17 || request.estatus_solicitud_id === 8">
+                            <div class="w-full mx-auto block p-10 text-center space-y-3">
+                                <i class="fa-regular fa-clock fa-5x text-slate-500"></i>
+                                <div>
+                                    <ng-container *ngFor="let status of statuses">
+                                        <p class="font-medium text-lg"
+                                           *ngIf="status.value === request.estatus_solicitud_id">
+                                            La solicitud esta en estatus: <b>{{status.name}}</b>
+                                        </p>
+                                    </ng-container>
+
+                                    <p>Cuando tu documento este listo para descargar te avisaremos por correo
+                                        electrónico</p>
                                 </div>
                             </div>
                         </ng-container>
