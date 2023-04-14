@@ -86,7 +86,7 @@
                                                     <button mat-stroked-button color="warn"
                                                             class="px-3 py-2 text-xs font-medium rounded-md"
                                                             (click)="reUploadDocument(requeriment.Requisito.id)"
-                                                            *ngIf="requeriment.Requisito.Documento && requeriment.Requisito.Documento.estatus === 0">
+                                                            *ngIf="requeriment.Requisito.Documento && requeriment.Requisito.Documento.estatus === 0 && request.estatus_solicitud_id !== 12">
                                                         Eliminar y subir nuevamente
                                                     </button>
                                                 </div>
@@ -263,6 +263,26 @@
 
                                     <p>Cuando tu documento este listo para descargar te avisaremos por correo
                                         electrónico</p>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="request.estatus_solicitud_id === 12">
+                            <div class="w-full mx-auto block p-10 text-center space-y-3">
+                                <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
+                                <div>
+                                    <p class="font-medium text-lg">La solicitud esta en validación de requisitos</p>
+                                    <p>En cuanto tengamos noticias te nofiticaremos. Gracias por tu paciencia.</p>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="request.estatus_solicitud_id === 9">
+                            <div class="w-full mx-auto block p-10 text-center space-y-3">
+                                <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
+                                <div>
+                                    <p class="font-medium text-lg">¡Tu trámite esta listo!</p>
+                                    <p>Puedes pasar a recogerlo en cualquier momento dentro del horario de atención</p>
                                 </div>
                             </div>
                         </ng-container>
