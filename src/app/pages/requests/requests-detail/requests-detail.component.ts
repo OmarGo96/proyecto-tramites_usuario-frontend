@@ -88,6 +88,7 @@ export class RequestsDetailComponent implements OnInit {
         this.requestsService.getRecord(id).subscribe({
             next: res => {
                 this.request = res.solicitud;
+                console.log(this.request);
                 this.requeriments = res.requisitos;
 
                 if (this.request.DocumentosPago.length > 0){
@@ -324,6 +325,18 @@ export class RequestsDetailComponent implements OnInit {
 
     openDocument(documentId: any) {
         this.documentsService.getUserDocument(documentId).subscribe({
+            next: res => {
+                let url = URL.createObjectURL(res);
+                window.open(url, '_blank');
+            },
+            error: err => {
+                this.messagesService.printStatus('Algo salio mal al obtener el documento. Intente mas tarde.', 'warning');
+            }
+        });
+    }
+
+    getRequestDocument(requestId: any){
+        this.documentsService.getRequestDocument(requestId).subscribe({
             next: res => {
                 let url = URL.createObjectURL(res);
                 window.open(url, '_blank');

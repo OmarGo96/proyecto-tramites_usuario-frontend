@@ -57,4 +57,8 @@ export class DocumentsService {
     public updateDocumentSolicitudRequisito(id: any, data: any): Observable<any>{
         return this.httpClient.put(`${this.urlApi}/documentos-solicitud-requisito/${id}`, data, {headers: this.headers})
     }
+
+    public getRequestDocument(requestId: any): Observable<any> {
+        return this.httpClient.get(`${this.urlApi}/solicitud/documento-digital/${requestId}'`, { headers: this.headers, responseType: "blob" });
+    }
 }
