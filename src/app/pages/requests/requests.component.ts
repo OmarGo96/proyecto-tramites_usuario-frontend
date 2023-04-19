@@ -7,6 +7,7 @@ import {MessageService} from "../../services/messages.service";
 import {MatDialog} from "@angular/material/dialog";
 import {NgxSpinnerService} from "ngx-spinner";
 import {RequestsStatus} from "../../const/status";
+import {LicfuncService} from "../../services/licfunc.service";
 
 @Component({
     selector: 'app-requests',
@@ -31,6 +32,7 @@ export class RequestsComponent implements OnInit {
     constructor(
         private requestService: RequestService,
         private messagesService: MessageService,
+        private licFuncService: LicfuncService,
         private spinner: NgxSpinnerService,
         private dialog: MatDialog
     ) {
@@ -51,57 +53,86 @@ export class RequestsComponent implements OnInit {
             },
             error: err => {
                 this.spinner.hide();
-                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+                this.messagesService.errorAlert(err.error.errors);
             }
         })
     }
 
     generateCheckout(solicitud: any) {
         this.spinner.show();
-        const data = {
-            solicitud_id: solicitud.id.toString(),
-            grupo_tramite_id: solicitud.Servicio.grupo_tramite_id.toString(),
-            tramite_id: solicitud.Servicio.tramite_id.toString(),
-            importe: '1445'
+        if (solicitud.Servicio.id === 7){
+            const data = {licencia: solicitud.licencia_id.toString() };
+            this.licFuncService.generarPaseCaja(data).subscribe({
+                next: res => {
+                    this.spinner.hide();
+                    window.open(res.pase_caja, '_blank');
+                    setTimeout(() => {
+                        this.dialog.closeAll();
+                    }, 1000);
+                },
+                error: err => {
+                    this.spinner.hide();
+                    this.messagesService.errorAlert(err.error.errors);
+                }
+            });
+        } else {
+            const data = {
+                solicitud_id: solicitud.id.toString(),
+                grupo_tramite_id: solicitud.Servicio.grupo_tramite_id.toString(),
+                tramite_id: solicitud.Servicio.tramite_id.toString(),
+                importe: '1445'
+            }
+            this.requestService.generateCheckout(data).subscribe({
+                next: res => {
+                    this.spinner.hide();
+                    window.open(res.pase_caja, '_blank');
+                    setTimeout(() => {
+                        this.dialog.closeAll();
+                    }, 1000);
+                },
+                error: err => {
+                    this.spinner.hide();
+                    this.messagesService.errorAlert(err.error.errors);
+                }
+            });
         }
 
-        this.requestService.generateCheckout(data).subscribe({
-            next: res => {
-                this.spinner.hide();
-                window.open(res.pase_caja, '_blank');
-                setTimeout(() => {
-                    this.dialog.closeAll();
-                }, 1000);
-            },
-            error: err => {
-                this.spinner.hide();
-                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
-            }
-        })
     }
 
     paymentLink(solicitud: any) {
         this.spinner.show();
-        const data = {
-            solicitud_id: solicitud.id.toString(),
-            grupo_tramite_id: solicitud.Servicio.grupo_tramite_id.toString(),
-            tramite_id: solicitud.Servicio.tramite_id.toString(),
-            importe: '1445'
+        if (solicitud.Servicio.id === 7){
+            const data = {licencia: solicitud.licencia_id.toString() };
+            this.licFuncService.realizarPago(data).subscribe({
+                next: res => {
+                    this.spinner.hide();
+                    window.open(res.link, '_blank');
+                },
+                error: err => {
+                    this.spinner.hide();
+                    this.messagesService.errorAlert(err.error.errors);
+                }
+            });
+        } else {
+            const data = {
+                solicitud_id: solicitud.id.toString(),
+                grupo_tramite_id: solicitud.Servicio.grupo_tramite_id.toString(),
+                tramite_id: solicitud.Servicio.tramite_id.toString(),
+                importe: '1445'
+            }
+
+            this.requestService.paymentLink(data).subscribe({
+                next: res => {
+                    this.spinner.hide();
+                    window.open(res.link, '_blank');
+                },
+                error: err => {
+                    this.spinner.hide();
+                    this.messagesService.errorAlert(err.error.errors);
+                }
+            })
         }
 
-        this.requestService.paymentLink(data).subscribe({
-            next: res => {
-                this.spinner.hide();
-                window.open(res.link, '_blank');
-                setTimeout(() => {
-                    this.dialog.closeAll();
-                }, 1000);
-            },
-            error: err => {
-                this.spinner.hide();
-                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
-            }
-        })
     }
 
     applyFilter(event: Event) {
