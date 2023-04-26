@@ -61,4 +61,8 @@ export class DocumentsService {
     public getRequestDocument(requestId: any): Observable<any> {
         return this.httpClient.get(`${this.urlApi}/solicitud/documento-digital/${requestId}'`, { headers: this.headers, responseType: "blob" });
     }
+
+    public anuenciaDocument(requestId: any, data: any): Observable<any> {
+        return this.httpClient.post(`${this.urlApi}/solicitud/documento-anuencia/${requestId}`, data, {headers: this.headers})
+    }
 }

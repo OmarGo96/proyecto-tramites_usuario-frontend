@@ -33,7 +33,7 @@ export class RequestsDetailComponent implements OnInit {
     public paymentDocRejected: any;
     public records: any;
     public messages: any;
-    public files: any;
+    public files: File[] = [];
     public requestId: any;
 
     public dataSource: any;
@@ -101,7 +101,6 @@ export class RequestsDetailComponent implements OnInit {
                     }
                 }
 
-                console.log(this.paymentDocs);
 
                 this.reqWithDocuments = res.requisitos.filter((req: any) => req.obligatorio === 1 && req.Requisito.Documento);
                 this.reqMandatory = res.requisitos.filter((req: any) => req.obligatorio === 1);
@@ -347,24 +346,6 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
-    openUploadDialog(): void {
-        const config = {
-            width: '50%',
-            data: {
-                title: false
-            },
-        }
-
-        const dialogRef = this.dialog.open(UploadModalComponent, config);
-
-        dialogRef.afterClosed().subscribe(document => {
-            console.log(document);
-            /*if (document) {
-                this.setDocument(document, requisitoId);
-            }*/
-        });
-    }
-
     reUploadDocument(reqId: any) {
         this.messagesService.confirmDelete('¿Estás seguro de eliminar este archivo?').then((result: any) => {
             if (result.isConfirmed) {
@@ -372,6 +353,59 @@ export class RequestsDetailComponent implements OnInit {
                 this.reUpload = true;
             }
         });
+    }
+
+    uploadFiles() {
+        this.files.forEach((file: any) => {
+            this.createDocuments(file);
+        });
+    }
+
+    createDocuments(file: any) {
+        this.spinner.show();
+        let formData = new FormData()
+        formData.append('file', file);
+        this.documentsService.anuenciaDocument(this.request.id.toString(), formData).subscribe({
+            next: res => {
+                this.updateRequestEstatus();
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
+        })
+    }
+
+    updateRequestEstatus(){
+        const data = {
+            estatus_solicitud_id: '23',
+            solicitud_id: this.request.id.toString()
+        };
+        this.requestsService.updateRecord(data).subscribe({
+            next: res => {
+                this.spinner.hide();
+                this.messagesService.printStatus(res.message, 'success');
+                setTimeout(() => {
+                    this.getId();
+                }, 2500);
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
+        })
+    }
+
+    onSelect(event: any) {
+        this.files.push(...event.addedFiles);
+    }
+
+    onRemove(event: any) {
+        this.files.splice(this.files.indexOf(event), 1);
+    }
+
+    redirectToService(){
+        this.router.navigate(['escritorio/servicio/aef9778e-7117-4619-9cb8-bf7f1c865968']);
     }
 
 }

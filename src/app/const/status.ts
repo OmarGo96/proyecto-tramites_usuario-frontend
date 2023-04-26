@@ -57,6 +57,18 @@ export const RequestsStatus = [
     },
 
     {
+        name: 'Pendiente anuencia protección civil',
+        value: 22,
+        styles: 'bg-indigo-200 text-indigo-800'
+    },
+
+    {
+        name: 'Validación de anuencia protección civil',
+        value: 23,
+        styles: 'bg-indigo-200 text-indigo-800'
+    },
+
+    {
         name: 'Impresión de documento',
         value: 16,
         styles: 'bg-sky-200 text-sky-800'
