@@ -58,6 +58,10 @@ export class DocumentsService {
         return this.httpClient.put(`${this.urlApi}/documentacion-pago/${documentId}`, data, {headers: this.headers})
     }
 
+    public updateDocumentoComplementario(data: any, documentId: any): Observable<any>{
+        return this.httpClient.put(`${this.urlApi}/documento-complementaria/${documentId}`, data, {headers: this.headers})
+    }
+
     public updateDocumentSolicitudRequisito(id: any, data: any): Observable<any>{
         return this.httpClient.put(`${this.urlApi}/documentos-solicitud-requisito/${id}`, data, {headers: this.headers})
     }

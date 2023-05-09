@@ -393,7 +393,7 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
-    reSelectComplementaryDocumentToUpdate(documentoPagoVal: any, documentacionPagoId: any): void {
+    reSelectComplementaryDocumentToUpdate(documentacionAnuenciaId: any): void {
         const config = {
             width: '100%'
         }
@@ -402,7 +402,25 @@ export class RequestsDetailComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe(document => {
             if (document) {
-                this.updatePaymentDocument(document, documentoPagoVal, documentacionPagoId);
+                this.updateComplementaryDocument(document, documentacionAnuenciaId);
+            }
+        });
+    }
+
+    updateComplementaryDocument(document: any, documentacionAnuenciaId: any){
+        this.spinner.show();
+        const data = {
+            documentacion_id: document.id,
+            solicitud_id: this.request.id
+        }
+
+        this.documentsService.updateDocumentoComplementario(data, documentacionAnuenciaId).subscribe({
+            next: res => {
+                this.getId();
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });
     }
