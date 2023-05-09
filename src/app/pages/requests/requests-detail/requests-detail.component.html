@@ -51,6 +51,7 @@
                                 </span>
                             </li>
                             <li class="flex items-center space-x-2.5"
+                                *ngIf="request.servicio_id === 6 || request.servicio_id === 7"
                                 [ngClass]="request.estatus_solicitud_id === 22 ? 'text-blue-600' : 'text-gray-300'">
                                 <span
                                     class="flex items-center justify-center w-8 h-8 border rounded-full shrink-0"
@@ -59,6 +60,18 @@
                                 </span>
                                 <span>
                                     <p class="text-sm">Anuencia de protección civil</p>
+                                </span>
+                            </li>
+                            <li class="flex items-center space-x-2.5"
+                                *ngIf="request.servicio_id === 15"
+                                [ngClass]="request.estatus_solicitud_id === 24 ? 'text-blue-600' : 'text-gray-300'">
+                                <span
+                                    class="flex items-center justify-center w-8 h-8 border rounded-full shrink-0"
+                                    [ngClass]="request.estatus_solicitud_id === 24 ? 'border-blue-600' : 'border-gray-300'">
+                                    3
+                                </span>
+                                <span>
+                                    <p class="text-sm">Documentación complementaria</p>
                                 </span>
                             </li>
                             <li class="flex items-center text-gray-300 space-x-2.5">
@@ -257,17 +270,6 @@
                             </div>
                         </ng-container>
 
-                        <ng-container *ngIf="request.estatus_solicitud_id === 20">
-                            <div class="w-full mx-auto block p-10 text-center space-y-3">
-                                <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
-                                <div>
-                                    <p class="font-medium text-lg">La solicitud esta en válidación de pago</p>
-                                    <p>Este trámite puede tardar aproximadamente entre 3 a 5 días habiles</p>
-                                    <p>Si deseas generar tu factura, puedes hacerlo <a href="https://facturacion.gobiernodesolidaridad.gob.mx/facturacontribuyente/" target="_blank" class="text-blue-600 underline">haciendo click aquí</a></p>
-                                </div>
-                            </div>
-                        </ng-container>
-
                         <!-- Anuencia Protección Civil -->
                         <ng-container *ngIf="request.estatus_solicitud_id === 22 && request.servicio_id === 7">
                             <div class="p-10 space-y-8">
@@ -276,7 +278,7 @@
                                 </button>
 
                                 <p class="text-sm text-slate-500 text-center w-1/4 border-b-2 leading-3"><span
-                                class="bg-white px-3">O adjunta el documento</span></p>
+                                    class="bg-white px-3">O adjunta el documento</span></p>
 
                                 <ngx-dropzone (change)="onSelect($event)">
                                     <ngx-dropzone-label class="ring-amber-600" autofocus>
@@ -301,8 +303,136 @@
                             </div>
                         </ng-container>
 
-                        <ng-container *ngIf="request.estatus_solicitud_id === 11 || request.estatus_solicitud_id === 19 || request.estatus_solicitud_id === 16
-                                        || request.estatus_solicitud_id === 17 || request.estatus_solicitud_id === 8 || request.estatus_solicitud_id === 23">
+                        <!-- Documentación complementaria -->
+                        <ng-container
+                            *ngIf="request.estatus_solicitud_id === 24">
+                            <div class="border-t border-gray-200">
+                                <!--div *ngIf="request.estatus_solicitud_id === 21"
+                                     class="flex p-4 mb-4 text-sm text-yellow-800 border border-yellow-300 bg-yellow-50">
+                                    <i class="fa-solid fa-circle-info fa-lg mr-3"></i>
+                                    <div>
+                                        Es probable que alguno de los documentos haya sido rechazado. Revisa y adjunta
+                                        nuevamente el archivo.
+                                    </div>
+                                </div>-->
+                                <dl class="pb-5 text-gray-900">
+                                    <ng-container>
+                                        <div class="border-b flex flex-col px-5 py-5">
+                                            <dt class="mb-1 text-md">
+                                                Documentación complementaria
+                                            </dt>
+                                            <dd class="flex items-center justify-between items-center font-medium text-gray-500">
+                                                <div class="flex space-x-2">
+                                                    <!-- Subir documentos por primera vez -->
+                                                    <button mat-flat-button color="primary"
+                                                            *ngIf="!request.DocumentosComplementarios"
+                                                            (click)="selectComplementaryDocument()"
+                                                            class="px-3 py-2 text-xs font-medium rounded-md">
+                                                        Examinar archivos
+                                                    </button>
+                                                    <button mat-stroked-button color="primary"
+                                                            *ngIf="request.DocumentosComplementarios && request.DocumentosComplementarios.status === -1"
+                                                            class="px-3 py-2 text-xs font-medium rounded-md">
+                                                        Adjuntar nuevamente
+                                                    </button>
+
+                                                    <!-- Ver documento adjunto por contribuyente -->
+                                                    <button mat-stroked-button color="primary"
+                                                            (click)="openDocument(request.DocumentosComplementarios.documentacion_id)"
+                                                            *ngIf="request.DocumentosComplementarios && request.DocumentosComplementarios.status === 0"
+                                                            class="px-3 py-2 text-xs font-medium rounded-md">
+                                                        Ver adjunto
+                                                    </button>
+                                                    <!-- Ver documento adjunto por contribuyente -->
+                                                    <!--<button mat-stroked-button color="primary"
+                                                            class="px-3 py-2 text-xs font-medium rounded-md"
+                                                            *ngIf="doc.doc">
+                                                        Ver adjunto
+                                                    </button>-->
+                                                </div>
+                                                <div class="space-x-2">
+                                                    <span
+                                                        *ngIf="request.DocumentosComplementarios && request.DocumentosComplementarios.status === 0"
+                                                        class="bg-gray-200 text-gray-600 text-xs font-medium px-2.5 py-0.5 rounded">
+                                                        <i class="fa-solid fa-clock fa-sm"></i>
+                                                        Enviado
+                                                    </span>
+                                                    <span
+                                                        *ngIf="request.DocumentosComplementarios && request.DocumentosComplementarios.status === 1"
+                                                        class="bg-green-200 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                                                        <i class="fa-solid fa-circle-check"></i>
+                                                        Aceptado
+                                                    </span>
+                                                </div>
+                                            </dd>
+                                        </div>
+
+                                    </ng-container>
+
+                                </dl>
+                            </div>
+
+                            <div class="px-4 pb-4 text-right">
+                                <button mat-flat-button (click)="validateComplementaryDocument('25')" class="rounded-md"
+                                        color="success">
+                                    Enviar a validación
+                                </button>
+                            </div>
+                        </ng-container>
+
+                        <!-- Descargar documento trámite -->
+                        <ng-container *ngIf="request.estatus_solicitud_id === 9 || request.estatus_solicitud_id === 18">
+                            <div class=" border-t border-gray-200">
+                                <div
+                                    class="flex p-4 mb-4 text-sm text-green-800 border border-green-300 bg-green-50">
+                                    <i class="fa-solid fa-circle-check fa-lg mr-3"></i>
+                                    <div>
+                                        Tu trámite esta listo. Puedes pasar a recoger tu documento en cualquier momento
+                                        dentro de los horarios de atención.
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-5 gap-4 mt-3 p-10">
+                                    <div
+                                        class="relative w-full h-40 p-4 border rounded-2xl bg-white mx-auto">
+                                        <a (click)="getRequestDocument(request.id)"
+                                           class="z-10 absolute inset-0 flex flex-col p-4 cursor-pointer">
+                                            <div class="aspect-[9/6]">
+                                                <div class="flex items-center justify-center h-full text-slate-400">
+                                                    <!-- Icon -->
+                                                    <i class="fa-solid fa-file fa-3x"></i>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col flex-auto justify-center text-center text-xs">
+                                                <div class="truncate font-medium">DOCUMENTO DE TRÁMITE DIGITAL</div>
+                                                <div class="text-green-600 truncate font-normal">¡Descargar ahora!</div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </ng-container>
+
+
+                        <!-- Mensajes de alerta al usuario -->
+
+                        <ng-container *ngIf="request.estatus_solicitud_id === 20">
+                            <div class="w-full mx-auto block p-10 text-center space-y-3">
+                                <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
+                                <div>
+                                    <p class="font-medium text-lg">La solicitud esta en válidación de pago</p>
+                                    <p>Este trámite puede tardar aproximadamente entre 3 a 5 días habiles</p>
+                                    <p>Si deseas generar tu factura, puedes hacerlo <a
+                                        href="https://facturacion.gobiernodesolidaridad.gob.mx/facturacontribuyente/"
+                                        target="_blank" class="text-blue-600 underline">haciendo click aquí</a></p>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="request.estatus_solicitud_id === 11 || request.estatus_solicitud_id === 19 || request.estatus_solicitud_id === 15
+                        || request.estatus_solicitud_id === 16 || request.estatus_solicitud_id === 17 || request.estatus_solicitud_id === 8 || request.estatus_solicitud_id === 23
+                        || request.estatus_solicitud_id === 25">
                             <div class="w-full mx-auto block p-10 text-center space-y-3">
                                 <i class="fa-regular fa-clock fa-5x text-slate-500"></i>
                                 <div>
@@ -329,39 +459,6 @@
                             </div>
                         </ng-container>
 
-                        <!-- Descargar documento trámite -->
-                        <ng-container *ngIf="request.estatus_solicitud_id === 9 || request.estatus_solicitud_id === 18">
-                            <div class=" border-t border-gray-200">
-                                <div
-                                    class="flex p-4 mb-4 text-sm text-green-800 border border-green-300 bg-green-50">
-                                    <i class="fa-solid fa-circle-check fa-lg mr-3"></i>
-                                    <div>
-                                        Tu trámite esta listo. Puedes pasar a recoger tu documento en cualquier momento
-                                        dentro de los horarios de atención.
-                                    </div>
-                                </div>
-
-                                <div class="grid grid-cols-5 gap-4 mt-3 p-10">
-                                    <div
-                                        class="relative w-full h-40 p-4 border rounded-2xl bg-white mx-auto">
-                                        <a (click)="getRequestDocument(request.id)"
-                                            class="z-10 absolute inset-0 flex flex-col p-4 cursor-pointer">
-                                            <div class="aspect-[9/6]">
-                                                <div class="flex items-center justify-center h-full text-slate-400">
-                                                    <!-- Icon -->
-                                                    <i class="fa-solid fa-file fa-3x"></i>
-                                                </div>
-                                            </div>
-                                            <div class="flex flex-col flex-auto justify-center text-center text-xs">
-                                                <div class="truncate font-medium">DOCUMENTO DE TRÁMITE DIGITAL</div>
-                                                <div class="text-green-600 truncate font-normal">¡Descargar ahora!</div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </ng-container>
 
                     </div>
                 </mat-tab>

@@ -361,6 +361,72 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
+    selectComplementaryDocument(): void {
+        const config = {
+            width: '100%'
+        }
+
+        const dialogRef = this.dialog.open(DocumentsModalComponent, config);
+
+        dialogRef.afterClosed().subscribe(document => {
+            if (document) {
+                this.setComplementaryDocument(document);
+            }
+        });
+    }
+
+    setComplementaryDocument(document: any){
+        this.spinner.show();
+        const data = {
+            documentacion_id: document.id,
+            solicitud_id: this.request.id
+        }
+
+        this.documentsService.createComplementaryDocument(data).subscribe({
+            next: res => {
+                this.getId();
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
+        });
+    }
+
+    reSelectComplementaryDocumentToUpdate(documentoPagoVal: any, documentacionPagoId: any): void {
+        const config = {
+            width: '100%'
+        }
+
+        const dialogRef = this.dialog.open(DocumentsModalComponent, config);
+
+        dialogRef.afterClosed().subscribe(document => {
+            if (document) {
+                this.updatePaymentDocument(document, documentoPagoVal, documentacionPagoId);
+            }
+        });
+    }
+
+    validateComplementaryDocument(status: any){
+        this.spinner.show();
+        this.solicitudForm.controls.estatus_solicitud_id.setValue(status);
+        this.solicitudForm.controls.solicitud_id.setValue(this.request.id.toString());
+        const data = this.solicitudForm.value;
+        this.requestsService.updateRecord(data).subscribe({
+            next: res => {
+                this.spinner.hide();
+                this.messagesService.printStatus(res.message, 'success');
+                setTimeout(() => {
+                    this.getId();
+                }, 2500);
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
+        })
+    }
+
     createDocuments(file: any) {
         this.spinner.show();
         let formData = new FormData()

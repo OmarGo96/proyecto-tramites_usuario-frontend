@@ -20,10 +20,10 @@ export class DependenciesService {
     }
 
     public getRecord(uuid: any): Observable<any> {
-        return this.httpClient.get(`${this.urlApi}/area/${uuid}`, { headers: this.headers });
+        return this.httpClient.get(`${this.urlApi}/area/${uuid}`, {headers: this.headers});
     }
 
     public getRecords(): Observable <any> {
-        return this.httpClient.get(`${this.urlApi}/areas`);
+        return this.httpClient.get(`${this.urlApi}/areas`, {headers: this.headers});
     }
 }

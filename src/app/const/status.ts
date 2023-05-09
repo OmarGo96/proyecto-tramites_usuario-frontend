@@ -69,6 +69,18 @@ export const RequestsStatus = [
     },
 
     {
+        name: 'Pendiente documentación complementaria',
+        value: 24,
+        styles: 'bg-indigo-200 text-indigo-800'
+    },
+
+    {
+        name: 'Validación de documentación complementaria',
+        value: 25,
+        styles: 'bg-indigo-200 text-indigo-800'
+    },
+
+    {
         name: 'Impresión de documento',
         value: 16,
         styles: 'bg-sky-200 text-sky-800'
