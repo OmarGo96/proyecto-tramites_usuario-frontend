@@ -221,7 +221,7 @@
                                                         Examinar archivos
                                                     </button>
                                                     <button mat-stroked-button color="primary"
-                                                            *ngIf="doc.doc && (doc.doc['estatus'] === -1)"
+                                                            *ngIf="doc.doc && (doc.doc['status'] === -1)"
                                                             (click)="reSelectPaymentDocumentToUpdate(doc.id, doc.doc['id'])"
                                                             class="px-3 py-2 text-xs font-medium rounded-md">
                                                         Adjuntar nuevamente
@@ -230,7 +230,7 @@
                                                     <!-- Ver documento adjunto por contribuyente -->
                                                     <button mat-stroked-button color="primary"
                                                             class="px-3 py-2 text-xs font-medium rounded-md"
-                                                            *ngIf="doc.doc && doc.doc['estatus'] === 0"
+                                                            *ngIf="doc.doc && doc.doc['status'] === 0"
                                                             (click)="openDocument(doc.doc['documentacion_id'])">
                                                         Ver adjunto
                                                     </button>
@@ -242,12 +242,12 @@
                                                     </button>-->
                                                 </div>
                                                 <div class="space-x-2">
-                                                    <span *ngIf="doc.doc && doc.doc['estatus'] === 0"
+                                                    <span *ngIf="doc.doc && doc.doc['status'] === 0"
                                                           class="bg-gray-200 text-gray-600 text-xs font-medium px-2.5 py-0.5 rounded">
                                                         <i class="fa-solid fa-clock fa-sm"></i>
                                                         Enviado
                                                     </span>
-                                                    <span *ngIf="doc.doc && doc.doc['estatus'] === 1"
+                                                    <span *ngIf="doc.doc && doc.doc['status'] === 1"
                                                           class="bg-green-200 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
                                                         <i class="fa-solid fa-circle-check"></i>
                                                         Aceptado
@@ -278,28 +278,67 @@
                                 </button>
 
                                 <p class="text-sm text-slate-500 text-center w-1/4 border-b-2 leading-3"><span
-                                    class="bg-white px-3">O adjunta el documento</span></p>
+                                    class="bg-white px-3">O adjunta los documentos</span></p>
 
-                                <ngx-dropzone (change)="onSelect($event)">
-                                    <ngx-dropzone-label class="ring-amber-600" autofocus>
-                                        <svg class="mx-auto h-12 w-12 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-                                             fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
-                                        </svg>
-                                        Da click aquí o arrastra el documento
-                                        <p class="text-xs">Formato PDF no más de 5MB</p>
-                                    </ngx-dropzone-label>
+                                <dl class="pb-5 text-gray-900">
+                                    <ng-container *ngFor="let doc of anuenciaDocs">
+                                        <div class="border-b flex flex-col px-5 py-5">
+                                            <dt class="mb-1 text-md">
+                                                {{ doc.name }}
+                                            </dt>
+                                            <dd class="flex items-center justify-between items-center font-medium text-gray-500">
+                                                <div class="flex space-x-2">
+                                                    <!-- Subir documentos por primera vez -->
+                                                    <button mat-flat-button color="primary" *ngIf="!doc.doc"
+                                                            (click)="selectAnuenciaDocument(doc.id)"
+                                                            class="px-3 py-2 text-xs font-medium rounded-md">
+                                                        Examinar archivos
+                                                    </button>
+                                                    <button mat-stroked-button color="primary"
+                                                            *ngIf="doc.doc && (doc.doc['status'] === -1)"
+                                                            (click)="reSelectAnuenciaDocumentToUpdate(doc.id, doc.doc['id'])"
+                                                            class="px-3 py-2 text-xs font-medium rounded-md">
+                                                        Adjuntar nuevamente
+                                                    </button>
 
-                                    <ngx-dropzone-preview *ngFor="let f of files" [removable]="true"
-                                                          (removed)="onRemove(f)">
-                                        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-                                    </ngx-dropzone-preview>
-                                </ngx-dropzone>
-                                <button mat-flat-button (click)="uploadFiles()" color="success">
-                                    Subir documento
+                                                    <!-- Ver documento adjunto por contribuyente -->
+                                                    <button mat-stroked-button color="primary"
+                                                            class="px-3 py-2 text-xs font-medium rounded-md"
+                                                            *ngIf="doc.doc && doc.doc['status'] === 0"
+                                                            (click)="openDocument(doc.doc['documentacion_id'])">
+                                                        Ver adjunto
+                                                    </button>
+                                                    <!-- Ver documento adjunto por contribuyente -->
+                                                    <!--<button mat-stroked-button color="primary"
+                                                            class="px-3 py-2 text-xs font-medium rounded-md"
+                                                            *ngIf="doc.doc">
+                                                        Ver adjunto
+                                                    </button>-->
+                                                </div>
+                                                <div class="space-x-2">
+                                                    <span *ngIf="doc.doc && doc.doc['status'] === 0"
+                                                          class="bg-gray-200 text-gray-600 text-xs font-medium px-2.5 py-0.5 rounded">
+                                                        <i class="fa-solid fa-clock fa-sm"></i>
+                                                        Enviado
+                                                    </span>
+                                                    <span *ngIf="doc.doc && doc.doc['status'] === 1"
+                                                          class="bg-green-200 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                                                        <i class="fa-solid fa-circle-check"></i>
+                                                        Aceptado
+                                                    </span>
+                                                </div>
+                                            </dd>
+                                        </div>
+
+                                    </ng-container>
+                                </dl>
+                            </div>
+                            <div class="px-4 pb-4 text-right"
+                                 *ngIf="(request.estatus_solicitud_id === 10 || request.estatus_solicitud_id === 21 || request.estatus_solicitud_id === 22) && request.DocumentosAnuencia.length === anuenciaDocs.length">
+                                <button mat-flat-button (click)="validateAnuencia('23')" class="rounded-md"
+                                        color="success">
+                                    Validar anuencia
                                 </button>
-
                             </div>
                         </ng-container>
 

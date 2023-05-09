@@ -16,6 +16,7 @@ import {FormBuilder, UntypedFormBuilder} from "@angular/forms";
 import {NgxSpinner, NgxSpinnerService} from "ngx-spinner";
 import {UploadModalComponent} from "../../../layouts/modals/upload-modal/upload-modal.component";
 import {PaymentDocs} from "../../../const/payment-docs";
+import {AnuenciaDocs} from "../../../const/anuencia-docs";
 
 @Component({
     selector: 'app-requests-detail',
@@ -47,6 +48,7 @@ export class RequestsDetailComponent implements OnInit {
     // Constants
     public statuses = RequestsStatus;
     public paymentDocs = PaymentDocs;
+    public anuenciaDocs = AnuenciaDocs;
 
     constructor(
         private requestsService: RequestService,
@@ -88,7 +90,6 @@ export class RequestsDetailComponent implements OnInit {
         this.requestsService.getRecord(id).subscribe({
             next: res => {
                 this.request = res.solicitud;
-                console.log(this.request);
                 this.requeriments = res.requisitos;
 
                 if (this.request.DocumentosPago.length > 0){
@@ -100,6 +101,19 @@ export class RequestsDetailComponent implements OnInit {
                         });
                     }
                 }
+
+                if (this.request.DocumentosAnuencia.length > 0){
+                    for (const doc of this.request.DocumentosAnuencia) {
+                        console.log(doc);
+                        this.anuenciaDocs.map(docu => {
+                            if (docu.id === doc.documento_anuencia){
+                                docu.doc = doc;
+                            }
+                        });
+                    }
+                }
+
+                console.log(this.anuenciaDocs);
 
 
                 this.reqWithDocuments = res.requisitos.filter((req: any) => req.obligatorio === 1 && req.Requisito.Documento);
@@ -182,6 +196,26 @@ export class RequestsDetailComponent implements OnInit {
         })
     }
 
+    validateAnuencia(status: any){
+        this.spinner.show();
+        this.solicitudForm.controls.estatus_solicitud_id.setValue(status);
+        this.solicitudForm.controls.solicitud_id.setValue(this.request.id.toString());
+        const data = this.solicitudForm.value;
+        this.requestsService.updateRecord(data).subscribe({
+            next: res => {
+                this.spinner.hide();
+                this.messagesService.printStatus(res.message, 'success');
+                setTimeout(() => {
+                    this.getId();
+                }, 2500);
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
+        })
+    }
+
 
     selectDocument(requisitoId: any): void {
         const config = {
@@ -228,6 +262,71 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
+    selectAnuenciaDocument(documentId: any): void {
+        const config = {
+            width: '100%'
+        }
+
+        const dialogRef = this.dialog.open(DocumentsModalComponent, config);
+
+        dialogRef.afterClosed().subscribe(document => {
+            if (document) {
+                this.setAnuenciaDocument(document, documentId);
+            }
+        });
+    }
+
+    setAnuenciaDocument(document: any, documentId: any){
+        this.spinner.show();
+        const data = {
+            documentacion_id: document.id,
+            solicitud_id: this.request.id,
+            documento_anuencia: documentId
+        }
+
+        this.documentsService.createDocumentoAnuencia(data).subscribe({
+            next: res => {
+                this.getId();
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
+        });
+    }
+
+    reSelectAnuenciaDocumentToUpdate(documentoAnuenciaVal: any, documentacionAnuenciaId: any): void {
+        const config = {
+            width: '100%'
+        }
+
+        const dialogRef = this.dialog.open(DocumentsModalComponent, config);
+
+        dialogRef.afterClosed().subscribe(document => {
+            if (document) {
+                this.updateAnuenciaDocument(document, documentoAnuenciaVal, documentacionAnuenciaId);
+            }
+        });
+    }
+
+    updateAnuenciaDocument(document: any, documentoAnuenciaVal: any, documentacionAnuenciaId: any){
+        this.spinner.show();
+        const data = {
+            documentacion_id: document.id,
+            solicitud_id: this.request.id,
+            documento_anuencia: documentoAnuenciaVal
+        }
+
+        this.documentsService.updateDocumentoAnuencia(data, documentacionAnuenciaId).subscribe({
+            next: res => {
+                this.getId();
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
+        });
+    }
 
     reSelectPaymentDocumentToUpdate(documentoPagoVal: any, documentacionPagoId: any): void {
         const config = {

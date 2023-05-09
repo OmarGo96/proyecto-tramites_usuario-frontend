@@ -119,7 +119,7 @@ export class ServicesDetailComponent implements OnInit {
 
     getRequirements() {
         const serviceUuid = this.service.uuid;
-        this.requirementsService.getRecords(serviceUuid).subscribe({
+        this.requirementsService.getRequerimentsByService(serviceUuid).subscribe({
             next: res => {
                 this.dataSource = new MatTableDataSource(res.requerimientos);
                 // this.dataSource.paginator = this.paginator;

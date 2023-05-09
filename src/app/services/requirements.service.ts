@@ -20,7 +20,7 @@ export class RequirementsService {
         this.headers = new HttpHeaders().set('Authorization', this.token);
     }
 
-    public getRecords(serviceUuid: any): Observable <any> {
-        return this.httpClient.get(`${this.urlApi}/requerimientos/${serviceUuid}`);
+    public getRequerimentsByService(serviceUuid: any): Observable <any> {
+        return this.httpClient.get(`${this.urlApi}/requerimientos-servicio/${serviceUuid}`);
     }
 }
