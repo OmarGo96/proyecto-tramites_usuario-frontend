@@ -90,6 +90,7 @@ export class RequestsDetailComponent implements OnInit {
         this.requestsService.getRecord(id).subscribe({
             next: res => {
                 this.request = res.solicitud;
+                console.log(this.request);
                 this.requeriments = res.requisitos;
 
                 if (this.request.DocumentosPago.length > 0){
@@ -113,7 +114,6 @@ export class RequestsDetailComponent implements OnInit {
                     }
                 }
 
-                console.log(this.anuenciaDocs);
 
 
                 this.reqWithDocuments = res.requisitos.filter((req: any) => req.obligatorio === 1 && req.Requisito.Documento);

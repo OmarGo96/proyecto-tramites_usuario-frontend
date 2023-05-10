@@ -412,7 +412,8 @@
                             </div>
 
                             <div class="px-4 pb-4 text-right">
-                                <button mat-flat-button (click)="validateComplementaryDocument('25')" class="rounded-md"
+                                <button *ngIf="(request.estatus_solicitud_id === 24) && request.DocumentosComplementarios"
+                                    mat-flat-button (click)="validateComplementaryDocument('25')" class="rounded-md"
                                         color="success">
                                     Enviar a validación
                                 </button>
