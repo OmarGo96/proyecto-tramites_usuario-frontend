@@ -79,7 +79,11 @@ export const RequestsStatus = [
         value: 25,
         styles: 'bg-indigo-200 text-indigo-800'
     },
-
+    {
+        name: 'Generación de pase a caja',
+        value: 26,
+        styles: 'bg-indigo-200 text-indigo-800'
+    },
     {
         name: 'Impresión de documento',
         value: 16,

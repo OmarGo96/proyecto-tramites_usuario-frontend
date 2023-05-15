@@ -30,22 +30,19 @@
                         <ol class="px-4 py-5 sm:px-6 items-center w-full space-y-4 sm:flex sm:space-x-8 sm:space-y-0">
                             <li class="flex items-center space-x-2.5"
                                 [ngClass]="request.estatus_solicitud_id === 1 || request.estatus_solicitud_id === 2 || request.estatus_solicitud_id === 5 ? 'text-blue-600' : 'text-gray-300'">
-                                <span
-                                    class="flex items-center justify-center w-8 h-8 border rounded-full shrink-0"
-                                    [ngClass]="request.estatus_solicitud_id === 1 || request.estatus_solicitud_id === 2 || request.estatus_solicitud_id === 5 ? 'border-blue-600' : 'border-gray-300'">
-                                    1
-                                </span>
                                 <span>
                                     <p class="text-sm">Adjuntar requisitos</p>
                                 </span>
                             </li>
                             <li class="flex items-center space-x-2.5"
-                                [ngClass]="request.estatus_solicitud_id === 10 || request.estatus_solicitud_id === 20 || request.estatus_solicitud_id === 21 ? 'text-blue-600' : 'text-gray-300'">
-                                <span
-                                    class="flex items-center justify-center w-8 h-8 border rounded-full shrink-0"
-                                    [ngClass]="request.estatus_solicitud_id === 10 || request.estatus_solicitud_id === 20 || request.estatus_solicitud_id === 21 ? 'border-blue-600' : 'border-gray-300'">
-                                    2
+                                *ngIf="request.servicio_id === 15"
+                                [ngClass]="request.estatus_solicitud_id === 24 ? 'text-blue-600' : 'text-gray-300'">
+                                <span>
+                                    <p class="text-sm">Documentación complementaria</p>
                                 </span>
+                            </li>
+                            <li class="flex items-center space-x-2.5"
+                                [ngClass]="request.estatus_solicitud_id === 10 || request.estatus_solicitud_id === 20 || request.estatus_solicitud_id === 21 ? 'text-blue-600' : 'text-gray-300'">
                                 <span>
                                     <p class="text-sm">Validación de pago</p>
                                 </span>
@@ -53,32 +50,11 @@
                             <li class="flex items-center space-x-2.5"
                                 *ngIf="request.servicio_id === 6 || request.servicio_id === 7"
                                 [ngClass]="request.estatus_solicitud_id === 22 ? 'text-blue-600' : 'text-gray-300'">
-                                <span
-                                    class="flex items-center justify-center w-8 h-8 border rounded-full shrink-0"
-                                    [ngClass]="request.estatus_solicitud_id === 22 ? 'border-blue-600' : 'border-gray-300'">
-                                    3
-                                </span>
                                 <span>
                                     <p class="text-sm">Anuencia de protección civil</p>
                                 </span>
                             </li>
-                            <li class="flex items-center space-x-2.5"
-                                *ngIf="request.servicio_id === 15"
-                                [ngClass]="request.estatus_solicitud_id === 24 ? 'text-blue-600' : 'text-gray-300'">
-                                <span
-                                    class="flex items-center justify-center w-8 h-8 border rounded-full shrink-0"
-                                    [ngClass]="request.estatus_solicitud_id === 24 ? 'border-blue-600' : 'border-gray-300'">
-                                    3
-                                </span>
-                                <span>
-                                    <p class="text-sm">Documentación complementaria</p>
-                                </span>
-                            </li>
                             <li class="flex items-center text-gray-300 space-x-2.5">
-                                <span
-                                    class="flex items-center justify-center w-8 h-8 border border-gray-300 rounded-full shrink-0">
-                                    4
-                                </span>
                                 <span>
                                     <p class="text-sm">Descargar archivo</p>
                                 </span>
@@ -489,6 +465,16 @@
                             </div>
                         </ng-container>
 
+                        <ng-container *ngIf="request.estatus_solicitud_id === 26">
+                            <div class="w-full mx-auto block p-10 text-center space-y-3">
+                                <i class="fa-solid fa-file-invoice fa-5x text-slate-500"></i>
+                                <div>
+                                    <p class="font-medium text-lg">Tu pase a caja se esta generando</p>
+                                    <p>En cuanto tengamos noticias te nofiticaremos. Gracias por tu paciencia.</p>
+                                </div>
+                            </div>
+                        </ng-container>
+
                         <ng-container *ngIf="request.estatus_solicitud_id === 12">
                             <div class="w-full mx-auto block p-10 text-center space-y-3">
                                 <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
@@ -498,6 +484,9 @@
                                 </div>
                             </div>
                         </ng-container>
+
+
+
 
 
                     </div>

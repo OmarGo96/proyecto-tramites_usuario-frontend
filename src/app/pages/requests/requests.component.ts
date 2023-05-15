@@ -60,8 +60,8 @@ export class RequestsComponent implements OnInit {
 
     generateCheckout(solicitud: any) {
         this.spinner.show();
-        if (solicitud.Servicio.id === 7){
-            const data = {licencia: solicitud.licencia_id.toString() };
+        if (solicitud.Servicio.id === 7) {
+            const data = {licencia: solicitud.licencia_id.toString()};
             this.licFuncService.generarPaseCaja(data).subscribe({
                 next: res => {
                     this.spinner.hide();
@@ -75,12 +75,24 @@ export class RequestsComponent implements OnInit {
                     this.messagesService.errorAlert(err.error.errors);
                 }
             });
+        } else if(solicitud.Servicio.id === 15){
+            this.requestService.obtenerPaseCaja(solicitud.id).subscribe({
+                next: res => {
+                    this.spinner.hide();
+                    let url = URL.createObjectURL(res);
+                    window.open(url, '_blank');
+                },
+                error: err => {
+                    this.spinner.hide();
+                    this.messagesService.errorAlert(err.error.errors);
+                }
+            });
         } else {
             const data = {
                 solicitud_id: solicitud.id.toString(),
                 grupo_tramite_id: solicitud.Servicio.grupo_tramite_id.toString(),
                 tramite_id: solicitud.Servicio.tramite_id.toString(),
-                importe: '1445'
+                importe: '2500'
             }
             this.requestService.generateCheckout(data).subscribe({
                 next: res => {

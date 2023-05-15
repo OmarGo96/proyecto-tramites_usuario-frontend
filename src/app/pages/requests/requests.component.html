@@ -59,8 +59,8 @@
                             <div class="space-x-3" *ngIf="element.Estatus.id === 10">
                                 <button mat-stroked-button class="rounded-md" (click)="generateCheckout(element)">Pase a Caja
                                 </button>
-                                <button mat-stroked-button color="primary" class="rounded-md" (click)="paymentLink(element)">Pago en
-                                    línea
+                                <button mat-stroked-button color="primary" class="rounded-md" (click)="paymentLink(element)" *ngIf="element.Servicio.id !== 15">
+                                    Pago en línea
                                 </button>
                             </div>
                             <span class="text-xs"

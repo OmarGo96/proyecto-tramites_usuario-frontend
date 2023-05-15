@@ -38,6 +38,11 @@ const routes: Routes = [
     {
         path: 'reenviar-link-activacion',
         component: ResendActivationLinkComponent
+    },
+    {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full'
     }
 ]
 
