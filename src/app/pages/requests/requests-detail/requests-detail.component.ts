@@ -90,7 +90,6 @@ export class RequestsDetailComponent implements OnInit {
         this.requestsService.getRecord(id).subscribe({
             next: res => {
                 this.request = res.solicitud;
-                console.log(this.request);
                 this.requeriments = res.requisitos;
 
                 if (this.request.DocumentosPago.length > 0){
@@ -113,8 +112,6 @@ export class RequestsDetailComponent implements OnInit {
                         });
                     }
                 }
-
-
 
                 this.reqWithDocuments = res.requisitos.filter((req: any) => req.obligatorio === 1 && req.Requisito.Documento);
                 this.reqMandatory = res.requisitos.filter((req: any) => req.obligatorio === 1);
@@ -445,11 +442,65 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
-    reUploadDocument(reqId: any) {
+    reUploadDocument(documentacionId: any) {
         this.messagesService.confirmDelete('¿Estás seguro de eliminar este archivo?').then((result: any) => {
             if (result.isConfirmed) {
-                this.requestId = reqId;
-                this.reUpload = true;
+                this.spinner.show();
+                this.documentsService.deleteDocumentoSolicitud(documentacionId).subscribe({
+                    next: res => {
+                        this.spinner.hide();
+                        this.messagesService.printStatus(res.message, 'success');
+                        setTimeout(() => {
+                            this.getId();
+                        },2500);
+                    },
+                    error: err => {
+                        this.spinner.hide();
+                        this.messagesService.errorAlert(err.error.errors);
+                    }
+                })
+            }
+        });
+    }
+
+    reUploadDocumentoPago(documentacionId: any) {
+        this.messagesService.confirmDelete('¿Estás seguro de eliminar este archivo?').then((result: any) => {
+            if (result.isConfirmed) {
+                this.spinner.show();
+                this.documentsService.deleteDocumentoPago(documentacionId).subscribe({
+                    next: res => {
+                        this.spinner.hide();
+                        this.messagesService.printStatus(res.message, 'success');
+                        setTimeout(() => {
+                            location.reload();
+                        },2500);
+                    },
+                    error: err => {
+                        this.spinner.hide();
+                        this.messagesService.errorAlert(err.error.errors);
+                    }
+                })
+            }
+        });
+    }
+
+    reUploadDocumentoAnuencia(documentacionId: any) {
+        this.messagesService.confirmDelete('¿Estás seguro de eliminar este archivo?').then((result: any) => {
+            if (result.isConfirmed) {
+                this.spinner.show();
+                this.documentsService.deleteDocumentoAnuencia(documentacionId).subscribe({
+                    next: res => {
+                        this.spinner.hide();
+                        this.messagesService.printStatus(res.message, 'success');
+                        setTimeout(() => {
+                            location.reload();
+                        },2500);
+                    },
+                    error: err => {
+                        this.spinner.hide();
+                        this.messagesService.errorAlert(err.error.errors);
+                    }
+                })
             }
         });
     }

@@ -46,6 +46,10 @@ export class DocumentsService {
         return this.httpClient.post(`${this.urlApi}/documentos-solcicitud`, data, {headers: this.headers})
     }
 
+    public deleteDocumentoSolicitud(documentacionId: any): Observable<any>{
+        return this.httpClient.put(`${this.urlApi}/eliminar-documentacion/${documentacionId}`,null,{headers: this.headers})
+    }
+
     public createDocumentoPago(data: any): Observable<any>{
         return this.httpClient.post(`${this.urlApi}/documentacion-pago`, data, {headers: this.headers})
     }
@@ -54,12 +58,24 @@ export class DocumentsService {
         return this.httpClient.post(`${this.urlApi}/documento-anuencia`, data, {headers: this.headers})
     }
 
+    public deleteDocumentoAnuencia(documentacionId: any): Observable<any>{
+        return this.httpClient.put(`${this.urlApi}/eliminar-documentacion-anuencia/${documentacionId}`,null,{headers: this.headers})
+    }
+
     public createComplementaryDocument(data: any): Observable<any>{
         return this.httpClient.post(`${this.urlApi}/documento-complementaria`, data, {headers: this.headers})
     }
 
+    public deleteComplementaryDocument(documentacionId: any): Observable<any>{
+        return this.httpClient.put(`${this.urlApi}/eliminar-documento-complementario/${documentacionId}`,null,{headers: this.headers})
+    }
+
     public updateDocumentoPago(data: any, documentId: any): Observable<any>{
         return this.httpClient.put(`${this.urlApi}/documentacion-pago/${documentId}`, data, {headers: this.headers})
+    }
+
+    public deleteDocumentoPago(documentacionId: any): Observable<any>{
+        return this.httpClient.put(`${this.urlApi}/eliminar_documentacion_pago/${documentacionId}`,null,{headers: this.headers})
     }
 
     public updateDocumentoAnuencia(data: any, documentId: any): Observable<any>{
@@ -74,6 +90,8 @@ export class DocumentsService {
         return this.httpClient.put(`${this.urlApi}/documentos-solicitud-requisito/${id}`, data, {headers: this.headers})
     }
 
+
+
     public getRequestDocument(requestId: any): Observable<any> {
         return this.httpClient.get(`${this.urlApi}/solicitud/documento-digital/${requestId}'`, { headers: this.headers, responseType: "blob" });
     }
@@ -81,4 +99,6 @@ export class DocumentsService {
     public anuenciaDocument(requestId: any, data: any): Observable<any> {
         return this.httpClient.post(`${this.urlApi}/solicitud/documento-anuencia/${requestId}`, data, {headers: this.headers})
     }
+
+
 }
