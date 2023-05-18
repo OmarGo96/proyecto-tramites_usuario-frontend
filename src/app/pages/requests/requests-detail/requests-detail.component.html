@@ -68,8 +68,17 @@
                                 <dl class="pb-5 text-gray-900">
                                     <div class="border-b flex flex-col px-5 py-5"
                                          *ngFor="let requeriment of requeriments">
+
                                         <dt class="mb-1 text-md">
-                                            {{ requeriment.Requisito.nombre }}
+                                            <span
+                                                class="text-red-800 text-xs"
+                                                *ngIf="requeriment.obligatorio === 1">
+                                                <i class="fa-solid fa-star-of-life fa-xs"></i>
+                                                Requerido
+                                            </span>
+                                            <p>
+                                                {{ requeriment.Requisito.nombre }}
+                                            </p>
                                         </dt>
                                         <dd class="flex items-center justify-between font-medium text-gray-500">
                                             <div class="flex space-x-2">
@@ -81,15 +90,14 @@
                                                     Examinar archivos
                                                 </button>
                                                 <!-- Boton para eliminar el documento actual y actualizarlo. No se ha enviado la solicitud antes. -->
-                                                <div class="flex"
-                                                     *ngIf="requestId !== requeriment.Requisito.id && request.estatus_solicitud_id !== 2">
+                                                <ng-container *ngIf="requestId !== requeriment.Requisito.id && request.estatus_solicitud_id !== 2">
                                                     <button mat-stroked-button color="warn"
                                                             class="px-3 py-2 text-xs font-medium rounded-md"
                                                             (click)="reUploadDocument(requeriment.Requisito.Documento.id)"
                                                             *ngIf="requeriment.Requisito.Documento && requeriment.Requisito.Documento.estatus === 0 && request.estatus_solicitud_id !== 12">
                                                         Eliminar y subir nuevamente
                                                     </button>
-                                                </div>
+                                                </ng-container>
                                                 <!-- Adjuntar nuevamente el documento cuando se elimino. No se ha envado la solicitud
                                                 <button mat-stroked-button color="primary"
                                                         (click)="reSelectDocumentToUpdate(requeriment.Requisito.id, requeriment.Requisito.Documento.id)"
@@ -129,15 +137,10 @@
                                                 <span
                                                     class="bg-gray-200 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded"
                                                     *ngIf="requeriment.Requisito.Documento && requeriment.Requisito.Documento.estatus === -1">
-                                                    <i class="fa-solid fa-circle-xmark"></i>
-                                                Rechazado
-                                            </span>
-                                                <span
-                                                    class="bg-red-200 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded"
-                                                    *ngIf="requeriment.obligatorio === 1">
-                                                <i class="fa-solid fa-star-of-life fa-xs"></i>
-                                                Requerido
-                                            </span>
+                                                        <i class="fa-solid fa-circle-xmark"></i>
+                                                    Rechazado
+                                                </span>
+
                                             </div>
                                         </dd>
                                     </div>
@@ -369,7 +372,7 @@
                                                             class="px-3 py-2 text-xs font-medium rounded-md">
                                                         Examinar archivos
                                                     </button>
-                                                    <button mat-stroked-button color="primary" (click)="reSelectComplementaryDocumentToUpdate(request.DocumentosComplementarios.id)"
+                                                    <button mat-flat-button color="primary" (click)="reSelectComplementaryDocumentToUpdate(request.DocumentosComplementarios.id)"
                                                             *ngIf="request.DocumentosComplementarios && request.DocumentosComplementarios.status === -1"
                                                             class="px-3 py-2 text-xs font-medium rounded-md">
                                                         Adjuntar nuevamente
