@@ -505,6 +505,27 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
+    reUploadDocumentoComplementario(documentacionId: any) {
+        this.messagesService.confirmDelete('¿Estás seguro de eliminar este archivo?').then((result: any) => {
+            if (result.isConfirmed) {
+                this.spinner.show();
+                this.documentsService.deleteDocumentoComplementario(documentacionId).subscribe({
+                    next: res => {
+                        this.spinner.hide();
+                        this.messagesService.printStatus(res.message, 'success');
+                        setTimeout(() => {
+                            location.reload();
+                        },2500);
+                    },
+                    error: err => {
+                        this.spinner.hide();
+                        this.messagesService.errorAlert(err.error.errors);
+                    }
+                })
+            }
+        });
+    }
+
     uploadFiles() {
         this.files.forEach((file: any) => {
             this.createDocuments(file);

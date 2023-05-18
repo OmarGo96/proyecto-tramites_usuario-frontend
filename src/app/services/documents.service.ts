@@ -86,6 +86,10 @@ export class DocumentsService {
         return this.httpClient.put(`${this.urlApi}/documento-complementaria/${documentId}`, data, {headers: this.headers})
     }
 
+    public deleteDocumentoComplementario(documentacionId: any): Observable<any>{
+        return this.httpClient.put(`${this.urlApi}/eliminar-documento-complementario/${documentacionId}`,null,{headers: this.headers})
+    }
+
     public updateDocumentSolicitudRequisito(id: any, data: any): Observable<any>{
         return this.httpClient.put(`${this.urlApi}/documentos-solicitud-requisito/${id}`, data, {headers: this.headers})
     }

@@ -90,20 +90,20 @@
                                                         Eliminar y subir nuevamente
                                                     </button>
                                                 </div>
-                                                <!-- Adjuntar nuevamente el documento cuando se elimino. No se ha envado la solicitud  -->
-                                                <!--<button mat-stroked-button color="primary"
+                                                <!-- Adjuntar nuevamente el documento cuando se elimino. No se ha envado la solicitud
+                                                <button mat-stroked-button color="primary"
                                                         (click)="reSelectDocumentToUpdate(requeriment.Requisito.id, requeriment.Requisito.Documento.id)"
                                                         class="px-3 py-2 text-xs font-medium rounded-md"
                                                         *ngIf="reUpload && requestId === requeriment.Requisito.id">
                                                     Adjuntar nuevamente
-                                                </button>
-                                                &lt;!&ndash; Adjuntar nuevamente el documento cuando ya se ha rechazado por el admin &ndash;&gt;
-                                                <button mat-stroked-button color="accent"
+                                                </button>-->
+                                                <!-- Adjuntar nuevamente el documento cuando ya se ha rechazado por el admin -->
+                                                <button mat-flat-button color="primary"
                                                         class="px-3 py-2 text-xs font-medium rounded-md"
                                                         (click)="reSelectDocumentToUpdate(requeriment.Requisito.id, requeriment.Requisito.Documento.id)"
                                                         *ngIf="requeriment.Requisito.Documento && (requeriment.Requisito.Documento.estatus === -1)">
                                                     Adjuntar nuevamente
-                                                </button>-->
+                                                </button>
                                                 <!-- Ver documento adjunto por contribuyente -->
                                                 <button mat-stroked-button color="primary"
                                                         class="px-3 py-2 text-xs font-medium rounded-md"
@@ -196,6 +196,12 @@
                                                             class="px-3 py-2 text-xs font-medium rounded-md">
                                                         Examinar archivos
                                                     </button>
+                                                    <button mat-flat-button color="primary"
+                                                            *ngIf="doc.doc && (doc.doc['status'] === -1)"
+                                                            (click)="reSelectPaymentDocumentToUpdate(doc.id, doc.doc['id'])"
+                                                            class="px-3 py-2 text-xs font-medium rounded-md">
+                                                        Adjuntar nuevamente
+                                                    </button>
                                                     <button mat-stroked-button color="warn"
                                                             class="px-3 py-2 text-xs font-medium rounded-md"
                                                             (click)="reUploadDocumentoPago(doc.doc['id'])"
@@ -206,7 +212,7 @@
                                                     <!-- Ver documento adjunto por contribuyente -->
                                                     <button mat-stroked-button color="primary"
                                                             class="px-3 py-2 text-xs font-medium rounded-md"
-                                                            *ngIf="doc.doc && doc.doc['status'] === 0"
+                                                            *ngIf="doc.doc"
                                                             (click)="openDocument(doc.doc['documentacion_id'])">
                                                         Ver adjunto
                                                     </button>
@@ -227,6 +233,12 @@
                                                           class="bg-green-200 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
                                                         <i class="fa-solid fa-circle-check"></i>
                                                         Aceptado
+                                                    </span>
+                                                    <span
+                                                        class="bg-gray-200 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded"
+                                                        *ngIf="doc.doc && doc.doc['status'] === -1">
+                                                            <i class="fa-solid fa-circle-xmark"></i>
+                                                        Rechazado
                                                     </span>
                                                 </div>
                                             </dd>
@@ -262,13 +274,19 @@
                                             <dt class="mb-1 text-md">
                                                 {{ doc.name }}
                                             </dt>
-                                            <dd class="flex items-center justify-between items-center font-medium text-gray-500">
+                                            <dd class="flex items-center justify-between font-medium text-gray-500">
                                                 <div class="flex space-x-2">
                                                     <!-- Subir documentos por primera vez -->
                                                     <button mat-flat-button color="primary" *ngIf="!doc.doc"
                                                             (click)="selectAnuenciaDocument(doc.id)"
                                                             class="px-3 py-2 text-xs font-medium rounded-md">
                                                         Examinar archivos
+                                                    </button>
+                                                    <button mat-flat-button color="primary"
+                                                            *ngIf="doc.doc && (doc.doc['status'] === -1)"
+                                                            (click)="reSelectAnuenciaDocumentToUpdate(doc.id, doc.doc['id'])"
+                                                            class="px-3 py-2 text-xs font-medium rounded-md">
+                                                        Adjuntar nuevamente
                                                     </button>
 
                                                     <button mat-stroked-button color="warn"
@@ -277,6 +295,7 @@
                                                             *ngIf="doc.doc && doc.doc['status'] === 0">
                                                         Eliminar y subir nuevamente
                                                     </button>
+
                                                     <!--<button mat-stroked-button color="primary"
                                                             *ngIf="doc.doc && (doc.doc['status'] === -1)"
                                                             (click)="reSelectAnuenciaDocumentToUpdate(doc.id, doc.doc['id'])"
@@ -287,7 +306,7 @@
                                                     <!-- Ver documento adjunto por contribuyente -->
                                                     <button mat-stroked-button color="primary"
                                                             class="px-3 py-2 text-xs font-medium rounded-md"
-                                                            *ngIf="doc.doc && doc.doc['status'] === 0"
+                                                            *ngIf="doc.doc"
                                                             (click)="openDocument(doc.doc['documentacion_id'])">
                                                         Ver adjunto
                                                     </button>
@@ -309,6 +328,12 @@
                                                         <i class="fa-solid fa-circle-check"></i>
                                                         Aceptado
                                                     </span>
+                                                    <span
+                                                        class="bg-gray-200 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded"
+                                                        *ngIf="doc.doc && doc.doc['status'] === -1">
+                                                            <i class="fa-solid fa-circle-xmark"></i>
+                                                        Rechazado
+                                                    </span>
                                                 </div>
                                             </dd>
                                         </div>
@@ -329,14 +354,6 @@
                         <ng-container
                             *ngIf="request.estatus_solicitud_id === 24">
                             <div class="border-t border-gray-200">
-                                <!--div *ngIf="request.estatus_solicitud_id === 21"
-                                     class="flex p-4 mb-4 text-sm text-yellow-800 border border-yellow-300 bg-yellow-50">
-                                    <i class="fa-solid fa-circle-info fa-lg mr-3"></i>
-                                    <div>
-                                        Es probable que alguno de los documentos haya sido rechazado. Revisa y adjunta
-                                        nuevamente el archivo.
-                                    </div>
-                                </div>-->
                                 <dl class="pb-5 text-gray-900">
                                     <ng-container>
                                         <div class="border-b flex flex-col px-5 py-5">
@@ -357,11 +374,17 @@
                                                             class="px-3 py-2 text-xs font-medium rounded-md">
                                                         Adjuntar nuevamente
                                                     </button>
+                                                    <button mat-stroked-button color="warn"
+                                                            class="px-3 py-2 text-xs font-medium rounded-md"
+                                                            (click)="reUploadDocumentoComplementario(request.DocumentosComplementarios.id)"
+                                                            *ngIf="request.DocumentosComplementarios && request.DocumentosComplementarios.status === 0">
+                                                        Eliminar y subir nuevamente
+                                                    </button>
 
                                                     <!-- Ver documento adjunto por contribuyente -->
                                                     <button mat-stroked-button color="primary"
                                                             (click)="openDocument(request.DocumentosComplementarios.documentacion_id)"
-                                                            *ngIf="request.DocumentosComplementarios && request.DocumentosComplementarios.status === 0"
+                                                            *ngIf="request.DocumentosComplementarios"
                                                             class="px-3 py-2 text-xs font-medium rounded-md">
                                                         Ver adjunto
                                                     </button>
@@ -378,6 +401,12 @@
                                                         class="bg-green-200 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
                                                         <i class="fa-solid fa-circle-check"></i>
                                                         Aceptado
+                                                    </span>
+                                                    <span
+                                                        class="bg-gray-200 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded"
+                                                        *ngIf="request.DocumentosComplementarios && request.DocumentosComplementarios.status === -1">
+                                                            <i class="fa-solid fa-circle-xmark"></i>
+                                                        Rechazado
                                                     </span>
                                                 </div>
                                             </dd>
