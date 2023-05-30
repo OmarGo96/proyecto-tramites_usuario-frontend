@@ -45,6 +45,10 @@ export class SidebarComponent implements OnInit {
         }
     }
 
+    logout(): void {
+        this.usersService.logout();
+    }
+
 }
 
 export const ROUTES = [
