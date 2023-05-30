@@ -24,6 +24,6 @@ export class DependenciesService {
     }
 
     public getRecords(): Observable <any> {
-        return this.httpClient.get(`${this.urlApi}/areas`, {headers: this.headers});
+        return this.httpClient.get(`${this.urlApi}/contribuyente/areas`, {headers: this.headers});
     }
 }

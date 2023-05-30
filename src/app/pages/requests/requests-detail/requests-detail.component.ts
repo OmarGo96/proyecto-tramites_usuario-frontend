@@ -660,7 +660,7 @@ export class RequestsDetailComponent implements OnInit {
     }
 
     redirectToService(){
-        this.router.navigate(['escritorio/servicio/aef9778e-7117-4619-9cb8-bf7f1c865968']);
+        this.router.navigate(['escritorio/tramites/8e9b4ee4-6d60-41fd-851e-3e7d0ce06c4e']);
     }
 
 }

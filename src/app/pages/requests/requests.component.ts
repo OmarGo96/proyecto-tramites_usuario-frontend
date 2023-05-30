@@ -75,7 +75,7 @@ export class RequestsComponent implements OnInit {
                     this.messagesService.errorAlert(err.error.errors);
                 }
             });
-        } else if(solicitud.Servicio.id === 15){
+        } else if(solicitud.Servicio.id === 15 || solicitud.Servicio.id === 21 || solicitud.Servicio.id === 22){
             this.requestService.obtenerPaseCaja(solicitud.id).subscribe({
                 next: res => {
                     this.spinner.hide();
