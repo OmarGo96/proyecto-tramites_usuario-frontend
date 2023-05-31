@@ -32,8 +32,8 @@ export class RequestService {
         return this.httpClient.post(`${this.urlApi}/solicitudes`, data, { headers: this.headers });
     }
 
-    public updateRecord(data: any): Observable <any> {
-        return this.httpClient.post(`${this.urlApi}/cambiar_solicitud_estatus`, data, { headers: this.headers });
+    public updateRecord(data: any, solicitudId: any): Observable <any> {
+        return this.httpClient.post(`${this.urlApi}/cambiar_solicitud_estatus/${solicitudId}`, data, { headers: this.headers });
     }
 
     public getHistory(id: any): Observable <any> {

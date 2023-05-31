@@ -4,17 +4,11 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {RequestService} from "../../../services/request.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {RequestsStatus} from "../../../const/status";
-
-import {
-    RequestHistoryModalComponent
-} from "../../../layouts/modals/request-history-modal/request-history-modal.component";
-import {MessagesModalComponent} from "../../../layouts/modals/messages-modal/messages-modal.component";
 import {MatDialog} from "@angular/material/dialog";
 import {DocumentsModalComponent} from "../../../layouts/modals/documents-modal/documents-modal.component";
 import {DocumentsService} from "../../../services/documents.service";
 import {FormBuilder, UntypedFormBuilder} from "@angular/forms";
 import {NgxSpinner, NgxSpinnerService} from "ngx-spinner";
-import {UploadModalComponent} from "../../../layouts/modals/upload-modal/upload-modal.component";
 import {PaymentDocs} from "../../../const/payment-docs";
 import {AnuenciaDocs} from "../../../const/anuencia-docs";
 
@@ -156,9 +150,9 @@ export class RequestsDetailComponent implements OnInit {
     saveRequest(status: any) {
         this.spinner.show();
         this.solicitudForm.controls.estatus_solicitud_id.setValue(status);
-        this.solicitudForm.controls.solicitud_id.setValue(this.request.id.toString());
+        // this.solicitudForm.controls.solicitud_id.setValue(this.request.id.toString());
         const data = this.solicitudForm.value;
-        this.requestsService.updateRecord(data).subscribe({
+        this.requestsService.updateRecord(data, this.request.id.toString()).subscribe({
             next: res => {
                 this.spinner.hide();
                 this.messagesService.printStatus(res.message, 'success');
@@ -176,9 +170,9 @@ export class RequestsDetailComponent implements OnInit {
     validatePayment(status: any){
         this.spinner.show();
         this.solicitudForm.controls.estatus_solicitud_id.setValue(status);
-        this.solicitudForm.controls.solicitud_id.setValue(this.request.id.toString());
+        // this.solicitudForm.controls.solicitud_id.setValue(this.request.id.toString());
         const data = this.solicitudForm.value;
-        this.requestsService.updateRecord(data).subscribe({
+        this.requestsService.updateRecord(data, this.request.id.toString()).subscribe({
             next: res => {
                 this.spinner.hide();
                 this.messagesService.printStatus(res.message, 'success');
@@ -196,9 +190,9 @@ export class RequestsDetailComponent implements OnInit {
     validateAnuencia(status: any){
         this.spinner.show();
         this.solicitudForm.controls.estatus_solicitud_id.setValue(status);
-        this.solicitudForm.controls.solicitud_id.setValue(this.request.id.toString());
+        // this.solicitudForm.controls.solicitud_id.setValue(this.request.id.toString());
         const data = this.solicitudForm.value;
-        this.requestsService.updateRecord(data).subscribe({
+        this.requestsService.updateRecord(data, this.request.id.toString()).subscribe({
             next: res => {
                 this.spinner.hide();
                 this.messagesService.printStatus(res.message, 'success');
@@ -599,9 +593,9 @@ export class RequestsDetailComponent implements OnInit {
     validateComplementaryDocument(status: any){
         this.spinner.show();
         this.solicitudForm.controls.estatus_solicitud_id.setValue(status);
-        this.solicitudForm.controls.solicitud_id.setValue(this.request.id.toString());
+        // this.solicitudForm.controls.solicitud_id.setValue(this.request.id.toString());
         const data = this.solicitudForm.value;
-        this.requestsService.updateRecord(data).subscribe({
+        this.requestsService.updateRecord(data, this.request.id.toString()).subscribe({
             next: res => {
                 this.spinner.hide();
                 this.messagesService.printStatus(res.message, 'success');
@@ -633,10 +627,9 @@ export class RequestsDetailComponent implements OnInit {
 
     updateRequestEstatus(){
         const data = {
-            estatus_solicitud_id: '23',
-            solicitud_id: this.request.id.toString()
+            estatus_solicitud_id: '23'
         };
-        this.requestsService.updateRecord(data).subscribe({
+        this.requestsService.updateRecord(data, this.request.id.toString()).subscribe({
             next: res => {
                 this.spinner.hide();
                 this.messagesService.printStatus(res.message, 'success');

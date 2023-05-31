@@ -46,6 +46,7 @@ export class RequestsComponent implements OnInit {
         this.spinner.show();
         this.requestService.getRecords().subscribe({
             next: res => {
+                console.log(res.solicitudes);
                 this.spinner.hide();
                 this.dataSource = new MatTableDataSource(res.solicitudes);
                 this.dataSource.paginator = this.paginator;
@@ -159,10 +160,9 @@ export class RequestsComponent implements OnInit {
                 if (result.isConfirmed) {
                     this.spinner.show();
                     const data = {
-                        estatus_solicitud_id: '13',
-                        solicitud_id: solicitudId.toString()
+                        estatus_solicitud_id: '13'
                     };
-                    this.requestService.updateRecord(data).subscribe({
+                    this.requestService.updateRecord(data, solicitudId.toString()).subscribe({
                         next: res => {
                             this.spinner.hide();
                             this.messagesService.printStatus(res.message, 'success');
