@@ -31,9 +31,37 @@
                         </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="tramite">
-                        <th mat-header-cell *matHeaderCellDef> Trámite/Servicio</th>
-                        <td mat-cell *matCellDef="let element">{{ element.servicio | excerpt:90 }}</td>
+                    <ng-container matColumnDef="area">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Area/Dependencia
+                        </th>
+                        <td mat-cell *matCellDef="let element">{{ element.area }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="servicio">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Trámite/Servicio
+                        </th>
+                        <td mat-cell *matCellDef="let element">{{ element.servicio }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="licencia">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Número de Licencia
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                                <span
+                                    class="inline-flex items-center font-bold px-2.5 py-0.5 rounded-full tracking-wide uppercase">
+                                        <span class="whitespace-nowrap text-xs">{{element.licencia}}</span>
+                                    </span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="contribuyente">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Contribuyente
+                        </th>
+                        <td mat-cell *matCellDef="let element">{{ element.contribuyente }}</td>
                     </ng-container>
 
                     <ng-container matColumnDef="creado">

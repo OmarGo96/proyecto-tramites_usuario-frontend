@@ -18,7 +18,7 @@ export class RequestsComponent implements OnInit {
 
 
     public dataSource: any;
-    public displayedColumns: string[] = ['folio', 'tramite', 'creado', 'estatus', 'pago', 'accion'];
+    public displayedColumns: string[] = ['folio', 'servicio', 'licencia', 'area', 'contribuyente', 'creado', 'estatus', 'pago', 'accion'];
     public expandedElement: any;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
