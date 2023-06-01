@@ -57,7 +57,7 @@
                                     <p class="text-sm">Anuencia de protección civil</p>
                                 </span>
                             </li>
-                            <li class="flex items-center text-gray-300 space-x-2.5">
+                            <li class="flex items-center text-gray-300 space-x-2.5" *ngIf="request.servicio_id !== 13">
                                 <span>
                                     <p class="text-sm">Descargar archivo</p>
                                 </span>
@@ -433,7 +433,7 @@
                         </ng-container>
 
                         <!-- Descargar documento trámite -->
-                        <ng-container *ngIf="request.estatus_solicitud_id === 9 || request.estatus_solicitud_id === 18">
+                        <ng-container *ngIf="request.estatus_solicitud_id === 9 || request.estatus_solicitud_id === 18 && (request.servicio_id !== 13)">
                             <div class=" border-t border-gray-200">
                                 <div
                                     class="flex p-4 mb-4 text-sm text-green-800 border border-green-300 bg-green-50">
@@ -521,8 +521,26 @@
                             </div>
                         </ng-container>
 
+                        <ng-container *ngIf="request.estatus_solicitud_id === 12">
+                            <div class="w-full mx-auto block p-10 text-center space-y-3">
+                                <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
+                                <div>
+                                    <p class="font-medium text-lg">La solicitud esta en validación de requisitos</p>
+                                    <p>En cuanto tengamos noticias te nofiticaremos. Gracias por tu paciencia.</p>
+                                </div>
+                            </div>
+                        </ng-container>
 
 
+                        <ng-container *ngIf="request.estatus_solicitud_id === 9 || request.estatus_solicitud_id === 18 && (request.servicio_id === 13)">
+                            <div class="w-full mx-auto block p-10 text-center space-y-3">
+                                <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
+                                <div>
+                                    <p class="font-medium text-lg">El trámite se aprobo y se finalizo con éxito</p>
+                                    <p><b>¡Importante!</b> Conserva tu comprobante de pago para futuros trámites.</p>
+                                </div>
+                            </div>
+                        </ng-container>
 
 
                     </div>
