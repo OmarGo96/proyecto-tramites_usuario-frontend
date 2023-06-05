@@ -57,7 +57,7 @@ export class RegisterComponent implements OnInit {
             next: res => {
                 this.spinner.hide();
                 this.registerForm.reset();
-                this.router.navigate(['login']);
+                this.router.navigate(['login', 1]);
             },
             error: err => {
                 this.spinner.hide();

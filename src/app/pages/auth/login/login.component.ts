@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UntypedFormBuilder, Validators} from "@angular/forms";
 import {UsersService} from "../../../services/users.service";
 import {MessageService} from "../../../services/messages.service";
@@ -23,17 +23,29 @@ export class LoginComponent implements OnInit {
 
     public currentYear = moment().format('YYYY')
 
+    public firstLogin = false;
+
     constructor(
         private formBuilder: UntypedFormBuilder,
         private usersService: UsersService,
         private messagesService: MessageService,
         private spinner: NgxSpinnerService,
+        private activatedRoute: ActivatedRoute,
         private router: Router,
     ) {
     }
 
     ngOnInit(): void {
+        this.isFirstLogin();
         this.initLoginForm()
+    }
+
+    isFirstLogin(){
+        this.activatedRoute.params.subscribe(params => {
+            if (params['first'] === '1'){
+                this.firstLogin = true;
+            }
+        });
     }
 
     initLoginForm() {
