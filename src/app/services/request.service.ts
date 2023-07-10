@@ -49,7 +49,7 @@ export class RequestService {
     }
 
     public obtenerPaseCaja(requestId: any): Observable <any> {
-        return this.httpClient.get(`${this.urlApi}/solicitud/pase-caja/${requestId}`, { headers: this.headers, responseType: "blob" });
+        return this.httpClient.get(`${this.urlApi}/solicitud/pase-caja/${requestId}`, { headers: this.headers, responseType: "blob"});
     }
 
     public paymentLink(data: any): Observable <any> {

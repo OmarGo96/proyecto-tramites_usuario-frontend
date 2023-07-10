@@ -76,7 +76,7 @@ export class RequestsComponent implements OnInit {
                     this.messagesService.errorAlert(err.error.errors);
                 }
             });
-        } else if([15, 21, 22, 5, 13].includes(solicitud.Servicio.id)){
+        } else if([15, 21, 22, 5, 13, 24, 11].includes(solicitud.Servicio.id)){
             this.requestService.obtenerPaseCaja(solicitud.id).subscribe({
                 next: res => {
                     this.spinner.hide();
@@ -85,7 +85,7 @@ export class RequestsComponent implements OnInit {
                 },
                 error: err => {
                     this.spinner.hide();
-                    this.messagesService.errorAlert(err.error.errors);
+                    this.messagesService.errorAlert([{message: 'Ocurrio un problema al obtener el PDF. Intentalo más tarde.'}]);
                 }
             });
         } else {

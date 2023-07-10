@@ -50,6 +50,12 @@
                                     <p class="text-sm">Validación de pago</p>
                                 </span>
                             </li>
+                            <!--<li class="flex items-center space-x-2.5"
+                                [ngClass]="request.estatus_solicitud_id === 10 || request.estatus_solicitud_id === 20 || request.estatus_solicitud_id === 21 ? 'text-blue-600' : 'text-gray-300'">
+                                <span>
+                                    <p class="text-sm">Visita Topográfica</p>
+                                </span>
+                            </li>-->
                             <li class="flex items-center space-x-2.5"
                                 *ngIf="request.servicio_id === 6 || request.servicio_id === 7"
                                 [ngClass]="request.estatus_solicitud_id === 22 ? 'text-blue-600' : 'text-gray-300'">
@@ -531,7 +537,7 @@
                         </ng-container>
 
 
-                        <ng-container *ngIf="request.estatus_solicitud_id === 9 || request.estatus_solicitud_id === 18 && (request.servicio_id === 13)">
+                        <ng-container *ngIf="(request.estatus_solicitud_id === 9 || request.estatus_solicitud_id === 18) && (request.servicio_id === 13)">
                             <div class="w-full mx-auto block p-10 text-center space-y-3">
                                 <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
                                 <div>

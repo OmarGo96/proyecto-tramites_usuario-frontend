@@ -178,6 +178,7 @@ export class MessageService {
     }
 
     errorAlert(messages: any) {
+        console.log(messages);
         let msg;
         messages.forEach((m: any) => {
             msg = m.message;
