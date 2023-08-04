@@ -37,8 +37,7 @@
                                     <p class="text-sm">Adjuntar requisitos</p>
                                 </span>
                             </li>
-                            <li class="flex items-center space-x-2.5"
-                                *ngIf="request.servicio_id === 15 || request.servicio_id === 21 || request.servicio_id === 22"
+                            <li class="flex items-center space-x-2.5" *ngIf="[15, 21, 22, 2].includes(request.servicio_id)"
                                 [ngClass]="request.estatus_solicitud_id === 24 ? 'text-blue-600' : 'text-gray-300'">
                                 <span>
                                     <p class="text-sm">Documentación complementaria</p>
@@ -50,12 +49,20 @@
                                     <p class="text-sm">Validación de pago</p>
                                 </span>
                             </li>
-                            <li class="flex items-center space-x-2.5"
+                            <li class="flex items-center space-x-2.5" *ngIf="[11].includes(request.servicio_id)"
                                 [ngClass]="request.estatus_solicitud_id === 27 || request.estatus_solicitud_id === 28 || request.estatus_solicitud_id === 29  ? 'text-blue-600' : 'text-gray-300'">
                                 <span>
                                     <p class="text-sm">Visita Topográfica</p>
                                 </span>
                             </li>
+
+                            <li class="flex items-center space-x-2.5" *ngIf="[2].includes(request.servicio_id)"
+                                [ngClass]="request.estatus_solicitud_id === 31 ? 'text-blue-600' : 'text-gray-300'">
+                                <span>
+                                    <p class="text-sm">Visita para valuación</p>
+                                </span>
+                            </li>
+
                             <li class="flex items-center space-x-2.5"
                                 *ngIf="request.servicio_id === 6 || request.servicio_id === 7"
                                 [ngClass]="request.estatus_solicitud_id === 22 ? 'text-blue-600' : 'text-gray-300'">
@@ -639,6 +646,30 @@
                                 <i class="fa-regular fa-clock fa-5x text-slate-500"></i>
                                 <div>
                                     <p class="font-medium text-lg">La solicitud esta en Visita Topográfica</p>
+                                    <p>Fecha programada de la visita: <b>{{request.fecha_visita | date }}</b></p>
+                                </div>
+                            </div>
+                        </ng-container>
+
+
+                        <!-- visita para valuación -->
+                        <ng-container *ngIf="request.estatus_solicitud_id === 31 && request.fecha_visita">
+                        <div class="w-full mx-auto block p-10 text-center space-y-3">
+                            <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
+                            <div>
+                                <p class="font-medium text-lg">La visita para valuación ha sido programada.</p>
+                                <p>Te estaremos visitando el día {{ request.fecha_visita | date }} en un horario de 9 a 5 PM</p>
+                            </div>
+                        </div>
+                        </ng-container>
+
+                        <!-- en visita-->
+                        <ng-container
+                            *ngIf="request.estatus_solicitud_id === 32">
+                            <div class="w-full mx-auto block p-10 text-center space-y-3">
+                                <i class="fa-regular fa-clock fa-5x text-slate-500"></i>
+                                <div>
+                                    <p class="font-medium text-lg">La solicitud esta en Visita para valuación</p>
                                     <p>Fecha programada de la visita: <b>{{request.fecha_visita | date }}</b></p>
                                 </div>
                             </div>
