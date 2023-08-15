@@ -120,4 +120,44 @@ export const RequestsStatus = [
         value: 7,
         styles: 'bg-rose-200 text-rose-800'
     },
+    {
+        name: 'Programar visita topografica',
+        value: 27,
+        styles: 'bg-indigo-200 text-indigo-800'
+    },
+    {
+        name: 'En visita topografica',
+        value: 28,
+        styles: 'bg-indigo-200 text-indigo-800'
+    },
+    {
+        name: 'Sin puntos de distinción',
+        value: 29,
+        styles: 'bg-indigo-200 text-indigo-800'
+    },
+    {
+        name: 'En validación de puntos de distinción',
+        value: 30,
+        styles: 'bg-indigo-200 text-indigo-800'
+    },
+    {
+        name: 'Programar visita para valuación',
+        value: 31,
+        styles: 'bg-indigo-200 text-indigo-800'
+    },
+    {
+        name: 'En visita para valuación',
+        value: 32,
+        styles: 'bg-indigo-200 text-indigo-800'
+    },
+    {
+        name: 'Realizar cambio de propietario',
+        value: 33,
+        styles: 'bg-indigo-200 text-indigo-800'
+    },
+    {
+        name: 'Cambio de propietario aplicado',
+        value: 34,
+        styles: 'bg-indigo-200 text-indigo-800'
+    }
 ]

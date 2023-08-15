@@ -609,6 +609,26 @@
                             </div>
                         </ng-container>
 
+                        <ng-container *ngIf="request.estatus_solicitud_id === 33">
+                            <div class="w-full mx-auto block p-10 text-center space-y-3">
+                                <i class="fa-solid fa-clock fa-5x text-slate-500"></i>
+                                <div>
+                                    <p class="font-medium text-lg">Se esta realizando el cambio de propietario</p>
+                                    <p>Favor de estar al pendiente del estatus de tu solicitud. Gracias por tu paciencia..</p>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="request.estatus_solicitud_id === 34">
+                            <div class="w-full mx-auto block p-10 text-center space-y-3">
+                                <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
+                                <div>
+                                    <p class="font-medium text-lg">Se aplico el cambio de propietario correctamente</p>
+                                    <p>Favor de estar al pendiente del estatus de tu solicitud. Gracias por tu paciencia..</p>
+                                </div>
+                            </div>
+                        </ng-container>
+
                         <ng-container *ngIf="request.estatus_solicitud_id === 12">
                             <div class="w-full mx-auto block p-10 text-center space-y-3">
                                 <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
