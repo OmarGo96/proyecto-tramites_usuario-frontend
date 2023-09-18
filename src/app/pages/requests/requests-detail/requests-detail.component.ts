@@ -412,7 +412,51 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
-    openDocument(documentId: any) {
+    openDocument(documentacion: any) {
+        this.documentsService.getUserDocument(documentacion.id).subscribe({
+            next: res => {
+                let downloadURL = window.URL.createObjectURL(res);
+
+                if(res.type == 'application/dwg' || res.type == 'application/dxf') {
+                    let link = document.createElement('a');
+                    link.href = downloadURL;
+                    link.download = documentacion.url;
+                    link.click();
+                }  else {
+                    window.open(downloadURL, '_blank')
+                }
+            },
+            error: err => {
+                this.messagesService.printStatus('Algo salio mal al obtener el documento. Intente mas tarde.', 'warning');
+            }
+        });
+    }
+
+    openPaymentDocument(documentId: any) {
+        this.documentsService.getUserDocument(documentId).subscribe({
+            next: res => {
+                let url = URL.createObjectURL(res);
+                window.open(url, '_blank');
+            },
+            error: err => {
+                this.messagesService.printStatus('Algo salio mal al obtener el documento. Intente mas tarde.', 'warning');
+            }
+        });
+    }
+
+    openAnuenciaDocument(documentId: any) {
+        this.documentsService.getUserDocument(documentId).subscribe({
+            next: res => {
+                let url = URL.createObjectURL(res);
+                window.open(url, '_blank');
+            },
+            error: err => {
+                this.messagesService.printStatus('Algo salio mal al obtener el documento. Intente mas tarde.', 'warning');
+            }
+        });
+    }
+
+    openDocumentComplementary(documentId: any) {
         this.documentsService.getUserDocument(documentId).subscribe({
             next: res => {
                 let url = URL.createObjectURL(res);

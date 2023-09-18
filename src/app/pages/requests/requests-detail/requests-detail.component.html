@@ -131,7 +131,7 @@
                                                 <!-- Ver documento adjunto por contribuyente -->
                                                 <button mat-stroked-button color="primary"
                                                         class="px-3 py-2 text-xs font-medium rounded-md"
-                                                        (click)="openDocument(requeriment.Requisito.Documento.Documentacion.id)"
+                                                        (click)="openDocument(requeriment.Requisito.Documento.Documentacion)"
                                                         *ngIf="requeriment.Requisito.Documento && requeriment.Requisito.Documento.estatus !== -2">
                                                     Ver adjunto
                                                 </button>
@@ -207,7 +207,7 @@
                                             <dt class="mb-1 text-md">
                                                 {{ doc.name }}
                                             </dt>
-                                            <dd class="flex items-center justify-between items-center font-medium text-gray-500">
+                                            <dd class="flex items-center justify-between font-medium text-gray-500">
                                                 <div class="flex space-x-2">
                                                     <!-- Subir documentos por primera vez -->
                                                     <button mat-flat-button color="primary" *ngIf="!doc.doc"
@@ -232,7 +232,7 @@
                                                     <button mat-stroked-button color="primary"
                                                             class="px-3 py-2 text-xs font-medium rounded-md"
                                                             *ngIf="doc.doc"
-                                                            (click)="openDocument(doc.doc['documentacion_id'])">
+                                                            (click)="openPaymentDocument(doc.doc['documentacion_id'])">
                                                         Ver adjunto
                                                     </button>
                                                     <!-- Ver documento adjunto por contribuyente -->
@@ -326,7 +326,7 @@
                                                     <button mat-stroked-button color="primary"
                                                             class="px-3 py-2 text-xs font-medium rounded-md"
                                                             *ngIf="doc.doc"
-                                                            (click)="openDocument(doc.doc['documentacion_id'])">
+                                                            (click)="openAnuenciaDocument(doc.doc['documentacion_id'])">
                                                         Ver adjunto
                                                     </button>
                                                     <!-- Ver documento adjunto por contribuyente -->
@@ -402,7 +402,7 @@
 
                                                     <!-- Ver documento adjunto por contribuyente -->
                                                     <button mat-stroked-button color="primary"
-                                                            (click)="openDocument(request.DocumentosComplementarios.documentacion_id)"
+                                                            (click)="openDocumentComplementary(request.DocumentosComplementarios.documentacion_id)"
                                                             *ngIf="request.DocumentosComplementarios"
                                                             class="px-3 py-2 text-xs font-medium rounded-md">
                                                         Ver adjunto
@@ -478,7 +478,7 @@
 
                                                     <!-- Ver documento adjunto por contribuyente -->
                                                     <button mat-stroked-button color="primary"
-                                                            (click)="openDocument(request.DocumentosComplementarios.documentacion_id)"
+                                                            (click)="openDocumentComplementary(request.DocumentosComplementarios.documentacion_id)"
                                                             *ngIf="request.DocumentosComplementarios"
                                                             class="px-3 py-2 text-xs font-medium rounded-md">
                                                         Ver adjunto

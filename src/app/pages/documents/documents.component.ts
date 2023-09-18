@@ -71,16 +71,25 @@ export class DocumentsComponent implements OnInit {
         })
     }
 
-    openDocument(documentId: any) {
+    openDocument(documentacion: any) {
         this.spinner.show();
-        this.documentsService.getUserDocument(documentId).subscribe({
+        this.documentsService.getUserDocument(documentacion.id).subscribe({
             next: res => {
-                let url = URL.createObjectURL(res);
-                window.open(url, '_blank');
+                let downloadURL = window.URL.createObjectURL(res);
+
+                if(res.type == 'application/dwg' || res.type == 'application/dxf') {
+                    let link = document.createElement('a');
+                    link.href = downloadURL;
+                    link.download = documentacion.url;
+                    link.click();
+                }  else {
+                    window.open(downloadURL, '_blank')
+                }
+
                 this.spinner.hide();
             },
             error: err => {
-                this.messagesService.printStatus('Ocurrio un error al obtener el documento.', 'error');
+                this.messagesService.printStatus('Ocurrió un error al obtener el documento.', 'error');
                 this.spinner.hide();
             }
         });
