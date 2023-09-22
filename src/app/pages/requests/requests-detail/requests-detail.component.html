@@ -18,7 +18,8 @@
                         </ng-container>
                     </div>
                     <div class="font-medium tracking-tight text-slate-500" *ngIf="request.servicio_id === 7">
-                        Número de Licencia de Funcionamiento: <b>{{ request.LicenciaFuncionamiento.licencia_funcionamiento_id }}</b>
+                        Número de Licencia de Funcionamiento:
+                        <b>{{ request.LicenciaFuncionamiento.licencia_funcionamiento_id }}</b>
                     </div>
                 </div>
             </div>
@@ -37,7 +38,8 @@
                                     <p class="text-sm">Adjuntar requisitos</p>
                                 </span>
                             </li>
-                            <li class="flex items-center space-x-2.5" *ngIf="[15, 21, 22, 2].includes(request.servicio_id)"
+                            <li class="flex items-center space-x-2.5"
+                                *ngIf="[15, 21, 22, 2].includes(request.servicio_id)"
                                 [ngClass]="request.estatus_solicitud_id === 24 ? 'text-blue-600' : 'text-gray-300'">
                                 <span>
                                     <p class="text-sm">Documentación complementaria</p>
@@ -106,7 +108,8 @@
                                                     Examinar archivos
                                                 </button>
                                                 <!-- Boton para eliminar el documento actual y actualizarlo. No se ha enviado la solicitud antes. -->
-                                                <ng-container *ngIf="requestId !== requeriment.Requisito.id && request.estatus_solicitud_id !== 2">
+                                                <ng-container
+                                                    *ngIf="requestId !== requeriment.Requisito.id && request.estatus_solicitud_id !== 2">
                                                     <button mat-stroked-button color="warn"
                                                             class="px-3 py-2 text-xs font-medium rounded-md"
                                                             (click)="reUploadDocument(requeriment.Requisito.Documento.id)"
@@ -388,7 +391,8 @@
                                                             class="px-3 py-2 text-xs font-medium rounded-md">
                                                         Examinar archivos
                                                     </button>
-                                                    <button mat-flat-button color="primary" (click)="reSelectComplementaryDocumentToUpdate(request.DocumentosComplementarios.id)"
+                                                    <button mat-flat-button color="primary"
+                                                            (click)="reSelectComplementaryDocumentToUpdate(request.DocumentosComplementarios.id)"
                                                             *ngIf="request.DocumentosComplementarios && request.DocumentosComplementarios.status === -1"
                                                             class="px-3 py-2 text-xs font-medium rounded-md">
                                                         Adjuntar nuevamente
@@ -437,9 +441,10 @@
                             </div>
 
                             <div class="px-4 pb-4 text-right">
-                                <button *ngIf="(request.estatus_solicitud_id === 24) && request.DocumentosComplementarios"
+                                <button
+                                    *ngIf="(request.estatus_solicitud_id === 24) && request.DocumentosComplementarios"
                                     mat-flat-button (click)="validateComplementaryDocument('25')" class="rounded-md"
-                                        color="success">
+                                    color="success">
                                     Enviar a validación
                                 </button>
                             </div>
@@ -464,7 +469,8 @@
                                                             class="px-3 py-2 text-xs font-medium rounded-md">
                                                         Examinar archivos
                                                     </button>
-                                                    <button mat-flat-button color="primary" (click)="reSelectComplementaryDocumentToUpdate(request.DocumentosComplementarios.id)"
+                                                    <button mat-flat-button color="primary"
+                                                            (click)="reSelectComplementaryDocumentToUpdate(request.DocumentosComplementarios.id)"
                                                             *ngIf="request.DocumentosComplementarios && request.DocumentosComplementarios.status === -1"
                                                             class="px-3 py-2 text-xs font-medium rounded-md">
                                                         Adjuntar nuevamente
@@ -513,23 +519,26 @@
                             </div>
 
                             <div class="px-4 pb-4 text-right">
-                                <button *ngIf="(request.estatus_solicitud_id === 29) && request.DocumentosComplementarios"
-                                        mat-flat-button (click)="validateComplementaryDocument('30')" class="rounded-md"
-                                        color="success">
+                                <button
+                                    *ngIf="(request.estatus_solicitud_id === 29) && request.DocumentosComplementarios"
+                                    mat-flat-button (click)="validateComplementaryDocument('30')" class="rounded-md"
+                                    color="success">
                                     Enviar a validación
                                 </button>
                             </div>
                         </ng-container>
 
                         <!-- Descargar documento trámite -->
-                        <ng-container *ngIf="request.estatus_solicitud_id === 9 || request.estatus_solicitud_id === 18 && (request.servicio_id !== 13)">
+                        <ng-container
+                            *ngIf="request.estatus_solicitud_id === 9 || request.estatus_solicitud_id === 18 && (request.servicio_id !== 13)">
                             <div class=" border-t border-gray-200">
                                 <div
                                     class="flex p-4 mb-4 text-sm text-green-800 border border-green-300 bg-green-50">
                                     <i class="fa-solid fa-circle-check fa-lg mr-3"></i>
                                     <div>
-                                        Tu trámite esta listo. Puedes pasar a recoger tu documento en cualquier momento
-                                        dentro de los horarios de atención.
+                                        Tu trámite esta listo. Es importante saber que el documento digitalizado no
+                                        tiene validez oficial, por lo que es necesario
+                                        recoger el documento oficial en las oficinas del H. Ayuntamiento de Solidaridad
                                     </div>
                                 </div>
 
@@ -584,7 +593,8 @@
                                         </p>
                                     </ng-container>
 
-                                    <p>Favor de estar al pendiente del estatus de tu solicitud. Gracias por tu paciencia</p>
+                                    <p>Favor de estar al pendiente del estatus de tu solicitud. Gracias por tu
+                                        paciencia</p>
                                 </div>
                             </div>
                         </ng-container>
@@ -594,7 +604,8 @@
                                 <i class="fa-solid fa-file-invoice fa-5x text-slate-500"></i>
                                 <div>
                                     <p class="font-medium text-lg">Tu pase a caja se esta generando</p>
-                                    <p>Favor de estar al pendiente del estatus de tu solicitud. Gracias por tu paciencia.</p>
+                                    <p>Favor de estar al pendiente del estatus de tu solicitud. Gracias por tu
+                                        paciencia.</p>
                                 </div>
                             </div>
                         </ng-container>
@@ -604,7 +615,8 @@
                                 <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
                                 <div>
                                     <p class="font-medium text-lg">La solicitud esta en validación de requisitos</p>
-                                    <p>Favor de estar al pendiente del estatus de tu solicitud. Gracias por tu paciencia..</p>
+                                    <p>Favor de estar al pendiente del estatus de tu solicitud. Gracias por tu
+                                        paciencia..</p>
                                 </div>
                             </div>
                         </ng-container>
@@ -614,7 +626,8 @@
                                 <i class="fa-solid fa-clock fa-5x text-slate-500"></i>
                                 <div>
                                     <p class="font-medium text-lg">Se esta realizando el cambio de propietario</p>
-                                    <p>Favor de estar al pendiente del estatus de tu solicitud. Gracias por tu paciencia..</p>
+                                    <p>Favor de estar al pendiente del estatus de tu solicitud. Gracias por tu
+                                        paciencia..</p>
                                 </div>
                             </div>
                         </ng-container>
@@ -624,7 +637,8 @@
                                 <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
                                 <div>
                                     <p class="font-medium text-lg">Se aplico el cambio de propietario correctamente</p>
-                                    <p>Favor de estar al pendiente del estatus de tu solicitud. Gracias por tu paciencia..</p>
+                                    <p>Favor de estar al pendiente del estatus de tu solicitud. Gracias por tu
+                                        paciencia..</p>
                                 </div>
                             </div>
                         </ng-container>
@@ -634,7 +648,8 @@
                                 <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
                                 <div>
                                     <p class="font-medium text-lg">La solicitud esta en validación de requisitos</p>
-                                    <p>Favor de estar al pendiente del estatus de tu solicitud. Gracias por tu paciencia..</p>
+                                    <p>Favor de estar al pendiente del estatus de tu solicitud. Gracias por tu
+                                        paciencia..</p>
                                 </div>
                             </div>
                         </ng-container>
@@ -643,8 +658,10 @@
                             <div class="w-full mx-auto block p-10 text-center space-y-3">
                                 <i class="fa-regular fa-clock fa-5x text-slate-500"></i>
                                 <div>
-                                    <p class="font-medium text-lg">La solicitud se encuentra en espera de Visita Topográfica</p>
-                                    <p>Tu fecha sera programada en los próximos días. Favor de estar al pendiente del estatus de tu solicitud.</p>
+                                    <p class="font-medium text-lg">La solicitud se encuentra en espera de Visita
+                                        Topográfica</p>
+                                    <p>Tu fecha sera programada en los próximos días. Favor de estar al pendiente del
+                                        estatus de tu solicitud.</p>
                                     <p>Gracias por tu paciencia</p>
                                 </div>
                             </div>
@@ -655,7 +672,8 @@
                                 <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
                                 <div>
                                     <p class="font-medium text-lg">La visita topográfica ha sido programada.</p>
-                                    <p>Te estaremos visitando el día {{ request.fecha_visita | date }} en un horario de 9 a 5 PM</p>
+                                    <p>Te estaremos visitando el día {{ request.fecha_visita | date }} en un horario de
+                                        9 a 5 PM</p>
                                 </div>
                             </div>
                         </ng-container>
@@ -674,13 +692,14 @@
 
                         <!-- visita para valuación -->
                         <ng-container *ngIf="request.estatus_solicitud_id === 31 && request.fecha_visita">
-                        <div class="w-full mx-auto block p-10 text-center space-y-3">
-                            <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
-                            <div>
-                                <p class="font-medium text-lg">La visita para valuación ha sido programada.</p>
-                                <p>Te estaremos visitando el día {{ request.fecha_visita | date }} en un horario de 9 a 5 PM</p>
+                            <div class="w-full mx-auto block p-10 text-center space-y-3">
+                                <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
+                                <div>
+                                    <p class="font-medium text-lg">La visita para valuación ha sido programada.</p>
+                                    <p>Te estaremos visitando el día {{ request.fecha_visita | date }} en un horario de
+                                        9 a 5 PM</p>
+                                </div>
                             </div>
-                        </div>
                         </ng-container>
 
                         <!-- en visita-->
@@ -699,13 +718,16 @@
                             <div class="w-full mx-auto block p-10 text-center space-y-3">
                                 <i class="fa-regular fa-clock fa-5x text-slate-500"></i>
                                 <div>
-                                    <p class="font-medium text-lg">La solicitud esta en validación de puntos de distinción</p>
-                                    <p>Favor de estar al pendiente del estatus de tu solicitud. Gracias por tu paciencia..</p>
+                                    <p class="font-medium text-lg">La solicitud esta en validación de puntos de
+                                        distinción</p>
+                                    <p>Favor de estar al pendiente del estatus de tu solicitud. Gracias por tu
+                                        paciencia..</p>
                                 </div>
                             </div>
                         </ng-container>
 
-                        <ng-container *ngIf="(request.estatus_solicitud_id === 9 || request.estatus_solicitud_id === 18) && (request.servicio_id === 13)">
+                        <ng-container
+                            *ngIf="(request.estatus_solicitud_id === 9 || request.estatus_solicitud_id === 18) && (request.servicio_id === 13)">
                             <div class="w-full mx-auto block p-10 text-center space-y-3">
                                 <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
                                 <div>
