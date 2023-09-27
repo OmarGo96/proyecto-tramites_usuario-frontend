@@ -53,6 +53,6 @@ export class RequestService {
     }
 
     public paymentLink(data: any): Observable <any> {
-        return this.httpClient.post(`${this.urlApi}/solicitud/link_pago`, data, { headers: this.headers });
+        return this.httpClient.post(`${this.urlApi}/solicitud/pago_online`, data, { headers: this.headers });
     }
 }
