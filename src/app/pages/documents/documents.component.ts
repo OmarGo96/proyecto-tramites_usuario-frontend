@@ -61,6 +61,7 @@ export class DocumentsComponent implements OnInit {
     getDocuments() {
         this.documentsService.getRecords().subscribe({
             next: res => {
+                console.log(res);
                 this.documents = res.documentacion
                 this.spinner.hide();
             },

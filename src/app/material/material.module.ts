@@ -57,7 +57,7 @@ import {MatTabsModule} from "@angular/material/tabs";
         MatStepperModule,
         MatBadgeModule,
         MatListModule,
-        MatTabsModule
+        MatTabsModule,
     ],
     exports: [
         MatToolbarModule,
@@ -86,7 +86,7 @@ import {MatTabsModule} from "@angular/material/tabs";
         MatStepperModule,
         MatBadgeModule,
         MatListModule,
-        MatTabsModule
+        MatTabsModule,
     ],
     providers: [
         MatDatepickerModule,
