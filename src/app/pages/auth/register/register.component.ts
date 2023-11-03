@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {UntypedFormBuilder, Validators} from "@angular/forms";
+import {AbstractControl, UntypedFormBuilder, Validators} from "@angular/forms";
 
 /* Services */
 import {UsersService} from "../../../services/users.service";
@@ -19,6 +19,14 @@ export class RegisterComponent implements OnInit {
     public loading = false;
     public token: any;
 
+    public lowerLetters: any;
+    public upperLetters: any;
+    public numbers: any;
+    public symbols: any;
+    public length: any;
+
+    hide = true;
+
     constructor(
         private formBuilder: UntypedFormBuilder,
         private usersService: UsersService,
@@ -32,27 +40,33 @@ export class RegisterComponent implements OnInit {
         this.initRegisterForm();
     }
 
-    initRegisterForm(){
+    initRegisterForm() {
         this.registerForm = this.formBuilder.group({
             nombre: ['', Validators.required],
             apellidos: ['', Validators.required],
             email: ['', Validators.required],
             re_email: ['', Validators.required],
-            password: ['', Validators.required],
+            password: ['', [
+                Validators.required,
+                Validators.minLength(8),
+                Validators.pattern(
+                    /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[A-Z]).{8,}$/
+                ),
+            ]],
             re_password: ['', Validators.required],
             edad: ['', Validators.required],
             telefono: ['', Validators.required],
             rfc: ['', Validators.required],
             genero: ['', Validators.required],
-            aviso_privacidad: [1, Validators.required],
+            aviso_privacidad: ['', Validators.required],
+            terms_conditions: ['', Validators.required],
             recaptcha: ['', Validators.required]
         })
     }
 
-    onRegister(){
+    onRegister() {
         this.spinner.show();
         const data = this.registerForm.value;
-        console.log(data);
         this.usersService.register(data).subscribe({
             next: res => {
                 this.spinner.hide();
@@ -64,6 +78,23 @@ export class RegisterComponent implements OnInit {
                 this.messagesService.printStatusArrayNew(err.error.errors, 'warning');
             }
         })
+    }
+
+    checkStrength(event: any): void {
+        const password = event.target.value;
+
+
+        // 2
+        this.lowerLetters = /[a-z]+/.test(password) ? true : false;
+        this.upperLetters = /[A-Z]+/.test(password) ? true : false;
+        this.numbers = /[0-9]+/.test(password) ? true : false;
+        this.symbols = /[$-/:-?{-~!"^_#@`\[\]]/g.test(password) ? true : false;
+        this.length = password.length >= 8 ? true : false;
+
+    }
+
+    get password(): AbstractControl {
+        return this.registerForm.get('password');
     }
 
 }
