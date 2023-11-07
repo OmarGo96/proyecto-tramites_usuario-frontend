@@ -76,7 +76,7 @@ export class RequestsComponent implements OnInit {
                     this.messagesService.errorAlert(err.error.errors);
                 }
             });
-        } else if([15, 21, 22, 5, 13, 24, 11, 2, 3].includes(solicitud.Servicio.id)){
+        } else if ([2, 3, 5, 11, 13, 14, 15, 21, 22, 24].includes(solicitud.Servicio.id)) {
             this.requestService.obtenerPaseCaja(solicitud.id).subscribe({
                 next: res => {
                     this.spinner.hide();
@@ -114,8 +114,8 @@ export class RequestsComponent implements OnInit {
 
     paymentLink(solicitud: any) {
         this.spinner.show();
-        if (solicitud.Servicio.id === 7 || solicitud.Servicio.id === 6){
-            const data = {licencia: solicitud.licencia_id.toString() };
+        if (solicitud.Servicio.id === 7 || solicitud.Servicio.id === 6) {
+            const data = {licencia: solicitud.licencia_id.toString()};
             this.licFuncService.realizarPago(data).subscribe({
                 next: res => {
                     this.spinner.hide();
