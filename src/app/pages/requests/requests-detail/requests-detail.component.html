@@ -72,6 +72,15 @@
                                     <p class="text-sm">Anuencia de protección civil</p>
                                 </span>
                             </li>
+
+                            <li class="flex items-center space-x-2.5"
+                                *ngIf="request.servicio_id === 6"
+                                [ngClass]="request.estatus_solicitud_id === 38 ? 'text-blue-600' : 'text-gray-300'">
+                                <span>
+                                    <p class="text-sm">Uso de suelo de giro comercial</p>
+                                </span>
+                            </li>
+
                             <li class="flex items-center text-gray-300 space-x-2.5" *ngIf="request.servicio_id !== 13">
                                 <span>
                                     <p class="text-sm">Descargar archivo</p>
@@ -281,7 +290,8 @@
                         </ng-container>
 
                         <!-- Anuencia Protección Civil -->
-                        <ng-container *ngIf="request.estatus_solicitud_id === 22 && request.servicio_id === 7">
+                        <ng-container
+                            *ngIf="request.estatus_solicitud_id === 22 && (request.servicio_id === 7 || request.servicio_id === 6)">
                             <div class="p-10 space-y-8">
                                 <button mat-flat-button (click)="redirectToService()" color="primary">
                                     Iniciar trámite
@@ -365,7 +375,86 @@
                             </div>
                             <div class="px-4 pb-4 text-right"
                                  *ngIf="(request.estatus_solicitud_id === 10 || request.estatus_solicitud_id === 21 || request.estatus_solicitud_id === 22) && request.DocumentosAnuencia.length === anuenciaDocs.length">
-                                <button mat-flat-button (click)="validateAnuencia('23')" class="rounded-md"
+                                <button mat-flat-button (click)="changeStatus('23')" class="rounded-md"
+                                        color="success">
+                                    Validar anuencia
+                                </button>
+                            </div>
+                        </ng-container>
+
+                        <!-- Uso de Suelo de Giro Comercial -->
+                        <ng-container *ngIf="request.estatus_solicitud_id === 38 && (request.servicio_id === 6)">
+                            <div class="p-10 space-y-8">
+                                <button mat-flat-button (click)="redirectToGiroComercial()" color="primary">
+                                    Iniciar trámite
+                                </button>
+
+                                <p class="text-sm text-slate-500 text-center w-1/4 border-b-2 leading-3"><span
+                                    class="bg-white px-3">O adjunta los documentos</span></p>
+
+                                <dl class="pb-5 text-gray-900">
+                                    <ng-container *ngFor="let doc of giroComercial">
+                                        <div class="border-b flex flex-col px-5 py-5">
+                                            <dt class="mb-1 text-md">
+                                                {{ doc.name }}
+                                            </dt>
+                                            <dd class="flex items-center justify-between font-medium text-gray-500">
+                                                <div class="flex space-x-2">
+                                                    <!-- Subir documentos por primera vez -->
+                                                    <button mat-flat-button color="primary" *ngIf="!doc.doc"
+                                                            (click)="selectGiroDocument(doc.id)"
+                                                            class="px-3 py-2 text-xs font-medium rounded-md">
+                                                        Examinar archivos
+                                                    </button>
+                                                    <button mat-flat-button color="primary"
+                                                            *ngIf="doc.doc && (doc.doc['status'] === -1)"
+                                                            (click)="reSelectGiroDocumentToUpdate(doc.id, doc.doc['id'])"
+                                                            class="px-3 py-2 text-xs font-medium rounded-md">
+                                                        Adjuntar nuevamente
+                                                    </button>
+
+                                                    <button mat-stroked-button color="warn"
+                                                            class="px-3 py-2 text-xs font-medium rounded-md"
+                                                            (click)="reUploadDocumentoGiro(doc.doc['id'])"
+                                                            *ngIf="doc.doc && doc.doc['status'] === 0">
+                                                        Eliminar y subir nuevamente
+                                                    </button>
+
+                                                    <!-- Ver documento adjunto por contribuyente -->
+                                                    <button mat-stroked-button color="primary"
+                                                            class="px-3 py-2 text-xs font-medium rounded-md"
+                                                            *ngIf="doc.doc"
+                                                            (click)="openAnuenciaDocument(doc.doc['documentacion_id'])">
+                                                        Ver adjunto
+                                                    </button>
+                                                </div>
+                                                <div class="space-x-2">
+                                                    <span *ngIf="doc.doc && doc.doc['status'] === 0"
+                                                          class="bg-gray-200 text-gray-600 text-xs font-medium px-2.5 py-0.5 rounded">
+                                                        <i class="fa-solid fa-clock fa-sm"></i>
+                                                        Enviado
+                                                    </span>
+                                                    <span *ngIf="doc.doc && doc.doc['status'] === 1"
+                                                          class="bg-green-200 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded">
+                                                        <i class="fa-solid fa-circle-check"></i>
+                                                        Aceptado
+                                                    </span>
+                                                    <span
+                                                        class="bg-gray-200 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded"
+                                                        *ngIf="doc.doc && doc.doc['status'] === -1">
+                                                            <i class="fa-solid fa-circle-xmark"></i>
+                                                        Rechazado
+                                                    </span>
+                                                </div>
+                                            </dd>
+                                        </div>
+
+                                    </ng-container>
+                                </dl>
+                            </div>
+                            <div class="px-4 pb-4 text-right"
+                                 *ngIf="(request.estatus_solicitud_id === 10 || request.estatus_solicitud_id === 21 || request.estatus_solicitud_id === 22 || request.estatus_solicitud_id === 38) && request.DocumentosLicenciaComercial.length === giroComercial.length">
+                                <button mat-flat-button (click)="changeStatus('39')" class="rounded-md"
                                         color="success">
                                     Validar anuencia
                                 </button>
@@ -564,9 +653,7 @@
 
                         </ng-container>
 
-
                         <!-- Mensajes de alerta al usuario -->
-
                         <ng-container *ngIf="request.estatus_solicitud_id === 20">
                             <div class="w-full mx-auto block p-10 text-center space-y-3">
                                 <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
@@ -582,7 +669,7 @@
 
                         <ng-container *ngIf="request.estatus_solicitud_id === 11 || request.estatus_solicitud_id === 19 || request.estatus_solicitud_id === 15
                         || request.estatus_solicitud_id === 16 || request.estatus_solicitud_id === 17 || request.estatus_solicitud_id === 8 || request.estatus_solicitud_id === 23
-                        || request.estatus_solicitud_id === 25">
+                        || request.estatus_solicitud_id === 25 || request.estatus_solicitud_id === 39">
                             <div class="w-full mx-auto block p-10 text-center space-y-3">
                                 <i class="fa-regular fa-clock fa-5x text-slate-500"></i>
                                 <div>
@@ -593,8 +680,11 @@
                                         </p>
                                     </ng-container>
 
-                                    <p>Favor de estar al pendiente del estatus de tu solicitud. Gracias por tu paciencia</p>
-                                    <p *ngIf="request.estatus_solicitud_id === 11" class="text-blue-600">Puedes encontrar tu recibo de pago en el apartado "Mis documentos" con el número de folio de tu solicitud</p>
+                                    <p>Favor de estar al pendiente del estatus de tu solicitud. Gracias por tu
+                                        paciencia</p>
+                                    <p *ngIf="request.estatus_solicitud_id === 11" class="text-blue-600">Puedes
+                                        encontrar tu recibo de pago en el apartado "Mis documentos" con el número de
+                                        folio de tu solicitud</p>
                                 </div>
                             </div>
                         </ng-container>
@@ -689,7 +779,6 @@
                             </div>
                         </ng-container>
 
-
                         <!-- visita para valuación -->
                         <ng-container *ngIf="request.estatus_solicitud_id === 31 && request.fecha_visita">
                             <div class="w-full mx-auto block p-10 text-center space-y-3">
@@ -726,6 +815,17 @@
                             </div>
                         </ng-container>
 
+                        <ng-container *ngIf="request.estatus_solicitud_id === 37">
+                            <div class="w-full mx-auto block p-10 text-center space-y-3">
+                                <i class="fa-regular fa-clock fa-5x text-slate-500"></i>
+                                <div>
+                                    <p class="font-medium text-lg">La solicitud esta en Calificación de Expediente</p>
+                                    <p>Favor de estar al pendiente del estatus de tu solicitud. Gracias por tu
+                                        paciencia.</p>
+                                </div>
+                            </div>
+                        </ng-container>
+
                         <ng-container
                             *ngIf="(request.estatus_solicitud_id === 9 || request.estatus_solicitud_id === 18) && (request.servicio_id === 13)">
                             <div class="w-full mx-auto block p-10 text-center space-y-3">
@@ -736,8 +836,6 @@
                                 </div>
                             </div>
                         </ng-container>
-
-
                     </div>
                 </mat-tab>
                 <mat-tab>
