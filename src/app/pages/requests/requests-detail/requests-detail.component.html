@@ -45,12 +45,20 @@
                                     <p class="text-sm">Documentación complementaria</p>
                                 </span>
                             </li>
+
+                            <li class="flex items-center space-x-2.5" *ngIf="[8].includes(request.servicio_id)"
+                                [ngClass]="request.estatus_solicitud_id === 36  ? 'text-blue-600' : 'text-gray-300'">
+                                <span>
+                                    <p class="text-sm">Visita de inspección fisica</p>
+                                </span>
+                            </li>
                             <li class="flex items-center space-x-2.5"
                                 [ngClass]="request.estatus_solicitud_id === 10 || request.estatus_solicitud_id === 20 || request.estatus_solicitud_id === 21 ? 'text-blue-600' : 'text-gray-300'">
                                 <span>
                                     <p class="text-sm">Validación de pago</p>
                                 </span>
                             </li>
+
                             <li class="flex items-center space-x-2.5" *ngIf="[11].includes(request.servicio_id)"
                                 [ngClass]="request.estatus_solicitud_id === 27 || request.estatus_solicitud_id === 28 || request.estatus_solicitud_id === 29  ? 'text-blue-600' : 'text-gray-300'">
                                 <span>
@@ -667,9 +675,7 @@
                             </div>
                         </ng-container>
 
-                        <ng-container *ngIf="request.estatus_solicitud_id === 11 || request.estatus_solicitud_id === 19 || request.estatus_solicitud_id === 15
-                        || request.estatus_solicitud_id === 16 || request.estatus_solicitud_id === 17 || request.estatus_solicitud_id === 8 || request.estatus_solicitud_id === 23
-                        || request.estatus_solicitud_id === 25 || request.estatus_solicitud_id === 39">
+                        <ng-container *ngIf="[11, 19, 15, 16, 17, 8, 23, 25, 39].includes(request.estatus_solicitud_id)">
                             <div class="w-full mx-auto block p-10 text-center space-y-3">
                                 <i class="fa-regular fa-clock fa-5x text-slate-500"></i>
                                 <div>
@@ -768,6 +774,7 @@
                             </div>
                         </ng-container>
 
+
                         <ng-container
                             *ngIf="request.estatus_solicitud_id === 28">
                             <div class="w-full mx-auto block p-10 text-center space-y-3">
@@ -779,7 +786,54 @@
                             </div>
                         </ng-container>
 
+                        <!-- Fecha de inspección fisica -->
+
+                        <ng-container *ngIf="request.estatus_solicitud_id === 36 && !request.fecha_visita">
+                            <div class="w-full mx-auto block p-10 text-center space-y-3">
+                                <i class="fa-regular fa-clock fa-5x text-slate-500"></i>
+                                <div>
+                                    <p class="font-medium text-lg">La solicitud se encuentra en espera de Inspección fisica</p>
+                                    <p>Tu fecha sera programada en los próximos días. Favor de estar al pendiente del
+                                        estatus de tu solicitud.</p>
+                                    <p>Gracias por tu paciencia</p>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="request.estatus_solicitud_id === 36 && request.fecha_visita">
+                            <div class="w-full mx-auto block p-10 text-center space-y-3">
+                                <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
+                                <div>
+                                    <p class="font-medium text-lg">La inspección fisica ha sido programada.</p>
+                                    <p>Te estaremos visitando el día {{ request.fecha_visita | date }} en un horario de
+                                        9 a 5 PM</p>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="request.estatus_solicitud_id === 35">
+                            <div class="w-full mx-auto block p-10 text-center space-y-3">
+                                <i class="fa-regular fa-clock fa-5x text-slate-500"></i>
+                                <div>
+                                    <p class="font-medium text-lg">La solicitud se encuentra en espera de Inspección fisica</p>
+                                    <p>Tu fecha sera programada en los próximos días. Favor de estar al pendiente del
+                                        estatus de tu solicitud.</p>
+                                </div>
+                            </div>
+                        </ng-container>
+
                         <!-- visita para valuación -->
+
+                        <ng-container *ngIf="request.estatus_solicitud_id === 31 && !request.fecha_visita">
+                            <div class="w-full mx-auto block p-10 text-center space-y-3">
+                                <i class="fa-regular fa-clock fa-5x text-slate-500"></i>
+                                <div>
+                                    <p class="font-medium text-lg">La solicitud se encuentra en espera de Visita de valuacón </p>
+                                    <p>Tu fecha sera programada en los próximos días. Favor de estar al pendiente del
+                                        estatus de tu solicitud.</p>
+                                </div>
+                            </div>
+                        </ng-container>
                         <ng-container *ngIf="request.estatus_solicitud_id === 31 && request.fecha_visita">
                             <div class="w-full mx-auto block p-10 text-center space-y-3">
                                 <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>
