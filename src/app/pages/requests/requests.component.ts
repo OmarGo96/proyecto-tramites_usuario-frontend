@@ -114,7 +114,7 @@ export class RequestsComponent implements OnInit {
 
     paymentLink(solicitud: any) {
         this.spinner.show();
-        if (solicitud.Servicio.id === 7 || solicitud.Servicio.id === 6) {
+        if (solicitud.Servicio.id === 7) {
             const data = {licencia: solicitud.licencia_id.toString()};
             this.licFuncService.realizarPago(data).subscribe({
                 next: res => {
