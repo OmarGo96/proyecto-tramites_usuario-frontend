@@ -93,7 +93,7 @@ export const ROUTES = [
         group: 'DOCUMENTACIÓN',
         module: 'documentos',
         action: 'list',
-        title: 'Expediente único',
+        title: 'Mis documentos',
         icon: 'fa-file-export',
         class: ''
     }
