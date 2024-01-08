@@ -90,11 +90,20 @@ export const ROUTES = [
     },*/
     {
         path: '/escritorio/documentos',
-        group: 'DOCUMENTACIÓN',
+        group: 'DOCUMENTOS DIGITALES',
         module: 'documentos',
         action: 'list',
-        title: 'Mis documentos',
+        title: 'Exp. único y doc. generales',
         icon: 'fa-file-export',
+        class: ''
+    },
+    {
+        path: '/escritorio/documentos',
+        group: 'DOCUMENTOS DIGITALES',
+        module: 'documentos',
+        action: 'list',
+        title: 'Imprimir acuse exp. único',
+        icon: 'fa-print',
         class: ''
     }
 ];

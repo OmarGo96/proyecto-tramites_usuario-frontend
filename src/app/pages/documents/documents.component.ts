@@ -5,6 +5,11 @@ import {MatDialog} from "@angular/material/dialog";
 import {DocumentsService} from "../../services/documents.service";
 import {DocumentTypesService} from "../../services/document-types.service";
 import {NgxSpinnerService} from "ngx-spinner";
+import {ExpedienteUnicoDocs} from "../../const/expediente-unico-docs";
+import {
+    ExpedienteUploadModalComponent
+} from "../../layouts/modals/expediente-upload-modal/expediente-upload-modal.component";
+import {UsersService} from "../../services/users.service";
 
 @Component({
     selector: 'app-documents',
@@ -16,9 +21,14 @@ export class DocumentsComponent implements OnInit {
     public documents: any;
     public documentTypes: any;
 
+    public expedienteUnico: any;
+
+    private user: any;
+
     constructor(
         private documentsService: DocumentsService,
         private documentTypesService: DocumentTypesService,
+        private usersService: UsersService,
         private spinner: NgxSpinnerService,
         private messagesService: MessageService,
         public dialog: MatDialog
@@ -27,6 +37,8 @@ export class DocumentsComponent implements OnInit {
 
     ngOnInit(): void {
         this.getDocumentTypes();
+        this.user = this.usersService.getIdentity();
+
     }
 
     openUploadDialog(): void {
@@ -44,11 +56,40 @@ export class DocumentsComponent implements OnInit {
         });
     }
 
+    openUploadExpedienteDialog(tipoDocumentoId: any): void {
+        const config = {
+            width: '50%',
+            data: {
+                tipo_documento_id: tipoDocumentoId
+            },
+        }
+
+        const dialogRef = this.dialog.open(ExpedienteUploadModalComponent, config);
+
+        dialogRef.afterClosed().subscribe(res => {
+            this.getExpedienteUnico()
+        });
+    }
+
     getDocumentTypes() {
         this.spinner.show();
         this.documentTypesService.getRecords().subscribe({
             next: res => {
                 this.documentTypes = res.documentos;
+                this.getExpedienteUnico();
+            },
+            error: err => {
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+                this.spinner.hide();
+            }
+        })
+    }
+
+    getExpedienteUnico() {
+        this.documentsService.getExpedienteUnico(this.user.uuid).subscribe({
+            next: res => {
+                this.expedienteUnico = res.documentacionExpediente;
+                this.spinner.hide();
                 this.getDocuments();
             },
             error: err => {
@@ -70,6 +111,7 @@ export class DocumentsComponent implements OnInit {
             }
         })
     }
+
 
     openDocument(documentacion: any) {
         this.spinner.show();
@@ -118,5 +160,4 @@ export class DocumentsComponent implements OnInit {
             });
 
     }
-
 }

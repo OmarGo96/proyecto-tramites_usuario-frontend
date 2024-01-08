@@ -34,6 +34,10 @@ export class DocumentsService {
         return this.httpClient.get(`${this.urlApi}/documentacion`, {headers: this.headers});
     }
 
+    public getExpedienteUnico(uuid: any): Observable <any> {
+        return this.httpClient.get(`${this.urlApi}/documentacion/expediente/${uuid}`, {headers: this.headers});
+    }
+
     public getDocument(uuid: any): Observable<any> {
         return this.httpClient.get(`${this.urlApi}/documento_servicios/${uuid}`, { responseType: 'blob' });
     }
