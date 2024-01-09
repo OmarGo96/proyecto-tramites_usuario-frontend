@@ -38,6 +38,7 @@ export class DocumentsComponent implements OnInit {
     ngOnInit(): void {
         this.getDocumentTypes();
         this.user = this.usersService.getIdentity();
+        console.log(this.user);
 
     }
 

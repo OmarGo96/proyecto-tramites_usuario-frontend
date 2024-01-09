@@ -58,6 +58,7 @@ export class RegisterComponent implements OnInit {
             telefono: ['', Validators.required],
             rfc: ['', Validators.required],
             genero: ['', Validators.required],
+            tipo_persona: ['', Validators.required],
             aviso_privacidad: ['', Validators.required],
             terms_conditions: ['', Validators.required],
             recaptcha: ['', Validators.required]
