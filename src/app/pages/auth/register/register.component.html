@@ -8,16 +8,47 @@
 
     <form [formGroup]="registerForm" (submit)="onRegister()">
 
-        <div>
-            <mat-label class="block text-sm font-medium text-slate-700">Nombre(s)</mat-label>
-            <mat-form-field appearance="outline">
-                <input matInput formControlName="nombre" type="text">
-            </mat-form-field>
+        <div class="mb-5">
+            <mat-label class="block text-sm font-medium text-slate-700">Tipo de persona</mat-label>
+            <mat-radio-group class="space-x-3" formControlName="tipo_persona" (change)="checkPersonType($event)">
+                <mat-radio-button value="1">Fisica</mat-radio-button>
+                <mat-radio-button value="2">Moral</mat-radio-button>
+            </mat-radio-group>
         </div>
-        <div>
+
+        <div class="grid grid-cols-3 gap-3">
+            <div class="col-span-2">
+                <mat-label class="block text-sm font-medium text-slate-700">
+                    <span *ngIf="personType === '1'">Nombre completo</span>
+                    <span *ngIf="personType === '2'">Denominación o Razón Social</span>
+                </mat-label>
+                <mat-form-field appearance="outline">
+                    <input matInput formControlName="nombre" type="text">
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-label class="block text-sm font-medium text-slate-700">RFC</mat-label>
+                <mat-form-field appearance="outline" class="w-full">
+                    <input matInput formControlName="rfc" type="text">
+                </mat-form-field>
+            </div>
+
+        </div>
+
+
+
+        <div *ngIf="personType === '1'">
             <mat-label class="block text-sm font-medium text-slate-700">Apellido(s)</mat-label>
             <mat-form-field appearance="outline">
                 <input matInput formControlName="apellidos" type="text">
+            </mat-form-field>
+        </div>
+
+        <div *ngIf="personType === '2'">
+            <mat-label class="block text-sm font-medium text-slate-700">Representante legal</mat-label>
+            <mat-form-field appearance="outline">
+                <input matInput formControlName="representante_legal" type="text">
             </mat-form-field>
         </div>
 
@@ -37,20 +68,20 @@
             </div>
         </div>
 
+        <div>
+            <mat-label class="block text-sm font-medium text-slate-700">Teléfono</mat-label>
+            <mat-form-field appearance="outline" class="w-full">
+                <input matInput formControlName="telefono" type="text">
+            </mat-form-field>
+        </div>
 
-        <div class="grid grid-cols-2 gap-3">
-            <div>
-                <mat-label class="block text-sm font-medium text-slate-700">Teléfono</mat-label>
-                <mat-form-field appearance="outline" class="w-full">
-                    <input matInput formControlName="telefono" type="text">
-                </mat-form-field>
-            </div>
-            <div>
-                <mat-label class="block text-sm font-medium text-slate-700">RFC</mat-label>
-                <mat-form-field appearance="outline" class="w-full">
-                    <input matInput formControlName="rfc" type="text">
-                </mat-form-field>
-            </div>
+        <div class="mb-5">
+            <mat-label class="block text-sm font-medium text-slate-700">Sexo</mat-label>
+            <mat-radio-group class="space-x-3" formControlName="genero">
+                <mat-radio-button value="1">Hombre</mat-radio-button>
+                <mat-radio-button value="0">Mujer</mat-radio-button>
+                <mat-radio-button value="2">Prefiero no responder</mat-radio-button>
+            </mat-radio-group>
         </div>
 
         <div>
@@ -89,22 +120,7 @@
             </mat-form-field>
         </div>
 
-        <div class="mb-5">
-            <mat-label class="block text-sm font-medium text-slate-700">Sexo</mat-label>
-            <mat-radio-group class="space-x-3" formControlName="genero">
-                <mat-radio-button value="1">Hombre</mat-radio-button>
-                <mat-radio-button value="0">Mujer</mat-radio-button>
-                <mat-radio-button value="2">Prefiero no responder</mat-radio-button>
-            </mat-radio-group>
-        </div>
 
-        <div>
-            <mat-label class="block text-sm font-medium text-slate-700">Tipo de persona</mat-label>
-            <mat-radio-group class="space-x-3" formControlName="tipo_persona">
-                <mat-radio-button value="1">Fisica</mat-radio-button>
-                <mat-radio-button value="2">Moral</mat-radio-button>
-            </mat-radio-group>
-        </div>
 
         <mat-divider class="my-3"></mat-divider>
 

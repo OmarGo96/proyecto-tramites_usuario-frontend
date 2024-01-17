@@ -161,4 +161,19 @@ export class DocumentsComponent implements OnInit {
             });
 
     }
+
+    printFile(){
+        this.spinner.show();
+        this.documentsService.printFile(this.user.uuid).subscribe({
+            next: res => {
+                this.spinner.hide();
+                let downloadURL = window.URL.createObjectURL(res);
+                window.open(downloadURL, '_blank');
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatus('Algo salio mal al obtener el documento. Intente mas tarde.', 'warning');
+            }
+        })
+    }
 }

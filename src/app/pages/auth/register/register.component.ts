@@ -27,6 +27,8 @@ export class RegisterComponent implements OnInit {
 
     hide = true;
 
+    public personType = '1';
+
     constructor(
         private formBuilder: UntypedFormBuilder,
         private usersService: UsersService,
@@ -43,7 +45,8 @@ export class RegisterComponent implements OnInit {
     initRegisterForm() {
         this.registerForm = this.formBuilder.group({
             nombre: ['', Validators.required],
-            apellidos: ['', Validators.required],
+            apellidos: [''],
+            representante_legal: [''],
             email: ['', Validators.required],
             re_email: ['', Validators.required],
             password: ['', [
@@ -58,7 +61,7 @@ export class RegisterComponent implements OnInit {
             telefono: ['', Validators.required],
             rfc: ['', Validators.required],
             genero: ['', Validators.required],
-            tipo_persona: ['', Validators.required],
+            tipo_persona: ['1', Validators.required],
             aviso_privacidad: ['', Validators.required],
             terms_conditions: ['', Validators.required],
             recaptcha: ['', Validators.required]
@@ -79,6 +82,11 @@ export class RegisterComponent implements OnInit {
                 this.messagesService.printStatusArrayNew(err.error.errors, 'warning');
             }
         })
+    }
+
+    checkPersonType(event: any){
+        this.personType = event.value;
+        console.log(this.personType);
     }
 
     checkStrength(event: any): void {

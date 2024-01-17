@@ -97,14 +97,14 @@ export const ROUTES = [
         icon: 'fa-file-export',
         class: ''
     },
-    {
-        path: '/escritorio/documentos',
+    /*{
+        path: '/ecritorio/imprimir-acuse',
         group: 'DOCUMENTOS DIGITALES',
         module: 'documentos',
         action: 'list',
         title: 'Imprimir acuse exp. único',
         icon: 'fa-print',
         class: ''
-    }
+    }*/
 ];
 

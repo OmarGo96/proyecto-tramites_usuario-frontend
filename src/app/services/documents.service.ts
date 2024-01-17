@@ -120,5 +120,7 @@ export class DocumentsService {
         return this.httpClient.post(`${this.urlApi}/solicitud/documento-anuencia/${requestId}`, data, {headers: this.headers})
     }
 
-
+    public printFile(contribueyenteUuid: any): Observable<any> {
+        return this.httpClient.get(`${this.urlApi}/contribuyente/acuse_expediente/${contribueyenteUuid}`, { headers: this.headers, responseType: "blob" });
+    }
 }
