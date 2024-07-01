@@ -55,4 +55,8 @@ export class RequestService {
     public paymentLink(data: any): Observable <any> {
         return this.httpClient.post(`${this.urlApi}/solicitud/pago_online`, data, { headers: this.headers });
     }
+
+    public validatePaoRenew(data: any): Observable <any> {
+        return this.httpClient.post(`${this.urlApi}/solicitud/check-expediente-pao`, data, { headers: this.headers });
+    }
 }
