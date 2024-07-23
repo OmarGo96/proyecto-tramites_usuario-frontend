@@ -219,7 +219,6 @@ export class RequestsDetailComponent implements OnInit {
         })
     }
 
-
     selectDocument(requisitoId: any): void {
         const config = {
             width: '100%'
@@ -233,7 +232,6 @@ export class RequestsDetailComponent implements OnInit {
             }
         });
     }
-
 
     reSelectDocumentToUpdate(requisitoId: any, documentoSolicitudRequisitoId: any) {
         const config = {
@@ -251,6 +249,7 @@ export class RequestsDetailComponent implements OnInit {
             }
         });
     }
+
     selectPaymentDocument(documentId: any): void {
         const config = {
             width: '100%'

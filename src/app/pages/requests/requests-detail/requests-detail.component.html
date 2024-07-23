@@ -96,11 +96,19 @@
                             </li>
                         </ol>
 
+
                         <!-- Adjuntar requisitos -->
                         <ng-container
                             *ngIf="request.estatus_solicitud_id === 1 || request.estatus_solicitud_id === 2 || request.estatus_solicitud_id === 5">
                             <div class="border-t border-gray-200">
-                                <dl class="pb-5 text-gray-900">
+                                <div class="w-full mx-auto block p-10 text-center space-y-3" *ngIf="request.servicio_id === 10">
+                                    <i class="fa-solid fa-arrow-up-right-from-square fa-5x text-slate-500"></i>
+                                    <div>
+                                        <p class="font-medium text-lg">Tu trámite esta en proceso</p>
+                                        <p>Visita <a href="{{request.ExpedientePao.url_consulta}}" target="_blank" class="text-blue-600">el siguiente link</a> para ver el estatus </p>
+                                    </div>
+                                </div>
+                                <dl class="pb-5 text-gray-900" *ngIf="request.servicio_id !== 10">
                                     <div class="border-b flex flex-col px-5 py-5"
                                          *ngFor="let requeriment of requeriments">
 
@@ -834,6 +842,7 @@
                                 </div>
                             </div>
                         </ng-container>
+
                         <ng-container *ngIf="request.estatus_solicitud_id === 31 && request.fecha_visita">
                             <div class="w-full mx-auto block p-10 text-center space-y-3">
                                 <i class="fa-solid fa-circle-check fa-5x text-emerald-600"></i>

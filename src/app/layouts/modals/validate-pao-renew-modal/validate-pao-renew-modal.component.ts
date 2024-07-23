@@ -52,7 +52,7 @@ export class ValidatePaoRenewModalComponent implements OnInit {
         this.requestsService.validatePaoRenew(data).subscribe({
             next: res => {
                 this.spinner.hide();
-                this.createRequest();
+                this.dialogRef.close({status: true, expediente: res.expediente});
             },
             error: err => {
                 this.spinner.hide();
@@ -61,27 +61,6 @@ export class ValidatePaoRenewModalComponent implements OnInit {
         })
     }
 
-    createRequest() {
-        this.spinner.show();
-        let servicioUuid = this.data.serviceUuid;
-        let data = {'servicio_uuid': servicioUuid};
-
-
-        this.requestsService.createRecords(data).subscribe({
-            next: res => {
-                this.spinner.hide();
-                this.messagesService.printStatus(res.message, 'success')
-                setTimeout(() => {
-                    this.router.navigate(['escritorio/solicitud', res.solicitud_id]);
-                    this.dialogRef.close();
-                }, 2500);
-            },
-            error: err => {
-                this.spinner.hide();
-                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
-            }
-        });
-    }
 
     private getYears() {
         const years: any = [];

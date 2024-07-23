@@ -1,0 +1,36 @@
+<mat-dialog-content>
+    <h3 class="text-lg leading-6 font-medium text-gray-900 mb-3">Información del contribuyente</h3>
+
+    <form [formGroup]="contribuyenteForm" class="flex flex-col">
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Clave catastral</mat-label>
+            <input matInput formControlName="clave_catastral">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Correo electrónico</mat-label>
+            <input matInput formControlName="correo">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Nombre del gestor</mat-label>
+            <input matInput formControlName="nombre_gestor">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Representante legal</mat-label>
+            <input matInput formControlName="representante_legal">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Teléfono de contacto</mat-label>
+            <input matInput formControlName="telefono_contacto">
+        </mat-form-field>
+
+        <button mat-flat-button class="rounded-md"
+                (click)="addExpedienteInfo()"
+                color="primary">
+            Guardar información
+        </button>
+    </form>
+</mat-dialog-content>

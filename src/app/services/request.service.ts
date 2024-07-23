@@ -59,4 +59,8 @@ export class RequestService {
     public validatePaoRenew(data: any): Observable <any> {
         return this.httpClient.post(`${this.urlApi}/solicitud/check-expediente-pao`, data, { headers: this.headers });
     }
+
+    public addExpedienteInfo(data: any): Observable <any> {
+        return this.httpClient.post(`${this.urlApi}/solicitud/add-expediente-information`, data, { headers: this.headers });
+    }
 }

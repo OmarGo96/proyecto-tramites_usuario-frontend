@@ -15,6 +15,9 @@ import {
 import {
     ValidatePaoRenewModalComponent
 } from "../../../layouts/modals/validate-pao-renew-modal/validate-pao-renew-modal.component";
+import {
+    ContribuyenteInfoModalComponent
+} from "../../../layouts/modals/contribuyente-info-modal/contribuyente-info-modal.component";
 
 
 @Component({
@@ -129,7 +132,24 @@ export class ServicesDetailComponent implements OnInit {
             }
         };
 
-        this.dialog.open(ValidatePaoRenewModalComponent, config);
+        const dialogRef = this.dialog.open(ValidatePaoRenewModalComponent, config);
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result.status){
+                this.openContribuyenteInfoModal(serviceUuid, result.expediente)
+            }
+        });
+    }
+
+    openContribuyenteInfoModal(serviceUuid: any, expedienteId: any): void {
+        const config = {
+            data: {
+                expediente_id: expedienteId,
+                serviceUuid
+            }
+        };
+
+        this.dialog.open(ContribuyenteInfoModalComponent, config);
     }
 
     getRequirements() {

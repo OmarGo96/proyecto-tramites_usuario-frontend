@@ -24,6 +24,7 @@ import { ValidateBeforeRenewModalComponent } from './modals/licenses/validate-be
 import { PublicNavbarComponent } from './public/public-navbar/public-navbar.component';
 import { ExpedienteUploadModalComponent } from './modals/expediente-upload-modal/expediente-upload-modal.component';
 import { ValidatePaoRenewModalComponent } from './modals/validate-pao-renew-modal/validate-pao-renew-modal.component';
+import { ContribuyenteInfoModalComponent } from './modals/contribuyente-info-modal/contribuyente-info-modal.component';
 
 @NgModule({
     declarations: [
@@ -45,7 +46,8 @@ import { ValidatePaoRenewModalComponent } from './modals/validate-pao-renew-moda
         ValidateBeforeRenewModalComponent,
         PublicNavbarComponent,
         ExpedienteUploadModalComponent,
-        ValidatePaoRenewModalComponent
+        ValidatePaoRenewModalComponent,
+        ContribuyenteInfoModalComponent
     ],
     imports: [
         CommonModule,
