@@ -9,6 +9,8 @@ import Swal from "sweetalert2";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {NgxSpinnerService} from "ngx-spinner";
+import {RequestService} from "../../services/request.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-predial',
@@ -35,7 +37,7 @@ export class PredialComponent implements OnInit {
         private messagesService: MessageService,
         private formBuilder: UntypedFormBuilder,
         private spinner: NgxSpinnerService,
-        public dialog: MatDialog,
+        public dialog: MatDialog
     ) {
     }
 
@@ -54,6 +56,7 @@ export class PredialComponent implements OnInit {
         this.spinner.show();
         this.predialService.getRecords().subscribe({
                 next: res => {
+                    console.log(res);
                     this.spinner.hide();
                     this.dataSource = new MatTableDataSource(res.claves);
                 },
@@ -113,9 +116,12 @@ export class PredialComponent implements OnInit {
         });
     }
 
+
     getEstadoCuenta(clave: any, i: number) {
         this.spinner.show()
-        let data = {'clave': clave};
+        let data = {
+            clave: clave.clave
+        };
         this.predialService.getEstadoCuenta(data).subscribe({
             next: res => {
                 this.spinner.hide();
@@ -133,7 +139,8 @@ export class PredialComponent implements OnInit {
             width: '80%',
             data: {
                 content: estadoCuenta ? estadoCuenta : false,
-                clave: clave ? clave : false
+                clave: clave ? clave : false,
+                claveId: clave ? clave.id : false
             }
         };
 

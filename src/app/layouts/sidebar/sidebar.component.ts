@@ -70,7 +70,7 @@ export const ROUTES = [
         icon: 'fa-list',
         class: ''
     },
-    /*{
+    {
         path: '/escritorio/predial',
         group: 'PREDIAL',
         module: 'servicios',
@@ -78,7 +78,7 @@ export const ROUTES = [
         title: 'Impuesto Predial',
         icon: 'fa-building-flag',
         class: ''
-    },*/
+    },
     /*{
         path: '/escritorio/licencia-funcionamiento',
         group: 'TRAMITES Y SERVICIOS',

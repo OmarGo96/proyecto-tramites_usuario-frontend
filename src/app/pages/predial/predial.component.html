@@ -44,11 +44,12 @@
                         <ng-container matColumnDef="estado_cuenta">
                             <th mat-header-cell *matHeaderCellDef> Estado de Cuenta</th>
                             <td mat-cell *matCellDef="let element; let i = index">
-                                <button type="button" mat-flat-button color="primary" class="rounded-md" (click)="getEstadoCuenta(element.clave, i)">
+                                <button type="button" mat-stroked-button color="primary" class="rounded-md" (click)="getEstadoCuenta(element, i)">
                                     Estado de Cuenta
                                 </button>
                             </td>
                         </ng-container>
+
 
                         <ng-container matColumnDef="accion">
                             <th mat-header-cell *matHeaderCellDef> Eliminar</th>
