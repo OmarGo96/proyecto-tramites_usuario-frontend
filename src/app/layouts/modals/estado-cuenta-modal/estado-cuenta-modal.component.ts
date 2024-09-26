@@ -81,7 +81,7 @@ export class EstadoCuentaModalComponent implements OnInit {
         })
     }
 
-    /*generarPaseCaja() {
+    generarPaseCaja() {
         this.spinner.show();
         let data = {'clave': this.clave};
         this.predialService.generarPaseCaja(data).subscribe({
@@ -97,10 +97,10 @@ export class EstadoCuentaModalComponent implements OnInit {
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });
-    }*/
+    }
 
     // Generar pase de caja del contribuyente
-    /*realizarPago() {
+    realizarPago() {
         this.spinner.show();
         var total = this.dataSource.data.map((element: any) => element.proImporte).reduce((acc: any, value: any) => acc + value, 0);
         let data = {
@@ -120,7 +120,7 @@ export class EstadoCuentaModalComponent implements OnInit {
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         );
-    }*/
+    }
 
     generatePaymentPass(): void {
         this.spinner.show();
