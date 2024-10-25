@@ -85,8 +85,8 @@ export class ServicesDetailComponent implements OnInit {
             title: '¿Estás seguro de iniciar este trámite?',
             icon: 'question',
             showCancelButton: true,
-            confirmButtonColor: '#264395',
-            cancelButtonColor: '#a2a2a2',
+            confirmButtonColor: '#721538',
+            cancelButtonColor: '#99825D',
             confirmButtonText: 'Si, iniciar trámite'
         }).then((result) => {
             if (result.isConfirmed) {

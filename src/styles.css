@@ -55,7 +55,7 @@ body { margin: 0; }
 
 .mat-button.mat-primary,
 .mat-stroked-button.mat-primary {
-    @apply text-blue-800;
+    @apply text-[#721538];
 }
 .mat-button.mat-primary:hover,
 .mat-stroked-button.mat-primary:hover {
@@ -66,11 +66,11 @@ body { margin: 0; }
 .mat-flat-button.mat-primary,
 .mat-fab.mat-primary,
 .mat-mini-fab.mat-primary {
-    @apply bg-blue-800 text-white;
+    @apply bg-[#721538] text-white;
 }
 
 .mat-icon-button.mat-primary {
-    @apply text-blue-800;
+    @apply text-[#721538];
 }
 /* End Primary Button Styling */
 
@@ -99,7 +99,7 @@ body { margin: 0; }
 
 /* Navbar Custom */
 .bg-navbar {
-    @apply bg-blue-800;
+    @apply bg-[#721538];
 }
 
 /* End Navbar */
@@ -107,7 +107,7 @@ body { margin: 0; }
 /* Sidebar*/
 
 .label-section {
-    @apply text-blue-800;
+    @apply text-[#721538];
 }
 
 /* End Sidebar */
