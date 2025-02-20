@@ -5,5 +5,5 @@ export const environment = {
         siteKey: '6LfWQeQjAAAAALCKcqwYte_HzBS1DJ8hM8XIKybo',
     },
     //urlApi: 'http://187.175.225.67:8028/api'
-    urlApi: 'https://tramitesyservicios.gobiernodesolidaridad.gob.mx:8028/'
+    urlApi: 'https://tramitesyservicios.gobiernodesolidaridad.gob.mx/service/api'
 };
