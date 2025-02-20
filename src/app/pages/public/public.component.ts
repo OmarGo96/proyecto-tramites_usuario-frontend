@@ -10,6 +10,7 @@ import {MessageService} from "../../services/messages.service";
 export class PublicComponent implements OnInit {
 
     public services: any;
+    public activeServices: any;
 
     constructor(
         private servicesService: ServicesService,
@@ -25,6 +26,7 @@ export class PublicComponent implements OnInit {
         this.servicesService.getPublicServices().subscribe({
             next: res => {
                 this.services = res.servicios;
+                this.activeServices = res.servicios.filter((serv: any) => serv.activo);
             },
             error: err => {
                 this.messagesServices.printStatusArrayNew(err.error.errors, 'warning');

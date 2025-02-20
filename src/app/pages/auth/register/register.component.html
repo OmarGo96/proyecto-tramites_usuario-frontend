@@ -1,113 +1,151 @@
 <app-public-navbar></app-public-navbar>
-<div class="min-h-full flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-xl w-full bg-white rounded-2xl border border-gray-200 shadow-md p-8">
-        <div class="w-full mb-5">
-            <img class="mx-auto w-1/2" src="assets/logo-horizontal-moneda.png">
-            <p class="mt-2 text-center text-md text-gray-600">
-                Ingresa la información para crear tu cuenta
-            </p>
+<div class="w-1/3 mx-auto flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <!--<div class="w-full mb-5">
+        <img class="mx-auto w-1/4" src="assets/logo-horizontal-moneda.png">
+    </div>-->
+    <h3 class="text-2xl font-bold text-gray-900">Crea tu cuenta</h3>
+    <p class="text-sm text-gray-600 mb-5">Ingresa la información para crear tu cuenta</p>
+
+    <form [formGroup]="registerForm" (submit)="onRegister()">
+
+        <div class="mb-5">
+            <mat-label class="block text-sm font-medium text-slate-700">Tipo de persona</mat-label>
+            <mat-radio-group class="space-x-3" formControlName="tipo_persona" (change)="checkPersonType($event)">
+                <mat-radio-button value="1">Fisica</mat-radio-button>
+                <mat-radio-button value="2">Moral</mat-radio-button>
+            </mat-radio-group>
         </div>
-        <!--<div class="mb-5">
-            <h3 class="text-2xl font-bold text-gray-900">Crea tu cuenta</h3>
-            <p class="text-sm text-gray-600">Ingresa los siguientes datos</p>
-        </div>-->
 
-        <form [formGroup]="registerForm" (submit)="onRegister()">
-
-            <div>
-                <mat-label class="block text-sm font-medium text-slate-700">Nombre(s)</mat-label>
+        <div class="grid grid-cols-3 gap-3">
+            <div class="col-span-2">
+                <mat-label class="block text-sm font-medium text-slate-700">
+                    <span *ngIf="personType === '1'">Nombre completo</span>
+                    <span *ngIf="personType === '2'">Denominación o Razón Social</span>
+                </mat-label>
                 <mat-form-field appearance="outline">
                     <input matInput formControlName="nombre" type="text">
                 </mat-form-field>
             </div>
-            <div>
-                <mat-label class="block text-sm font-medium text-slate-700">Apellido(s)</mat-label>
-                <mat-form-field appearance="outline">
-                    <input matInput formControlName="apellidos" type="text">
-                </mat-form-field>
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-                <div>
-                    <mat-label class="block text-sm font-medium text-slate-700">Correo electronico</mat-label>
-                    <mat-form-field appearance="outline" class="w-full">
-                        <input matInput formControlName="email" type="email">
-                    </mat-form-field>
-                </div>
-
-                <div>
-                    <mat-label class="block text-sm font-medium text-slate-700">Confirmar correo electronico</mat-label>
-                    <mat-form-field appearance="outline" class="w-full">
-                        <input matInput formControlName="re_email" type="email">
-                    </mat-form-field>
-                </div>
-            </div>
-
-
-
-            <div class="grid grid-cols-2 gap-3">
-                <div>
-                    <mat-label class="block text-sm font-medium text-slate-700">Teléfono</mat-label>
-                    <mat-form-field appearance="outline" class="w-full">
-                        <input matInput formControlName="telefono" type="text">
-                    </mat-form-field>
-                </div>
-                <div>
-                    <mat-label class="block text-sm font-medium text-slate-700">RFC</mat-label>
-                    <mat-form-field appearance="outline" class="w-full">
-                        <input matInput formControlName="rfc" type="text">
-                    </mat-form-field>
-                </div>
-            </div>
 
             <div>
-                <mat-label class="block text-sm font-medium text-slate-700">Rango de Edad</mat-label>
+                <mat-label class="block text-sm font-medium text-slate-700">RFC</mat-label>
                 <mat-form-field appearance="outline" class="w-full">
-                    <mat-select formControlName="edad">
-                        <mat-option value="1">18 - 29 años</mat-option>
-                        <mat-option value="2">30 - 59 años</mat-option>
-                        <mat-option value="3">60 o más</mat-option>
-                    </mat-select>
+                    <input matInput formControlName="rfc" type="text">
+                </mat-form-field>
+            </div>
+
+        </div>
+
+
+
+        <div *ngIf="personType === '1'">
+            <mat-label class="block text-sm font-medium text-slate-700">Apellido(s)</mat-label>
+            <mat-form-field appearance="outline">
+                <input matInput formControlName="apellidos" type="text">
+            </mat-form-field>
+        </div>
+
+        <div *ngIf="personType === '2'">
+            <mat-label class="block text-sm font-medium text-slate-700">Representante legal</mat-label>
+            <mat-form-field appearance="outline">
+                <input matInput formControlName="representante_legal" type="text">
+            </mat-form-field>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+            <div>
+                <mat-label class="block text-sm font-medium text-slate-700">Correo electronico</mat-label>
+                <mat-form-field appearance="outline" class="w-full">
+                    <input matInput formControlName="email" type="email">
                 </mat-form-field>
             </div>
 
             <div>
-                <mat-label class="block text-sm font-medium text-slate-700">Contraseña</mat-label>
+                <mat-label class="block text-sm font-medium text-slate-700">Confirmar correo electronico</mat-label>
                 <mat-form-field appearance="outline" class="w-full">
-                    <input matInput formControlName="password" type="password">
+                    <input matInput formControlName="re_email" type="email">
                 </mat-form-field>
             </div>
+        </div>
 
-            <div>
-                <mat-label class="block text-sm font-medium text-slate-700">Confirmar contraseña</mat-label>
-                <mat-form-field appearance="outline" class="w-full">
-                    <input matInput formControlName="re_password" type="password">
-                </mat-form-field>
-            </div>
+        <div>
+            <mat-label class="block text-sm font-medium text-slate-700">Teléfono</mat-label>
+            <mat-form-field appearance="outline" class="w-full">
+                <input matInput formControlName="telefono" type="text">
+            </mat-form-field>
+        </div>
 
+        <div class="mb-5">
+            <mat-label class="block text-sm font-medium text-slate-700">Sexo</mat-label>
             <mat-radio-group class="space-x-3" formControlName="genero">
                 <mat-radio-button value="1">Hombre</mat-radio-button>
                 <mat-radio-button value="0">Mujer</mat-radio-button>
+                <mat-radio-button value="2">Prefiero no responder</mat-radio-button>
             </mat-radio-group>
+        </div>
 
-            <mat-divider class="my-3"></mat-divider>
+        <div>
+            <mat-label class="block text-sm font-medium text-slate-700">Rango de Edad</mat-label>
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-select formControlName="edad">
+                    <mat-option value="1">18 - 29 años</mat-option>
+                    <mat-option value="2">30 - 59 años</mat-option>
+                    <mat-option value="3">60 o más</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
 
-            <div>
-                <p class="text-xs mb-3">Al hacer clic en <span class="font-bold">"Registrarme"</span> acepto los
-                    términos del <a href="https://gobiernodesolidaridad.gob.mx/avisosdeprivacidad" target="_blank" class="text-blue-700 hover:underline">Aviso de Privacidad</a></p>
+        <div>
+            <mat-label class="block text-sm font-medium text-slate-700">Contraseña</mat-label>
+            <mat-form-field appearance="outline" class="w-full">
+                <input matInput formControlName="password" type="password" (keyup)="checkStrength($event)" [type]="hide ? 'password' : 'text'">
+                <mat-icon class="text-gray-400" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <mat-error *ngIf="password.hasError('pattern')">
+                    La contraseña no cumple con los requisitos.
+                </mat-error>
+            </mat-form-field>
+            <div class="text-xs mb-5">
+                <p [ngClass]="{'text-gray-400 ' : !numbers, 'text-green-600' : numbers}"><i class="fa-solid fa-check"></i> Al menos 1 número [0-9]</p>
+                <p [ngClass]="{'text-gray-400 ' : !upperLetters, 'text-green-600' : upperLetters}"><i class="fa-solid fa-check"></i> Letra mayuscula</p>
+                <p [ngClass]="{'text-gray-400 ' : !symbols, 'text-green-600' : symbols}"><i class="fa-solid fa-check"></i> Carácter especial [!#@$%*]</p>
+                <p [ngClass]="{'text-gray-400 ' : !lowerLetters, 'text-green-600' : lowerLetters}"><i class="fa-solid fa-check"></i> Letra minuscula</p>
+                <p [ngClass]="{'text-gray-400 ' : !length, 'text-green-600' : length}"><i class="fa-solid fa-check"></i> 8 caracteres</p>
             </div>
+        </div>
 
-            <re-captcha id="recaptcha" formControlName="recaptcha"></re-captcha>
+        <div>
+            <mat-label class="block text-sm font-medium text-slate-700">Confirmar contraseña</mat-label>
+            <mat-form-field appearance="outline" class="w-full">
+                <input matInput formControlName="re_password" type="password">
+            </mat-form-field>
+        </div>
 
-            <button type="submit" mat-flat-button color="primary"
-                    class="mb-3 mt-3 rounded-md w-full">
-                Registrarme
-            </button>
-            <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                ¿Ya tienes cuenta?
-                <a [routerLink]="['/login']" class="text-blue-700 hover:underline">Inicia sesión aquí</a>
-            </div>
 
-        </form>
-    </div>
+
+        <mat-divider class="my-3"></mat-divider>
+
+        <mat-checkbox class="w-full text-sm" formControlName="terms_conditions">
+            He leido y acepto los
+            <a href="https://gobiernodesolidaridad.gob.mx/politicadeprivacidad" target="_blank"
+               class="text-blue-700 hover:underline">Términos y Condiciones</a> de la web
+        </mat-checkbox>
+        <mat-checkbox class="w-full text-sm" formControlName="aviso_privacidad">
+            He leido y acepto el <a
+            href="https://gobiernodesolidaridad.gob.mx/avisosdeprivacidad" target="_blank"
+            class="text-blue-700 hover:underline">Aviso de Privacidad</a>.
+        </mat-checkbox>
+
+        <re-captcha id="recaptcha" formControlName="recaptcha"></re-captcha>
+
+        <button type="submit" mat-flat-button color="primary"
+                class="mb-3 mt-3 rounded-md w-full"
+                [disabled]="!registerForm.valid">
+            Registrarme
+        </button>
+        <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+            ¿Ya tienes cuenta?
+            <a [routerLink]="['/login']" class="text-blue-700 hover:underline">Inicia sesión aquí</a>
+        </div>
+
+    </form>
 </div>

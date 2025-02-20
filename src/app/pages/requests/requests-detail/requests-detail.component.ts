@@ -11,6 +11,7 @@ import {FormBuilder, UntypedFormBuilder} from "@angular/forms";
 import {NgxSpinner, NgxSpinnerService} from "ngx-spinner";
 import {PaymentDocs} from "../../../const/payment-docs";
 import {AnuenciaDocs} from "../../../const/anuencia-docs";
+import {GiroComercialDoc} from "../../../const/giro-comercial-docs";
 
 @Component({
     selector: 'app-requests-detail',
@@ -43,6 +44,7 @@ export class RequestsDetailComponent implements OnInit {
     public statuses = RequestsStatus;
     public paymentDocs = PaymentDocs;
     public anuenciaDocs = AnuenciaDocs;
+    public giroComercial = GiroComercialDoc;
 
     constructor(
         private requestsService: RequestService,
@@ -101,6 +103,16 @@ export class RequestsDetailComponent implements OnInit {
                         console.log(doc);
                         this.anuenciaDocs.map(docu => {
                             if (docu.id === doc.documento_anuencia){
+                                docu.doc = doc;
+                            }
+                        });
+                    }
+                }
+
+                if (this.request.DocumentosLicenciaComercial.length > 0){
+                    for (const doc of this.request.DocumentosLicenciaComercial) {
+                        this.giroComercial.map(docu => {
+                            if (docu.id === doc.documento_licencia_comercial){
                                 docu.doc = doc;
                             }
                         });
@@ -187,7 +199,7 @@ export class RequestsDetailComponent implements OnInit {
         })
     }
 
-    validateAnuencia(status: any){
+    changeStatus(status: any){
         this.spinner.show();
         this.solicitudForm.controls.estatus_solicitud_id.setValue(status);
         // this.solicitudForm.controls.solicitud_id.setValue(this.request.id.toString());
@@ -207,7 +219,6 @@ export class RequestsDetailComponent implements OnInit {
         })
     }
 
-
     selectDocument(requisitoId: any): void {
         const config = {
             width: '100%'
@@ -221,7 +232,6 @@ export class RequestsDetailComponent implements OnInit {
             }
         });
     }
-
 
     reSelectDocumentToUpdate(requisitoId: any, documentoSolicitudRequisitoId: any) {
         const config = {
@@ -239,6 +249,7 @@ export class RequestsDetailComponent implements OnInit {
             }
         });
     }
+
     selectPaymentDocument(documentId: any): void {
         const config = {
             width: '100%'
@@ -249,6 +260,72 @@ export class RequestsDetailComponent implements OnInit {
         dialogRef.afterClosed().subscribe(document => {
             if (document) {
                 this.setPaymentDocument(document, documentId);
+            }
+        });
+    }
+
+    selectGiroDocument(documentId: any): void {
+        const config = {
+            width: '100%'
+        }
+
+        const dialogRef = this.dialog.open(DocumentsModalComponent, config);
+
+        dialogRef.afterClosed().subscribe(document => {
+            if (document) {
+                this.setGiroDocument(document, documentId);
+            }
+        });
+    }
+
+    setGiroDocument(document: any, documentId: any){
+        this.spinner.show();
+        const data = {
+            documentacion_id: document.id,
+            solicitud_id: this.request.id,
+            documento_licencia_comercial: documentId
+        }
+
+        this.documentsService.createDocumentoGiro(data).subscribe({
+            next: res => {
+                this.getId();
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
+        });
+    }
+
+    reSelectGiroDocumentToUpdate(documentoAnuenciaVal: any, documentacionAnuenciaId: any): void {
+        const config = {
+            width: '100%'
+        }
+
+        const dialogRef = this.dialog.open(DocumentsModalComponent, config);
+
+        dialogRef.afterClosed().subscribe(document => {
+            if (document) {
+                this.updateGiroDocument(document, documentoAnuenciaVal, documentacionAnuenciaId);
+            }
+        });
+    }
+
+    updateGiroDocument(document: any, documentoAnuenciaVal: any, documentacionAnuenciaId: any){
+        this.spinner.show();
+        const data = {
+            documentacion_id: document.id,
+            solicitud_id: this.request.id,
+            documento_licencia_comercial: documentoAnuenciaVal
+        }
+
+        this.documentsService.updateDocumentoGiro(data, documentacionAnuenciaId).subscribe({
+            next: res => {
+                this.getId();
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
             }
         });
     }
@@ -543,6 +620,27 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
+    reUploadDocumentoGiro(documentacionId: any) {
+        this.messagesService.confirmDelete('¿Estás seguro de eliminar este archivo?').then((result: any) => {
+            if (result.isConfirmed) {
+                this.spinner.show();
+                this.documentsService.deleteDocumentoGiro(documentacionId).subscribe({
+                    next: res => {
+                        this.spinner.hide();
+                        this.messagesService.printStatus(res.message, 'success');
+                        setTimeout(() => {
+                            location.reload();
+                        },2500);
+                    },
+                    error: err => {
+                        this.spinner.hide();
+                        this.messagesService.errorAlert(err.error.errors);
+                    }
+                })
+            }
+        });
+    }
+
     reUploadDocumentoComplementario(documentacionId: any) {
         this.messagesService.confirmDelete('¿Estás seguro de eliminar este archivo?').then((result: any) => {
             if (result.isConfirmed) {
@@ -699,5 +797,11 @@ export class RequestsDetailComponent implements OnInit {
     redirectToService(){
         this.router.navigate(['escritorio/tramites/8e9b4ee4-6d60-41fd-851e-3e7d0ce06c4e']);
     }
+
+    redirectToGiroComercial(){
+        this.router.navigate(['escritorio/tramites/b8ef16e0-12d4-415d-90e8-57b9427a47e0']);
+    }
+
+
 
 }

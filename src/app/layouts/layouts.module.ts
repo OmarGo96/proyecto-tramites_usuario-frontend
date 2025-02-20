@@ -22,6 +22,9 @@ import { AddLicensesModalComponent } from './modals/licenses/add-licenses-modal/
 import { RenewLicensesComponent } from './modals/licenses/renew-licenses/renew-licenses.component';
 import { ValidateBeforeRenewModalComponent } from './modals/licenses/validate-before-renew-modal/validate-before-renew-modal.component';
 import { PublicNavbarComponent } from './public/public-navbar/public-navbar.component';
+import { ExpedienteUploadModalComponent } from './modals/expediente-upload-modal/expediente-upload-modal.component';
+import { ValidatePaoRenewModalComponent } from './modals/validate-pao-renew-modal/validate-pao-renew-modal.component';
+import { ContribuyenteInfoModalComponent } from './modals/contribuyente-info-modal/contribuyente-info-modal.component';
 
 @NgModule({
     declarations: [
@@ -41,7 +44,10 @@ import { PublicNavbarComponent } from './public/public-navbar/public-navbar.comp
         AddLicensesModalComponent,
         RenewLicensesComponent,
         ValidateBeforeRenewModalComponent,
-        PublicNavbarComponent
+        PublicNavbarComponent,
+        ExpedienteUploadModalComponent,
+        ValidatePaoRenewModalComponent,
+        ContribuyenteInfoModalComponent
     ],
     imports: [
         CommonModule,

@@ -8,6 +8,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {NgxSpinnerService} from "ngx-spinner";
 import {RequestsStatus} from "../../const/status";
 import {LicfuncService} from "../../services/licfunc.service";
+import {PredialService} from "../../services/predial.service";
 
 @Component({
     selector: 'app-requests',
@@ -31,6 +32,7 @@ export class RequestsComponent implements OnInit {
 
     constructor(
         private requestService: RequestService,
+        private predialService: PredialService,
         private messagesService: MessageService,
         private licFuncService: LicfuncService,
         private spinner: NgxSpinnerService,
@@ -76,7 +78,22 @@ export class RequestsComponent implements OnInit {
                     this.messagesService.errorAlert(err.error.errors);
                 }
             });
-        } else if([15, 21, 22, 5, 13, 24, 11, 2, 3].includes(solicitud.Servicio.id)){
+        } else if (solicitud.Servicio.id == 4) {
+            let data = {'clave': solicitud.Clave.clave};
+            this.predialService.generarPaseCaja(data).subscribe({
+                next: res => {
+                    this.spinner.hide();
+                    window.open(res.link, '_blank');
+                    setTimeout(() => {
+                        this.dialog.closeAll();
+                    }, 1000);
+                },
+                error: err => {
+                    this.spinner.hide();
+                    this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+                }
+            });
+        } else if (solicitud.Servicio.id !== 7 || solicitud.Servicio.id !== 4) {
             this.requestService.obtenerPaseCaja(solicitud.id).subscribe({
                 next: res => {
                     this.spinner.hide();
@@ -114,8 +131,8 @@ export class RequestsComponent implements OnInit {
 
     paymentLink(solicitud: any) {
         this.spinner.show();
-        if (solicitud.Servicio.id === 7){
-            const data = {licencia: solicitud.licencia_id.toString() };
+        if (solicitud.Servicio.id === 7) {
+            const data = {licencia: solicitud.licencia_id.toString()};
             this.licFuncService.realizarPago(data).subscribe({
                 next: res => {
                     this.spinner.hide();
@@ -126,12 +143,28 @@ export class RequestsComponent implements OnInit {
                     this.messagesService.errorAlert(err.error.errors);
                 }
             });
+        } else if (solicitud.Servicio.id == 4) {
+            var total = solicitud.Clave.importe_adeudo;
+            let data = {
+                'clave': solicitud.Clave.clave,
+                'total': total
+            };
+            this.predialService.realizarPago(data).subscribe(
+                res => {
+                    this.spinner.hide();
+                    window.open(res.link, '_blank');
+                    setTimeout(() => {
+                        this.dialog.closeAll();
+                    }, 1000);
+                },
+                err => {
+                    this.spinner.hide();
+                    this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+                }
+            );
         } else {
             const data = {
-                solicitud_id: solicitud.id.toString(),
-                grupo_tramite_id: solicitud.Servicio.grupo_tramite_id.toString(),
-                tramite_id: solicitud.Servicio.tramite_id.toString(),
-                importe: '1445'
+                solicitud_id: solicitud.id.toString()
             }
 
             this.requestService.paymentLink(data).subscribe({

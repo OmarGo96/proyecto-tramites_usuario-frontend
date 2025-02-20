@@ -32,6 +32,10 @@ export class RequestService {
         return this.httpClient.post(`${this.urlApi}/solicitudes`, data, { headers: this.headers });
     }
 
+    public createPredialRequest(data: any): Observable <any> {
+        return this.httpClient.post(`${this.urlApi}/solicitud-predial`, data, { headers: this.headers });
+    }
+
     public updateRecord(data: any, solicitudId: any): Observable <any> {
         return this.httpClient.post(`${this.urlApi}/cambiar_solicitud_estatus/${solicitudId}`, data, { headers: this.headers });
     }
@@ -53,6 +57,14 @@ export class RequestService {
     }
 
     public paymentLink(data: any): Observable <any> {
-        return this.httpClient.post(`${this.urlApi}/solicitud/link_pago`, data, { headers: this.headers });
+        return this.httpClient.post(`${this.urlApi}/solicitud/pago_online`, data, { headers: this.headers });
+    }
+
+    public validatePaoRenew(data: any): Observable <any> {
+        return this.httpClient.post(`${this.urlApi}/solicitud/check-expediente-pao`, data, { headers: this.headers });
+    }
+
+    public addExpedienteInfo(data: any): Observable <any> {
+        return this.httpClient.post(`${this.urlApi}/solicitud/add-expediente-information`, data, { headers: this.headers });
     }
 }

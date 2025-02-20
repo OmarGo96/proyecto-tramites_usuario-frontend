@@ -159,5 +159,30 @@ export const RequestsStatus = [
         name: 'Cambio de propietario aplicado',
         value: 34,
         styles: 'bg-indigo-200 text-indigo-800'
+    },
+    {
+        name: 'Reprogramación de inspección fisica',
+        value: 35,
+        styles: 'bg-indigo-200 text-indigo-800'
+    },
+    {
+        name: 'Programación de inspección fisica',
+        value: 36,
+        styles: 'bg-indigo-200 text-indigo-800'
+    },
+    {
+        name: 'Calificación del expediente',
+        value: 37,
+        styles: 'bg-indigo-200 text-indigo-800'
+    },
+    {
+        name: 'Pendiente de licencia de uso de suelo',
+        value: 38,
+        styles: 'bg-indigo-200 text-indigo-800'
+    },
+    {
+        name: 'En validacion de licencia de uso de suelo',
+        value: 39,
+        styles: 'bg-indigo-200 text-indigo-800'
     }
 ]

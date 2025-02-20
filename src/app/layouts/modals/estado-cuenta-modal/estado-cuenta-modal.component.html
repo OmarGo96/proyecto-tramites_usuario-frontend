@@ -30,10 +30,20 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-    <button mat-stroked-button color="primary" (click)="data.licencia ? generatePaymentPass() : generarPaseCaja()">
-        Generar pase a caja
-    </button>
-    <button mat-flat-button color="primary" (click)="data.licencia ? makePayment() : realizarPago()">
-        Realizar pago
-    </button>
+
+    <!--<button type="button" mat-flat-button color="primary" class="rounded-md" (click)="createRequest('b4a6905c-8889-4708-bfaf-590e6e86944c')">
+        Crear solicitud
+    </button>-->
+    <div class="flex w-full justify-between items-center">
+
+
+        <div>
+            <button mat-stroked-button color="primary" (click)="data.licencia ? generatePaymentPass() : generarPaseCaja()">
+                Generar pase a caja
+            </button>
+            <button mat-flat-button color="primary" (click)="data.licencia ? makePayment() : realizarPago()">
+                Realizar pago
+            </button>
+        </div>
+    </div>
 </mat-dialog-actions>

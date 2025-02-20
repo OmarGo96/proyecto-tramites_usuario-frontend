@@ -1,0 +1,46 @@
+<mat-dialog-content>
+    <h3 class="text-lg leading-6 font-medium text-gray-900 mb-3">Validación de expediente</h3>
+
+    <form [formGroup]="validationForm" (ngSubmit)="validatePAO()">
+
+        <div>
+            <mat-label class="block text-sm font-medium text-slate-700">Folio del expediente</mat-label>
+            <mat-form-field appearance="outline" class="w-full">
+                <input matInput type="text" formControlName="folio">
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-label class="block text-sm font-medium text-slate-700">Año del expediente</mat-label>
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-select formControlName="ejercicio">
+                    <mat-option *ngFor="let year of validYears" [value]="year">{{year}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-label class="block text-sm font-medium text-slate-700">Vigencia del permiso
+            </mat-label>
+            <mat-form-field appearance="outline">
+                <input matInput [matDatepicker]="picker2" formControlName="vigenciaPermiso"
+                       (click)="picker2.open()">
+                <span matSuffix class="text-slate-400 text-sm">
+                                        <i class="fa-solid fa-calendar"></i>&nbsp;
+                                    </span>
+                <mat-datepicker #picker2>
+                    <mat-datepicker-actions>
+                        <button mat-button matDatepickerCancel>Cancelar</button>
+                        <button mat-raised-button color="primary" matDatepickerApply>Aplicar
+                        </button>
+                    </mat-datepicker-actions>
+                </mat-datepicker>
+            </mat-form-field>
+        </div>
+
+
+        <button type="submit" mat-flat-button color="primary" class="rounded-md w-full">
+            Validar expediente
+        </button>
+    </form>
+</mat-dialog-content>

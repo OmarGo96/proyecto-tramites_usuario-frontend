@@ -12,6 +12,12 @@ import {UploadModalComponent} from "../../../layouts/modals/upload-modal/upload-
 import {
     ValidateBeforeRenewModalComponent
 } from "../../../layouts/modals/licenses/validate-before-renew-modal/validate-before-renew-modal.component";
+import {
+    ValidatePaoRenewModalComponent
+} from "../../../layouts/modals/validate-pao-renew-modal/validate-pao-renew-modal.component";
+import {
+    ContribuyenteInfoModalComponent
+} from "../../../layouts/modals/contribuyente-info-modal/contribuyente-info-modal.component";
 
 
 @Component({
@@ -79,13 +85,15 @@ export class ServicesDetailComponent implements OnInit {
             title: '¿Estás seguro de iniciar este trámite?',
             icon: 'question',
             showCancelButton: true,
-            confirmButtonColor: '#264395',
-            cancelButtonColor: '#a2a2a2',
+            confirmButtonColor: '#721538',
+            cancelButtonColor: '#99825D',
             confirmButtonText: 'Si, iniciar trámite'
         }).then((result) => {
             if (result.isConfirmed) {
                 if (servicioUuid === 'a032833a-2a97-448a-9342-898930c2ba6b') {
                     this.openLicenseValidatorModal(servicioUuid);
+                } else if (servicioUuid === '3370d29f-1a60-4aec-a05f-e670facbfdf7') {
+                    this.openValidatePAORenewModal(servicioUuid);
                 } else {
                     this.loading = true;
                     this.requestsService.createRecords(data).subscribe({
@@ -115,6 +123,33 @@ export class ServicesDetailComponent implements OnInit {
 
         this.dialog.open(ValidateBeforeRenewModalComponent, config);
 
+    }
+
+    openValidatePAORenewModal(serviceUuid: any): void {
+        const config = {
+            data: {
+                serviceUuid
+            }
+        };
+
+        const dialogRef = this.dialog.open(ValidatePaoRenewModalComponent, config);
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result.status){
+                this.openContribuyenteInfoModal(serviceUuid, result.expediente)
+            }
+        });
+    }
+
+    openContribuyenteInfoModal(serviceUuid: any, expedienteId: any): void {
+        const config = {
+            data: {
+                expediente_id: expedienteId,
+                serviceUuid
+            }
+        };
+
+        this.dialog.open(ContribuyenteInfoModalComponent, config);
     }
 
     getRequirements() {

@@ -21,7 +21,7 @@ export class UsersService {
     }
 
     public register(data: any): Observable<any> {
-        return this.httpClient.post(`${this.urlApi}/contribuyentes`, data);
+        return this.httpClient.post(`${this.urlApi}/contribuyente`, data);
     }
 
     public login(data: any): Observable<any> {
@@ -30,15 +30,15 @@ export class UsersService {
 
     public getContribuyente(token: any): Observable<any> {
         const headers = new HttpHeaders().set('Authorization', token);
-        return this.httpClient.get(`${this.urlApi}/contribuyentes`, {headers});
+        return this.httpClient.get(`${this.urlApi}/contribuyente`, {headers});
     }
 
     public updateRecord(uuid: any, data: any): Observable<any> {
-        return this.httpClient.put(`${this.urlApi}/contribuyentes/${uuid}`, data, {headers: this.headers});
+        return this.httpClient.put(`${this.urlApi}/contribuyente/${uuid}`, data, {headers: this.headers});
     }
 
     public deleteRecord(uuid: any): Observable<any> {
-        return this.httpClient.get(`${this.urlApi}/contribuyentes/${uuid}`, {headers: this.headers});
+        return this.httpClient.delete(`${this.urlApi}/contribuyente/${uuid}`, {headers: this.headers});
     }
 
     public activarCuenta(codigo: any) {

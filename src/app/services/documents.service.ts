@@ -34,6 +34,10 @@ export class DocumentsService {
         return this.httpClient.get(`${this.urlApi}/documentacion`, {headers: this.headers});
     }
 
+    public getExpedienteUnico(uuid: any): Observable <any> {
+        return this.httpClient.get(`${this.urlApi}/documentacion/expediente/${uuid}`, {headers: this.headers});
+    }
+
     public getDocument(uuid: any): Observable<any> {
         return this.httpClient.get(`${this.urlApi}/documento_servicios/${uuid}`, { responseType: 'blob' });
     }
@@ -58,8 +62,16 @@ export class DocumentsService {
         return this.httpClient.post(`${this.urlApi}/documento-anuencia`, data, {headers: this.headers})
     }
 
+    public createDocumentoGiro(data: any): Observable<any>{
+        return this.httpClient.post(`${this.urlApi}/documento-licencia-comercial`, data, {headers: this.headers})
+    }
+
     public deleteDocumentoAnuencia(documentacionId: any): Observable<any>{
         return this.httpClient.put(`${this.urlApi}/eliminar-documentacion-anuencia/${documentacionId}`,null,{headers: this.headers})
+    }
+
+    public deleteDocumentoGiro(documentacionId: any): Observable<any>{
+        return this.httpClient.put(`${this.urlApi}/eliminar-documentacion-licencia-comercial/${documentacionId}`,null,{headers: this.headers})
     }
 
     public createComplementaryDocument(data: any): Observable<any>{
@@ -80,6 +92,10 @@ export class DocumentsService {
 
     public updateDocumentoAnuencia(data: any, documentId: any): Observable<any>{
         return this.httpClient.put(`${this.urlApi}/documento-anuencia/${documentId}`, data, {headers: this.headers})
+    }
+
+    public updateDocumentoGiro(data: any, documentId: any): Observable<any>{
+        return this.httpClient.put(`${this.urlApi}/documento-licencia-comercial/${documentId}`, data, {headers: this.headers})
     }
 
     public updateDocumentoComplementario(data: any, documentId: any): Observable<any>{
@@ -104,5 +120,7 @@ export class DocumentsService {
         return this.httpClient.post(`${this.urlApi}/solicitud/documento-anuencia/${requestId}`, data, {headers: this.headers})
     }
 
-
+    public printFile(contribueyenteUuid: any): Observable<any> {
+        return this.httpClient.get(`${this.urlApi}/contribuyente/acuse_expediente/${contribueyenteUuid}`, { headers: this.headers, responseType: "blob" });
+    }
 }
