@@ -4,7 +4,7 @@
         <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
             <div class="flex justify-start lg:w-0 lg:flex-1">
                 <a [routerLink]="['/']">
-                    <img class="h-8 w-auto sm:h-10" src="assets/logo-horizontal-moneda.png" alt="">
+                    <img class="h-20 w-auto" src="assets/gobierno-en-solidaridad.png" alt="">
                 </a>
             </div>
             <div class="-mr-2 -my-2 md:hidden">
@@ -21,11 +21,11 @@
             </div>
 
             <div class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-                <a [routerLink]="['/login']"
-                   class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+                <a [routerLink]="['/login']" mat-button color="primary"
+                   class="rounded-md">
                     Iniciar Sesión</a>
-                <a [routerLink]="['/registrarse']"
-                   class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">Registrarse</a>
+                <a [routerLink]="['/registrarse']" mat-flat-button color="primary"
+                   class="rounded-md">Registrarse</a>
             </div>
         </div>
     </div>
@@ -35,9 +35,9 @@
 <div class="bg-gray-100">
     <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
         <div class="flex-1 min-w-0">
-            <h2 class="block text-indigo-600 text-3xl font-bold">Informacion del Tramite</h2>
+            <h2 class="block text-[#99825D] text-3xl font-bold">Informacion del Tramite</h2>
             <p class="mb-3">El trámite se encuentra disponible para realizarlo en línea</p>
-            <a [routerLink]="['/']" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2">
+            <a [routerLink]="['/']" mat-flat-button color="primary">
                 Ver mas tramites
             </a>
         </div>
@@ -140,7 +140,7 @@
 <footer class="p-4 bg-white rounded-lg shadow md:px-6 md:py-8 dark:bg-gray-800">
     <div class="sm:flex sm:items-center sm:justify-between">
         <a [routerLink]="['/']" class="flex items-center mb-4 sm:mb-0">
-            <img src="assets/logo-horizontal-moneda.png" class="mr-3 h-8">
+            <img src="assets/gobierno-en-solidaridad.png" class="mr-3 h-20">
         </a>
         <ul class="flex flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0 dark:text-gray-400">
             <li>
@@ -155,7 +155,7 @@
         </ul>
     </div>
     <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8">
-    <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2022 <a [routerLink]="">H. Ayuntamiento de Solidaridad</a>.
+    <span class="block text-sm text-gray-500 sm:text-center">© 2024-2027 <a [routerLink]="">H. Ayuntamiento de Playa del Carmen</a>.
 </span>
 </footer>
 
