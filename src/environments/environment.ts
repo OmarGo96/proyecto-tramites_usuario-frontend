@@ -5,7 +5,7 @@
 export const environment = {
     production: false,
     // urlApi: 'http://localhost:8028/api',
-    urlApi: 'http://192.168.10.59:8028/api',
+    urlApi: 'http://192.168.10.61:8028/api',
     recaptcha: {
         siteKey: '6Lc8phgrAAAAAOdp4qjIgyRf6x-bt20Hutvm4BFw',
     },
