@@ -57,6 +57,10 @@ export class UsersService {
         return this.httpClient.post(`${this.urlApi}/reenvio_activacion`, data);
     }
 
+    public changeInformation(contribuyenteUuid: string, data: any): Observable<any> {
+        return this.httpClient.put(`${this.urlApi}/contribuyente/completar_informacion/${contribuyenteUuid}`, data, {headers: this.headers});
+    }
+
     public getToken() {
         let token: any;
         const tokenFromSessionStorage = sessionStorage.getItem('token');

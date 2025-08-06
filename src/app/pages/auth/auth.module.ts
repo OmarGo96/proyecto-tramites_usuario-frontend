@@ -13,6 +13,7 @@ import {ResendActivationLinkComponent} from './resend-activation-link/resend-act
 import {LayoutsModule} from "../../layouts/layouts.module";
 import {RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings} from "ng-recaptcha";
 import {environment} from "../../../environments/environment";
+import { ChangeInformationComponent } from './change-information/change-information.component';
 
 const routes: Routes = [
     {
@@ -44,6 +45,10 @@ const routes: Routes = [
         component: ResendActivationLinkComponent
     },
     {
+        path: 'cambiar-informacion',
+        component: ChangeInformationComponent
+    },
+    {
         path: '',
         redirectTo: 'login',
         pathMatch: 'full'
@@ -58,7 +63,8 @@ const routes: Routes = [
         ActivateAccountComponent,
         ResetPasswordComponent,
         ChangePasswordComponent,
-        ResendActivationLinkComponent
+        ResendActivationLinkComponent,
+        ChangeInformationComponent
     ],
     imports: [
         CommonModule,
