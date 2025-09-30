@@ -669,6 +669,24 @@
 
                         </ng-container>
 
+                        <!-- descarga constancia predial -->
+                        <ng-container *ngIf="request.estatus_solicitud_id === 41 ">
+                            <div class="border-t border-gray-200">
+                                <div
+                                    class="flex p-4 mb-4 text-sm text-green-800 border border-green-300 bg-green-50">
+                                    <i class="fa-solid fa-circle-check fa-lg mr-3"></i>
+                                    <div>
+                                        Tu Constancia de No Adeudo Predial esta listo. Puedes descargarlo a continuación
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="p-5">
+                                <button mat-raised-button color="primary" (click)="generarContanciaPredial(request.constancia_uuid)">Descargar constancia</button>
+                            </div>
+                        </ng-container>
+
                         <!-- Mensajes de alerta al usuario -->
                         <ng-container *ngIf="request.estatus_solicitud_id === 20">
                             <div class="w-full mx-auto block p-10 text-center space-y-3">
@@ -781,7 +799,6 @@
                                 </div>
                             </div>
                         </ng-container>
-
 
                         <ng-container
                             *ngIf="request.estatus_solicitud_id === 28">

@@ -40,6 +40,10 @@ export class PredialService {
         return this.httpClient.post(`${this.urlApi}/pase_caja`, data, { headers: this.headers });
     }
 
+    public generarConstancia(constanciaUuid: string): Observable <any> {
+        return this.httpClient.get(`${this.urlApi}/predial/constancia/${constanciaUuid}`, {headers: this.headers,  responseType: 'blob' });
+    }
+
     public realizarPago(data: any): Observable <any> {
         return this.httpClient.post(`${this.urlApi}/pago_banco`, data, { headers: this.headers });
     }

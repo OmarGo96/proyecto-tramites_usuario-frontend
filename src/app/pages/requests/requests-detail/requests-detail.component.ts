@@ -12,6 +12,7 @@ import {NgxSpinner, NgxSpinnerService} from "ngx-spinner";
 import {PaymentDocs} from "../../../const/payment-docs";
 import {AnuenciaDocs} from "../../../const/anuencia-docs";
 import {GiroComercialDoc} from "../../../const/giro-comercial-docs";
+import {PredialService} from "../../../services/predial.service";
 
 @Component({
     selector: 'app-requests-detail',
@@ -49,6 +50,7 @@ export class RequestsDetailComponent implements OnInit {
     constructor(
         private requestsService: RequestService,
         private messagesService: MessageService,
+        private predialService: PredialService,
         private documentsService: DocumentsService,
         private activatedRoute: ActivatedRoute,
         private formBuilder: FormBuilder,
@@ -88,31 +90,31 @@ export class RequestsDetailComponent implements OnInit {
                 this.request = res.solicitud;
                 this.requeriments = res.requisitos;
 
-                if (this.request.DocumentosPago.length > 0){
+                if (this.request.DocumentosPago.length > 0) {
                     for (const doc of this.request.DocumentosPago) {
                         this.paymentDocs.map(docu => {
-                            if (docu.id === doc.documento_pago){
+                            if (docu.id === doc.documento_pago) {
                                 docu.doc = doc;
                             }
                         });
                     }
                 }
 
-                if (this.request.DocumentosAnuencia.length > 0){
+                if (this.request.DocumentosAnuencia.length > 0) {
                     for (const doc of this.request.DocumentosAnuencia) {
                         console.log(doc);
                         this.anuenciaDocs.map(docu => {
-                            if (docu.id === doc.documento_anuencia){
+                            if (docu.id === doc.documento_anuencia) {
                                 docu.doc = doc;
                             }
                         });
                     }
                 }
 
-                if (this.request.DocumentosLicenciaComercial.length > 0){
+                if (this.request.DocumentosLicenciaComercial.length > 0) {
                     for (const doc of this.request.DocumentosLicenciaComercial) {
                         this.giroComercial.map(docu => {
-                            if (docu.id === doc.documento_licencia_comercial){
+                            if (docu.id === doc.documento_licencia_comercial) {
                                 docu.doc = doc;
                             }
                         });
@@ -179,7 +181,7 @@ export class RequestsDetailComponent implements OnInit {
         })
     }
 
-    validatePayment(status: any){
+    validatePayment(status: any) {
         this.spinner.show();
         this.solicitudForm.controls.estatus_solicitud_id.setValue(status);
         // this.solicitudForm.controls.solicitud_id.setValue(this.request.id.toString());
@@ -199,7 +201,7 @@ export class RequestsDetailComponent implements OnInit {
         })
     }
 
-    changeStatus(status: any){
+    changeStatus(status: any) {
         this.spinner.show();
         this.solicitudForm.controls.estatus_solicitud_id.setValue(status);
         // this.solicitudForm.controls.solicitud_id.setValue(this.request.id.toString());
@@ -211,6 +213,21 @@ export class RequestsDetailComponent implements OnInit {
                 setTimeout(() => {
                     this.getId();
                 }, 2500);
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
+        })
+    }
+
+    generarContanciaPredial(constanciaUuid: string) {
+        this.spinner.show();
+        this.predialService.generarConstancia(constanciaUuid).subscribe({
+            next: res => {
+                this.spinner.hide();
+                let url = URL.createObjectURL(res);
+                window.open(url, '_blank');
             },
             error: err => {
                 this.spinner.hide();
@@ -278,7 +295,7 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
-    setGiroDocument(document: any, documentId: any){
+    setGiroDocument(document: any, documentId: any) {
         this.spinner.show();
         const data = {
             documentacion_id: document.id,
@@ -311,7 +328,7 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
-    updateGiroDocument(document: any, documentoAnuenciaVal: any, documentacionAnuenciaId: any){
+    updateGiroDocument(document: any, documentoAnuenciaVal: any, documentacionAnuenciaId: any) {
         this.spinner.show();
         const data = {
             documentacion_id: document.id,
@@ -344,7 +361,7 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
-    setAnuenciaDocument(document: any, documentId: any){
+    setAnuenciaDocument(document: any, documentId: any) {
         this.spinner.show();
         const data = {
             documentacion_id: document.id,
@@ -377,7 +394,7 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
-    updateAnuenciaDocument(document: any, documentoAnuenciaVal: any, documentacionAnuenciaId: any){
+    updateAnuenciaDocument(document: any, documentoAnuenciaVal: any, documentacionAnuenciaId: any) {
         this.spinner.show();
         const data = {
             documentacion_id: document.id,
@@ -429,7 +446,7 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
-    setPaymentDocument(document: any, documentId: any){
+    setPaymentDocument(document: any, documentId: any) {
         this.spinner.show();
         const data = {
             documentacion_id: document.id,
@@ -448,7 +465,7 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
-    updatePaymentDocument(document: any, documentoPagoVal: any, documentacionPagoId: any){
+    updatePaymentDocument(document: any, documentoPagoVal: any, documentacionPagoId: any) {
         this.spinner.show();
         const data = {
             documentacion_id: document.id,
@@ -494,12 +511,12 @@ export class RequestsDetailComponent implements OnInit {
             next: res => {
                 let downloadURL = window.URL.createObjectURL(res);
 
-                if(res.type == 'application/dwg' || res.type == 'application/dxf') {
+                if (res.type == 'application/dwg' || res.type == 'application/dxf') {
                     let link = document.createElement('a');
                     link.href = downloadURL;
                     link.download = documentacion.url;
                     link.click();
-                }  else {
+                } else {
                     window.open(downloadURL, '_blank')
                 }
             },
@@ -545,7 +562,7 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
-    getRequestDocument(requestId: any){
+    getRequestDocument(requestId: any) {
         this.documentsService.getRequestDocument(requestId).subscribe({
             next: res => {
                 let url = URL.createObjectURL(res);
@@ -567,7 +584,7 @@ export class RequestsDetailComponent implements OnInit {
                         this.messagesService.printStatus(res.message, 'success');
                         setTimeout(() => {
                             this.getId();
-                        },2500);
+                        }, 2500);
                     },
                     error: err => {
                         this.spinner.hide();
@@ -588,7 +605,7 @@ export class RequestsDetailComponent implements OnInit {
                         this.messagesService.printStatus(res.message, 'success');
                         setTimeout(() => {
                             location.reload();
-                        },2500);
+                        }, 2500);
                     },
                     error: err => {
                         this.spinner.hide();
@@ -609,7 +626,7 @@ export class RequestsDetailComponent implements OnInit {
                         this.messagesService.printStatus(res.message, 'success');
                         setTimeout(() => {
                             location.reload();
-                        },2500);
+                        }, 2500);
                     },
                     error: err => {
                         this.spinner.hide();
@@ -630,7 +647,7 @@ export class RequestsDetailComponent implements OnInit {
                         this.messagesService.printStatus(res.message, 'success');
                         setTimeout(() => {
                             location.reload();
-                        },2500);
+                        }, 2500);
                     },
                     error: err => {
                         this.spinner.hide();
@@ -651,7 +668,7 @@ export class RequestsDetailComponent implements OnInit {
                         this.messagesService.printStatus(res.message, 'success');
                         setTimeout(() => {
                             location.reload();
-                        },2500);
+                        }, 2500);
                     },
                     error: err => {
                         this.spinner.hide();
@@ -682,7 +699,7 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
-    setComplementaryDocument(document: any){
+    setComplementaryDocument(document: any) {
         this.spinner.show();
         const data = {
             documentacion_id: document.id,
@@ -714,7 +731,7 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
-    updateComplementaryDocument(document: any, documentacionAnuenciaId: any){
+    updateComplementaryDocument(document: any, documentacionAnuenciaId: any) {
         this.spinner.show();
         const data = {
             documentacion_id: document.id,
@@ -732,7 +749,7 @@ export class RequestsDetailComponent implements OnInit {
         });
     }
 
-    validateComplementaryDocument(status: any){
+    validateComplementaryDocument(status: any) {
         this.spinner.show();
         this.solicitudForm.controls.estatus_solicitud_id.setValue(status);
         // this.solicitudForm.controls.solicitud_id.setValue(this.request.id.toString());
@@ -767,7 +784,7 @@ export class RequestsDetailComponent implements OnInit {
         })
     }
 
-    updateRequestEstatus(){
+    updateRequestEstatus() {
         const data = {
             estatus_solicitud_id: '23'
         };
@@ -794,14 +811,13 @@ export class RequestsDetailComponent implements OnInit {
         this.files.splice(this.files.indexOf(event), 1);
     }
 
-    redirectToService(){
+    redirectToService() {
         this.router.navigate(['escritorio/tramites/8e9b4ee4-6d60-41fd-851e-3e7d0ce06c4e']);
     }
 
-    redirectToGiroComercial(){
+    redirectToGiroComercial() {
         this.router.navigate(['escritorio/tramites/b8ef16e0-12d4-415d-90e8-57b9427a47e0']);
     }
-
 
 
 }
