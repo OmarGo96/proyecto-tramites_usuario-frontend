@@ -687,6 +687,23 @@
                             </div>
                         </ng-container>
 
+                        <ng-container *ngIf="request.estatus_solicitud_id === 40">
+                            <div class="border-t border-gray-200">
+                                <div
+                                    class="flex p-4 mb-4 text-sm text-green-800 border border-green-300 bg-green-50">
+                                    <i class="fa-solid fa-circle-check fa-lg mr-3"></i>
+                                    <div>
+                                        Tu Licencia de funcionamiento esta lista. Puedes descargarlo a continuación
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="p-5">
+                                <button mat-raised-button color="primary" (click)="generarLicencia(request.constancia_uuid)">Descargar licencia</button>
+                            </div>
+                        </ng-container>
+
                         <!-- Mensajes de alerta al usuario -->
                         <ng-container *ngIf="request.estatus_solicitud_id === 20">
                             <div class="w-full mx-auto block p-10 text-center space-y-3">

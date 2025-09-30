@@ -39,6 +39,10 @@ export class LicfuncService {
         return this.httpClient.post(`${this.urlApi}/licencia-pago-en-linea`, data, { headers: this.headers });
     }
 
+    public generarLicencia(constanciaUuid: string): Observable <any> {
+        return this.httpClient.get(`${this.urlApi}/licencia-funcionamiento/constancia/${constanciaUuid}`, {headers: this.headers,  responseType: 'blob' });
+    }
+
     public validarLicencia(data: any): Observable <any> {
         return this.httpClient.post(`${this.urlApi}/licencia-funcionamiento/check`, data, { headers: this.headers });
     }

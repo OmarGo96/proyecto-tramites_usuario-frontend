@@ -13,6 +13,7 @@ import {PaymentDocs} from "../../../const/payment-docs";
 import {AnuenciaDocs} from "../../../const/anuencia-docs";
 import {GiroComercialDoc} from "../../../const/giro-comercial-docs";
 import {PredialService} from "../../../services/predial.service";
+import {LicfuncService} from "../../../services/licfunc.service";
 
 @Component({
     selector: 'app-requests-detail',
@@ -51,6 +52,7 @@ export class RequestsDetailComponent implements OnInit {
         private requestsService: RequestService,
         private messagesService: MessageService,
         private predialService: PredialService,
+        private licenciaService: LicfuncService,
         private documentsService: DocumentsService,
         private activatedRoute: ActivatedRoute,
         private formBuilder: FormBuilder,
@@ -235,6 +237,22 @@ export class RequestsDetailComponent implements OnInit {
             }
         })
     }
+
+    generarLicencia(constanciaUuid: string) {
+        this.spinner.show();
+        this.licenciaService.generarLicencia(constanciaUuid).subscribe({
+            next: res => {
+                this.spinner.hide();
+                let url = URL.createObjectURL(res);
+                window.open(url, '_blank');
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
+        })
+    }
+
 
     selectDocument(requisitoId: any): void {
         const config = {
