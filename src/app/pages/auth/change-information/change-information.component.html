@@ -11,8 +11,8 @@
         <div class="mb-5">
             <mat-label class="block text-sm font-medium text-slate-700">Tipo de persona</mat-label>
             <mat-radio-group class="space-x-3" formControlName="tipo_persona" (change)="checkPersonType($event)">
-                <mat-radio-button value="1">Fisica</mat-radio-button>
-                <mat-radio-button value="2">Moral</mat-radio-button>
+                <mat-radio-button [value]="1">Fisica</mat-radio-button>
+                <mat-radio-button [value]="2">Moral</mat-radio-button>
             </mat-radio-group>
         </div>
 
