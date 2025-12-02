@@ -28,9 +28,9 @@ export class UsersService {
         return this.httpClient.post(`${this.urlApi}/session/contribuyente`, data);
     }
 
-    public getContribuyente(token: any): Observable<any> {
-        const headers = new HttpHeaders().set('Authorization', token);
-        return this.httpClient.get(`${this.urlApi}/contribuyente`, {headers});
+    public getContribuyente(): Observable<any> {
+        // const headers = new HttpHeaders().set('Authorization', token);
+        return this.httpClient.get(`${this.urlApi}/contribuyente`);
     }
 
     public updateRecord(uuid: any, data: any): Observable<any> {

@@ -42,8 +42,8 @@ export class ChangeInformationComponent implements OnInit {
     }
 
     getContribuyente(){
-        const token = this.usersService.getToken();
-        this.usersService.getContribuyente(token).subscribe({
+        // const token = this.usersService.getToken();
+        this.usersService.getContribuyente().subscribe({
             next: res => {
                 this.spinner.hide();
                 this.identity = res.contribuyente

@@ -4,14 +4,13 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {LayoutsModule} from "./layouts/layouts.module";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {PagesModule} from "./pages/pages.module";
 
 import localeEsMX from '@angular/common/locales/es-MX';
 import {NgxSpinnerModule} from 'ngx-spinner';
-import {RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings} from "ng-recaptcha";
-import {environment} from "../environments/environment";
+import {JwtInterceptor} from "./core/interceptors/jwt.interceptor";
 
 
 registerLocaleData(localeEsMX, 'mx');
@@ -31,6 +30,7 @@ registerLocaleData(localeEsMX, 'mx');
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
+        {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
         {provide: LOCALE_ID, useValue: 'mx'}
     ],
     bootstrap: [AppComponent]
