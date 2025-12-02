@@ -61,7 +61,14 @@ export class LoginComponent implements OnInit {
         this.usersService.login(data).subscribe({
             next: res => {
                 sessionStorage.setItem('token', res.token);
+
                 this.getIdentity(res);
+
+                if (res.completar_informacion){
+                    this.router.navigate(['cambiar-informacion']);
+                } else {
+                    this.router.navigate(['escritorio']);
+                }
             },
             error: err => {
                 this.spinner.hide();
@@ -71,22 +78,21 @@ export class LoginComponent implements OnInit {
     }
 
     getIdentity(result: any) {
-        this.usersService.getContribuyente(result.token).subscribe({
-            next: res => {
-                this.spinner.hide();
-                sessionStorage.setItem('identity', JSON.stringify(res.contribuyente));
+        return new Promise<void>((resolve, reject) => {
+            this.usersService.getContribuyente(result.token).subscribe({
+                next: res => {
+                    this.spinner.hide();
+                    sessionStorage.setItem('identity', JSON.stringify(res.contribuyente));
 
-                if (result.completar_informacion){
-                    this.router.navigate(['cambiar-informacion']);
-                } else {
-                    this.router.navigate(['escritorio']);
+                    resolve();
+
+                },
+                error: err => {
+                    this.spinner.hide();
+                    this.messagesService.printStatusArrayNew(err.error.errors, 'warning');
+                    reject(err);
                 }
-
-            },
-            error: err => {
-                this.spinner.hide();
-                this.messagesService.printStatusArrayNew(err.error.errors, 'warning');
-            }
-        });
+            });
+        })
     }
 }
