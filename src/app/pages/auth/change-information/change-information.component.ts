@@ -70,7 +70,8 @@ export class ChangeInformationComponent implements OnInit {
 
     changeInformation() {
         this.spinner.show();
-        const data = this.registerForm.value;
+        const data = this.registerForm.getRawValue();
+        console.log(data);
         this.usersService.changeInformation(this.identity.uuid, data).subscribe({
             next: res => {
                 this.messagesService.printStatus(res.message, 'success');
@@ -79,6 +80,7 @@ export class ChangeInformationComponent implements OnInit {
                 this.spinner.hide();
             },
             error: err => {
+                console.log(err);
                 this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'warning');
             }
