@@ -62,7 +62,7 @@ export class ChangeInformationComponent implements OnInit {
             apellidos: [''],
             representante_legal: [''],
             rfc: ['', Validators.required],
-            tipo_persona: ['1', Validators.required],
+            tipo_persona: [1, Validators.required],
             aviso_privacidad: ['', Validators.required],
             terms_conditions: ['', Validators.required],
         })
