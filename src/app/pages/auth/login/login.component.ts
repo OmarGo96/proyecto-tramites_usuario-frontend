@@ -62,13 +62,14 @@ export class LoginComponent implements OnInit {
             next: res => {
                 sessionStorage.setItem('token', res.token);
 
-                this.getIdentity(res);
-
-                if (res.completar_informacion){
-                    this.router.navigate(['cambiar-informacion']);
-                } else {
-                    this.router.navigate(['escritorio']);
-                }
+                setTimeout(() => {
+                    this.spinner.hide();
+                    if (res.completar_informacion){
+                        this.router.navigate(['cambiar-informacion']);
+                    } else {
+                        this.router.navigate(['escritorio']);
+                    }
+                },1000);
             },
             error: err => {
                 this.spinner.hide();
@@ -77,22 +78,8 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    getIdentity(result: any) {
+  /*  getIdentity(result: any) {
         return new Promise<void>((resolve, reject) => {
-            this.usersService.getContribuyente(result.token).subscribe({
-                next: res => {
-                    this.spinner.hide();
-                    sessionStorage.setItem('identity', JSON.stringify(res.contribuyente));
 
-                    resolve();
-
-                },
-                error: err => {
-                    this.spinner.hide();
-                    this.messagesService.printStatusArrayNew(err.error.errors, 'warning');
-                    reject(err);
-                }
-            });
-        })
-    }
+    }*/
 }

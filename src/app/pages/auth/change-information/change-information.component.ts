@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
     templateUrl: './change-information.component.html',
     styleUrls: ['./change-information.component.css']
 })
-export class ChangeInformationComponent implements OnInit, AfterViewInit {
+export class ChangeInformationComponent implements OnInit {
 
     public registerForm: any;
     public loading = false;
@@ -26,7 +26,7 @@ export class ChangeInformationComponent implements OnInit, AfterViewInit {
 
     public personType = '1';
 
-    public indentity: any;
+    public identity: any;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -38,12 +38,22 @@ export class ChangeInformationComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
-        this.initRegisterForm();
+        this.getContribuyente();
     }
 
-    ngAfterViewInit() {
-        this.indentity = this.usersService.getIdentity();
-        console.log(this.indentity);
+    getContribuyente(){
+        const token = this.usersService.getToken();
+        this.usersService.getContribuyente(token).subscribe({
+            next: res => {
+                this.spinner.hide();
+                this.identity = res.contribuyente
+                this.initRegisterForm();
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'warning');
+            }
+        });
     }
 
     initRegisterForm() {
@@ -61,7 +71,7 @@ export class ChangeInformationComponent implements OnInit, AfterViewInit {
     changeInformation() {
         this.spinner.show();
         const data = this.registerForm.value;
-        this.usersService.changeInformation(this.indentity.uuid, data).subscribe({
+        this.usersService.changeInformation(this.identity.uuid, data).subscribe({
             next: res => {
                 this.messagesService.printStatus(res.message, 'success');
                 this.registerForm.reset();
