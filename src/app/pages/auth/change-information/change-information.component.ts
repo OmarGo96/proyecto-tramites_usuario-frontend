@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, UntypedFormBuilder, Validators} from "@angular/forms";
 import {UsersService} from "../../../services/users.service";
 import {MessageService} from "../../../services/messages.service";
@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
     templateUrl: './change-information.component.html',
     styleUrls: ['./change-information.component.css']
 })
-export class ChangeInformationComponent implements OnInit {
+export class ChangeInformationComponent implements OnInit, AfterViewInit {
 
     public registerForm: any;
     public loading = false;
@@ -38,8 +38,12 @@ export class ChangeInformationComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.indentity = this.usersService.getIdentity();
         this.initRegisterForm();
+    }
+
+    ngAfterViewInit() {
+        this.indentity = this.usersService.getIdentity();
+        console.log(this.indentity);
     }
 
     initRegisterForm() {
