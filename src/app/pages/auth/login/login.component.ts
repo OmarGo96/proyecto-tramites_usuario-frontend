@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
                     if (res.completar_informacion){
                         this.router.navigate(['cambiar-informacion']);
                     } else {
-                        this.router.navigate(['escritorio']);
+                        this.getIdentity();
                     }
                 },1000);
             },
@@ -78,8 +78,18 @@ export class LoginComponent implements OnInit {
         });
     }
 
-  /*  getIdentity(result: any) {
-        return new Promise<void>((resolve, reject) => {
-
-    }*/
+    getIdentity(){
+        // const token = this.usersService.getToken();
+        this.usersService.getContribuyente().subscribe({
+            next: res => {
+                this.spinner.hide();
+                sessionStorage.setItem('identity', JSON.stringify(res.contribuyente));
+                this.router.navigate(['escritorio']);
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'warning');
+            }
+        });
+    }
 }

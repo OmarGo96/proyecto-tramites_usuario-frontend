@@ -36,8 +36,8 @@ export class ProfileComponent implements OnInit {
     }
 
     getUser(){
-        const token = this.usersService.getToken();
-        this.usersService.getContribuyente(token).subscribe({
+        // const token = this.usersService.getToken();
+        this.usersService.getContribuyente().subscribe({
             next: res => {
                 sessionStorage.setItem('identity', JSON.stringify(res.contribuyente));
                 this.user = res.contribuyente;
