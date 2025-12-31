@@ -39,9 +39,7 @@ export class ValidateBeforeRenewModalComponent implements OnInit {
 
     initLicenceForm() {
         this.licenceForm = this.formBuilder.group({
-            licencia: ['', Validators.required],
-            folioRenovacion: ['', Validators.required],
-            ultimoAnoRenovacion: ['', Validators.required]
+            licencia: ['', Validators.required]
         });
     }
 
