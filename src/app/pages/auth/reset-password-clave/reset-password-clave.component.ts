@@ -6,11 +6,11 @@ import {NgxSpinnerService} from "ngx-spinner";
 import {Router} from "@angular/router";
 
 @Component({
-    selector: 'app-reset-password',
-    templateUrl: './reset-password.component.html',
-    styleUrls: ['./reset-password.component.css']
+    selector: 'app-reset-password-clave',
+    templateUrl: './reset-password-clave.component.html',
+    styleUrls: ['./reset-password-clave.component.css']
 })
-export class ResetPasswordComponent implements OnInit {
+export class ResetPasswordClaveComponent implements OnInit {
 
     public resetPasswordForm: any;
 
@@ -20,8 +20,8 @@ export class ResetPasswordComponent implements OnInit {
         private formBuilder: FormBuilder,
         private usersService: UsersService,
         private messagesService: MessageService,
-        private router: Router,
         private spinner: NgxSpinnerService,
+        private router: Router
     ) {
     }
 
@@ -31,22 +31,23 @@ export class ResetPasswordComponent implements OnInit {
 
     initResetForm () {
         this.resetPasswordForm = this.formBuilder.group({
-            email: ['', Validators.required]
+            email: ['', Validators.required],
+            clave_catastral: ['', Validators.required]
         });
     }
 
     sendRequest(){
         this.spinner.show();
         const data = this.resetPasswordForm.value;
-        this.usersService.requestRestorePassword(data).subscribe({
+        this.usersService.requestRestorePasswordClave(data).subscribe({
             next: res => {
                 this.spinner.hide();
                 this.messagesService.printStatus(res.message, 'success');
+                this.router.navigate(['restablecer', res.codigo]);
             },
             error: err => {
                 this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'warning');
-                this.router.navigate(['restaurar-contrasena-clave']);
             }
         })
     }

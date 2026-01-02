@@ -14,6 +14,7 @@ import {LayoutsModule} from "../../layouts/layouts.module";
 import {RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings} from "ng-recaptcha";
 import {environment} from "../../../environments/environment";
 import { ChangeInformationComponent } from './change-information/change-information.component';
+import { ResetPasswordClaveComponent } from './reset-password-clave/reset-password-clave.component';
 
 const routes: Routes = [
     {
@@ -35,6 +36,10 @@ const routes: Routes = [
     {
         path: 'restaurar-contraseña',
         component: ResetPasswordComponent
+    },
+    {
+        path: 'restaurar-contrasena-clave',
+        component: ResetPasswordClaveComponent
     },
     {
         path: 'restablecer/:codigo',
@@ -64,7 +69,8 @@ const routes: Routes = [
         ResetPasswordComponent,
         ChangePasswordComponent,
         ResendActivationLinkComponent,
-        ChangeInformationComponent
+        ChangeInformationComponent,
+        ResetPasswordClaveComponent
     ],
     imports: [
         CommonModule,

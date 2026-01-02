@@ -49,6 +49,10 @@ export class UsersService {
         return this.httpClient.post(`${this.urlApi}/solicitud_restauracion`, contribuyente);
     }
 
+    public requestRestorePasswordClave(data: any): Observable<any> {
+        return this.httpClient.post(`${this.urlApi}/solicitud_cambio_password`, data);
+    }
+
     public restorePassword(data: any): Observable<any> {
         return this.httpClient.post(`${this.urlApi}/restaurar_cuenta`, data);
     }
