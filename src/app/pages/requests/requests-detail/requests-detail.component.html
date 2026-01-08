@@ -309,12 +309,12 @@
                         <ng-container
                             *ngIf="request.estatus_solicitud_id === 22 && (request.servicio_id === 7 || request.servicio_id === 6)">
                             <div class="p-10 space-y-8">
-                                <button mat-flat-button (click)="redirectToService()" color="primary">
+                                <!--<button mat-flat-button (click)="redirectToService()" color="primary">
                                     Iniciar trámite
                                 </button>
 
                                 <p class="text-sm text-slate-500 text-center w-1/4 border-b-2 leading-3"><span
-                                    class="bg-white px-3">O adjunta los documentos</span></p>
+                                    class="bg-white px-3">O adjunta los documentos</span></p>-->
 
                                 <dl class="pb-5 text-gray-900">
                                     <ng-container *ngFor="let doc of anuenciaDocs">
@@ -401,12 +401,12 @@
                         <!-- Uso de Suelo de Giro Comercial -->
                         <ng-container *ngIf="request.estatus_solicitud_id === 38 && (request.servicio_id === 6)">
                             <div class="p-10 space-y-8">
-                                <button mat-flat-button (click)="redirectToGiroComercial()" color="primary">
+                                <!--<button mat-flat-button (click)="redirectToGiroComercial()" color="primary">
                                     Iniciar trámite
                                 </button>
 
                                 <p class="text-sm text-slate-500 text-center w-1/4 border-b-2 leading-3"><span
-                                    class="bg-white px-3">O adjunta los documentos</span></p>
+                                    class="bg-white px-3">O adjunta los documentos</span></p>-->
 
                                 <dl class="pb-5 text-gray-900">
                                     <ng-container *ngFor="let doc of giroComercial">

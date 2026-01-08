@@ -85,7 +85,7 @@ export const RequestsStatus = [
         styles: 'bg-indigo-200 text-indigo-800'
     },
     {
-        name: 'Impresión de documento',
+        name: 'Generación de QR',
         value: 16,
         styles: 'bg-sky-200 text-sky-800'
     },
