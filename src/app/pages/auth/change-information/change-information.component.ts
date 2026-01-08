@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, UntypedFormBuilder, Validators} from "@angular/forms";
-import {UsersService} from "../../../services/users.service";
-import {MessageService} from "../../../services/messages.service";
-import {NgxSpinnerService} from "ngx-spinner";
-import {Router} from "@angular/router";
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, UntypedFormBuilder, Validators } from "@angular/forms";
+import { UsersService } from "../../../services/users.service";
+import { MessageService } from "../../../services/messages.service";
+import { NgxSpinnerService } from "ngx-spinner";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'app-change-information',
@@ -41,7 +41,7 @@ export class ChangeInformationComponent implements OnInit {
         this.getContribuyente();
     }
 
-    getContribuyente(){
+    getContribuyente() {
         // const token = this.usersService.getToken();
         this.usersService.getContribuyente().subscribe({
             next: res => {
@@ -62,7 +62,7 @@ export class ChangeInformationComponent implements OnInit {
             apellidos: [''],
             representante_legal: [''],
             rfc: ['', Validators.required],
-            tipo_persona: [1, Validators.required],
+            tipo_persona: ['1', Validators.required],
             aviso_privacidad: ['', Validators.required],
             terms_conditions: ['', Validators.required],
         })
@@ -87,7 +87,7 @@ export class ChangeInformationComponent implements OnInit {
         })
     }
 
-    checkPersonType(event: any){
+    checkPersonType(event: any) {
         this.personType = event.value;
     }
 

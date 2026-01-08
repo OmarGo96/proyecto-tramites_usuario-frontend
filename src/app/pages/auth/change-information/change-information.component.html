@@ -11,8 +11,8 @@
         <div class="mb-5">
             <mat-label class="block text-sm font-medium text-slate-700">Tipo de persona</mat-label>
             <mat-radio-group class="space-x-3" formControlName="tipo_persona" (change)="checkPersonType($event)">
-                <mat-radio-button [value]="1">Fisica</mat-radio-button>
-                <mat-radio-button [value]="2">Moral</mat-radio-button>
+                <mat-radio-button [value]="'1'">Fisica</mat-radio-button>
+                <mat-radio-button [value]="'2'">Moral</mat-radio-button>
             </mat-radio-group>
         </div>
 
@@ -56,18 +56,15 @@
         <mat-checkbox class="w-full text-sm" formControlName="terms_conditions">
             He leido y acepto los
             <a href="https://gobiernodesolidaridad.gob.mx/politicadeprivacidad" target="_blank"
-               class="text-blue-700 hover:underline">Términos y Condiciones</a> de la web
+                class="text-blue-700 hover:underline">Términos y Condiciones</a> de la web
         </mat-checkbox>
         <mat-checkbox class="w-full text-sm" formControlName="aviso_privacidad">
-            He leido y acepto el <a
-            href="https://gobiernodesolidaridad.gob.mx/avisosdeprivacidad" target="_blank"
-            class="text-blue-700 hover:underline">Aviso de Privacidad</a>.
+            He leido y acepto el <a href="https://gobiernodesolidaridad.gob.mx/avisosdeprivacidad" target="_blank"
+                class="text-blue-700 hover:underline">Aviso de Privacidad</a>.
         </mat-checkbox>
 
-        <button type="submit" mat-flat-button color="primary"
-                class="mb-3 mt-3 rounded-md w-full"
-                (click)="changeInformation()"
-                [disabled]="!registerForm.valid">
+        <button type="submit" mat-flat-button color="primary" class="mb-3 mt-3 rounded-md w-full"
+            (click)="changeInformation()" [disabled]="!registerForm.valid">
             Confirmar información
         </button>
 
