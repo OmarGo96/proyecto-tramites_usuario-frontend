@@ -309,6 +309,11 @@
                         <ng-container
                             *ngIf="request.estatus_solicitud_id === 22 && (request.servicio_id === 7 || request.servicio_id === 6)">
                             <div class="p-10 space-y-8">
+
+                                <div class="mt-2 bg-teal-100 border border-teal-200 text-sm text-teal-800 rounded-lg p-4 dark:bg-teal-800/10 dark:border-teal-900 dark:text-teal-500" role="alert" tabindex="-1" aria-labelledby="hs-soft-color-success-label">
+                                    <span id="hs-soft-color-success-label" class="font-bold">¡Formato de trámite listo!</span> Puedes encontrar tu formato de trámite en el apartado de expediente único
+                                </div>
+
                                 <!--<button mat-flat-button (click)="redirectToService()" color="primary">
                                     Iniciar trámite
                                 </button>
