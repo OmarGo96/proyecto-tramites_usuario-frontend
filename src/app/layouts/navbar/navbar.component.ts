@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {SearcherModalComponent} from "../modals/searcher-modal/searcher-modal.component";
-import {Dialog} from "@angular/cdk/dialog";
 import {MatDialog} from "@angular/material/dialog";
+import {ChangePasswordModalComponent} from "../modals/change-password-modal/change-password-modal.component";
+import {UsersService} from "../../services/users.service";
 
 @Component({
     selector: 'app-navbar',
@@ -11,19 +12,33 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class NavbarComponent implements OnInit {
 
+    public contribuyente: any;
+
     constructor(
+        private contribuyentesService: UsersService,
         private router: Router,
         private dialog: MatDialog
     ) {
     }
 
     ngOnInit(): void {
+        const identity: any = sessionStorage.getItem('identity');
+        this.contribuyente = JSON.parse(identity);
     }
 
-    logout(){
-        sessionStorage.removeItem('token');
-        sessionStorage.removeItem('identity');
-        this.router.navigate(['']);
+    openChangePasswordModal(){
+        const config = {
+            width: '30%',
+            data: {
+                contribuyente: this.contribuyente
+            }
+        }
+
+        const dialogRef = this.dialog.open(ChangePasswordModalComponent, config);
+
+        dialogRef.afterClosed().subscribe(res => {
+            // this.getContribuyentes();
+        });
     }
 
     activeSearchModal(){
@@ -38,5 +53,10 @@ export class NavbarComponent implements OnInit {
             // this.getClaves();
         });
     }
+
+    logout(): void {
+        this.contribuyentesService.logout();
+    }
+
 
 }

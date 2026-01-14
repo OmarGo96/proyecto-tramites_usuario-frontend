@@ -8,35 +8,29 @@
                     <img class="hidden lg:block w-64" src="assets/gobierno-en-solidaridad-blanco.png">
                 </div>
             </div>
-            <!--<button mat-icon-button [matMenuTriggerFor]="menu" class="mr-3 text-white"
-                    matBadge="7" matBadgeColor="warn" [matBadgeHidden]="false" matBadgeSize="small">
-                <i class="fa-solid fa-envelope fa-2x"></i>
-            </button>-->
-            <mat-menu #menu="matMenu" [xPosition]="'before'">
 
-                <button mat-menu-item>
-                    <mat-icon mat-list-icon>folder</mat-icon>
-                    <div mat-line>Certificación de Medidas y Colindancia</div>
-                    <div mat-line>3 mensajes nuevos</div>
-                </button>
-                <!--<mat-list>
-                    <div mat-subheader>Folders</div>
-                    <mat-list-item class="text-xs">
-                        <mat-icon mat-list-icon>folder</mat-icon>
-                        <div mat-line>Certificación de Medidas y Colindancia</div>
-                        <div mat-line>3 mensajes nuevos</div>
-                    </mat-list-item>
+            <div class="flex space-x-5">
+                <div class="w-80 relative">
 
-                </mat-list>-->
-            </mat-menu>
-            <div class="w-80 relative">
-
-                <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <input type="text" (click)="activeSearchModal()"
+                           class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5"
+                           placeholder="Buscar servicios...">
                 </div>
-                <input type="text" (click)="activeSearchModal()"
-                       class="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full pl-10 p-2.5"
-                       placeholder="Buscar servicios...">
+
+                <button mat-icon-button [matMenuTriggerFor]="menu" class="mr-3 text-white">
+                    <i class="fa-solid fa-circle-user fa-2x"></i>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="openChangePasswordModal()">
+                        <i class="fa-solid fa-lock"></i>&nbsp;Cambiar contraseña
+                    </button>
+                    <button mat-menu-item (click)="logout()">
+                        <i class="fa-solid fa-right-from-bracket"></i>&nbsp;Salir
+                    </button>
+                </mat-menu>
             </div>
         </div>
     </div>

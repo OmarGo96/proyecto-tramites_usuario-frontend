@@ -25,6 +25,7 @@ import { PublicNavbarComponent } from './public/public-navbar/public-navbar.comp
 import { ExpedienteUploadModalComponent } from './modals/expediente-upload-modal/expediente-upload-modal.component';
 import { ValidatePaoRenewModalComponent } from './modals/validate-pao-renew-modal/validate-pao-renew-modal.component';
 import { ContribuyenteInfoModalComponent } from './modals/contribuyente-info-modal/contribuyente-info-modal.component';
+import { ChangePasswordModalComponent } from './modals/change-password-modal/change-password-modal.component';
 
 @NgModule({
     declarations: [
@@ -47,7 +48,8 @@ import { ContribuyenteInfoModalComponent } from './modals/contribuyente-info-mod
         PublicNavbarComponent,
         ExpedienteUploadModalComponent,
         ValidatePaoRenewModalComponent,
-        ContribuyenteInfoModalComponent
+        ContribuyenteInfoModalComponent,
+        ChangePasswordModalComponent
     ],
     imports: [
         CommonModule,

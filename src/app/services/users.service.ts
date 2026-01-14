@@ -57,6 +57,10 @@ export class UsersService {
         return this.httpClient.post(`${this.urlApi}/restaurar_cuenta`, data);
     }
 
+    public changePassword(contribuyenteUuid: any, data: any): Observable<any> {
+        return this.httpClient.put(`${this.urlApi}/contribuyente/cambiar_password/${contribuyenteUuid}`, data);
+    }
+
     public resendActivationLink(data: any): Observable<any> {
         return this.httpClient.post(`${this.urlApi}/reenvio_activacion`, data);
     }
