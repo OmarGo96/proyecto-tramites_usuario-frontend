@@ -46,7 +46,7 @@ export class ResetPasswordComponent implements OnInit {
             error: err => {
                 this.spinner.hide();
                 this.messagesService.printStatusArrayNew(err.error.errors, 'warning');
-                this.router.navigate(['restaurar-contrasena-clave']);
+                //this.router.navigate(['restaurar-contrasena-clave']);
             }
         })
     }

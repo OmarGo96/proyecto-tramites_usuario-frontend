@@ -24,6 +24,10 @@ export class LoginComponent implements OnInit {
     public currentYear = moment().format('YYYY')
 
     public firstLogin = false;
+    
+    /* Datos del registro */
+    public emailRegistrated: string = '';
+    public telephoneRegistrated: string = '';
 
     constructor(
         private formBuilder: UntypedFormBuilder,
@@ -37,7 +41,8 @@ export class LoginComponent implements OnInit {
 
     ngOnInit(): void {
         this.isFirstLogin();
-        this.initLoginForm()
+        this.getRegistrationData();
+        this.initLoginForm();
     }
 
     isFirstLogin(){
@@ -46,6 +51,18 @@ export class LoginComponent implements OnInit {
                 this.firstLogin = true;
             }
         });
+    }
+    
+    getRegistrationData() {
+        // Usar history.state en lugar de getCurrentNavigation()
+        const state = history.state;
+        if (state && (state.email || state.telefono)) {
+            this.emailRegistrated = state.email || '';
+            this.telephoneRegistrated = state.telefono || '';
+            
+            console.log('Email registrado:', this.emailRegistrated);
+            console.log('Teléfono registrado:', this.telephoneRegistrated);
+        }
     }
 
     initLoginForm() {

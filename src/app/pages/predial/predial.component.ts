@@ -31,6 +31,9 @@ export class PredialComponent implements OnInit {
     /* Banderas */
     public creating = false;
     public loading = false;
+    
+    /* Contador de dígitos */
+    public digitCount = 0;
 
     constructor(
         private predialService: PredialService,
@@ -48,8 +51,84 @@ export class PredialComponent implements OnInit {
 
     initClaveForm() {
         this.predialForm = this.formBuilder.group({
-            clave: ['', Validators.required]
+            clave: ['', [Validators.required, this.claveValidator.bind(this)]]
         });
+    }
+
+    /**
+     * Validador personalizado para la clave catastral
+     * Debe tener 15 dígitos, guion y opcionalmente 0-3 dígitos más
+     */
+    claveValidator(control: any) {
+        if (!control.value) {
+            return null;
+        }
+
+        const value = control.value;
+        // Validar que no tenga espacios
+        if (/\s/.test(value)) {
+            return { hasSpaces: true };
+        }
+
+        // Patrón: 15 dígitos + guion + 0-3 dígitos opcionales
+        const pattern = /^\d{15}-\d{0,3}$/;
+        
+        if (!pattern.test(value)) {
+            // Verificar si al menos tiene 15 dígitos sin el guion
+            const digitsOnly = value.replace(/[^0-9]/g, '');
+            if (digitsOnly.length < 15) {
+                return { insufficientDigits: true };
+            }
+            return { invalidFormat: true };
+        }
+
+        return null;
+    }
+
+    /**
+     * Formatea automáticamente la clave catastral
+     * Agrega el guion después de 15 dígitos
+     */
+    onClaveInput(event: any) {
+        let value = event.target.value;
+        
+        // Eliminar todos los caracteres que no sean dígitos o guion
+        value = value.replace(/[^0-9-]/g, '');
+        
+        // Eliminar espacios si los hay
+        value = value.replace(/\s/g, '');
+        
+        // Eliminar guiones existentes para reconstruir el formato
+        let digitsOnly = value.replace(/-/g, '');
+        
+        // Limitar a máximo 18 dígitos (15 + 3)
+        if (digitsOnly.length > 18) {
+            digitsOnly = digitsOnly.substring(0, 18);
+        }
+        
+        // Actualizar contador de dígitos
+        this.digitCount = digitsOnly.length;
+        
+        // Formatear: agregar guion después de 15 dígitos
+        let formatted = '';
+        if (digitsOnly.length <= 15) {
+            formatted = digitsOnly;
+        } else {
+            formatted = digitsOnly.substring(0, 15) + '-' + digitsOnly.substring(15);
+        }
+        
+        // Si ya tiene exactamente 15 dígitos, agregar el guion
+        if (digitsOnly.length === 15 && !formatted.includes('-')) {
+            formatted = digitsOnly + '-';
+        }
+        
+        // Actualizar el valor del formulario
+        this.predialForm.patchValue({
+            clave: formatted
+        }, { emitEvent: false });
+        
+        // Actualizar el input
+        event.target.value = formatted;
     }
 
     getClaves() {

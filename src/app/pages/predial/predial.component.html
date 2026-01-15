@@ -13,12 +13,38 @@
             <div class="grid grid-cols-4 items-start gap-5 mt-5">
                 <div class="w-full p-6 space-y-5 bg-white shadow rounded-lg">
                     <h3 class="text-lg leading-6 font-medium text-gray-900">Agregar Clave Catastral</h3>
+                    <p class="text-sm text-gray-700">
+                        <strong>Importante:</strong> la clave catastral lleva <strong>15 dígitos</strong> y siempre debe incluir <strong>un guion (-)</strong>. En algunos casos, puede tener números después del guion.
+                    </p>
                     <form [formGroup]="predialForm" (ngSubmit)="createClave()">
                         <mat-form-field appearance="outline" class="w-full">
                             <mat-label>Ingresa la Clave Catastral</mat-label>
-                            <input matInput type="text" formControlName="clave">
+                            <input matInput 
+                                   type="text" 
+                                   formControlName="clave"
+                                   (input)="onClaveInput($event)"
+                                   placeholder="000000000000000-"
+                                   maxlength="19">
+                            <mat-hint align="start">
+                                <span [class.text-red-600]="digitCount < 15" [class.text-green-600]="digitCount >= 15">
+                                    {{ digitCount }} dígitos (mínimo 15, máximo 18) {{ digitCount >= 15 ? '✓' : '' }}
+                                </span>
+                            </mat-hint>
+                            <mat-error *ngIf="predialForm.get('clave').hasError('hasSpaces')">
+                                No se permiten espacios
+                            </mat-error>
+                            <mat-error *ngIf="predialForm.get('clave').hasError('insufficientDigits')">
+                                Debe tener al menos 15 dígitos
+                            </mat-error>
+                            <mat-error *ngIf="predialForm.get('clave').hasError('invalidFormat')">
+                                Formato inválido. Ejemplo: 123456789012345-123
+                            </mat-error>
                         </mat-form-field>
-                        <button type="submit" mat-flat-button color="primary" class="rounded-md w-full">
+                        <button type="submit" 
+                                mat-flat-button 
+                                color="primary" 
+                                class="rounded-md w-full"
+                                [disabled]="predialForm.invalid || digitCount < 15">
                             Agregar
                         </button>
                     </form>

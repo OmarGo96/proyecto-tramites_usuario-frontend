@@ -74,8 +74,15 @@ export class RegisterComponent implements OnInit {
         this.usersService.register(data).subscribe({
             next: res => {
                 this.spinner.hide();
+                const email = this.registerForm.get('email')?.value;
+                const telefono = this.registerForm.get('telefono')?.value;
                 this.registerForm.reset();
-                this.router.navigate(['login', 1]);
+                this.router.navigate(['login', 1], {
+                    state: {
+                        email: email,
+                        telefono: telefono
+                    }
+                });
             },
             error: err => {
                 this.spinner.hide();
