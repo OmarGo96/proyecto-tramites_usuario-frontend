@@ -45,7 +45,7 @@
                 <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
             </ngx-dropzone-preview>
         </ngx-dropzone>
-        <button type="submit" mat-flat-button color="primary" class="rounded-md" [disabled]="loading">
+        <button type="submit" mat-flat-button color="primary" class="rounded-md" [disabled]="documentsForm.invalid">
             Cargar documento
         </button>
     </form>
