@@ -14,6 +14,7 @@ import {AnuenciaDocs} from "../../../const/anuencia-docs";
 import {GiroComercialDoc} from "../../../const/giro-comercial-docs";
 import {PredialService} from "../../../services/predial.service";
 import {LicfuncService} from "../../../services/licfunc.service";
+import Swal from "sweetalert2";
 
 @Component({
     selector: 'app-requests-detail',
@@ -184,23 +185,14 @@ export class RequestsDetailComponent implements OnInit {
     }
 
     validatePayment(status: any) {
-        this.spinner.show();
-        this.solicitudForm.controls.estatus_solicitud_id.setValue(status);
-        // this.solicitudForm.controls.solicitud_id.setValue(this.request.id.toString());
-        const data = this.solicitudForm.value;
-        this.requestsService.updateRecord(data, this.request.id.toString()).subscribe({
-            next: res => {
-                this.spinner.hide();
-                this.messagesService.printStatus(res.message, 'success');
-                setTimeout(() => {
-                    this.getId();
-                }, 2500);
-            },
-            error: err => {
-                this.spinner.hide();
-                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
-            }
-        })
+        Swal.fire({
+            title: 'Sistema en mantenimiento',
+            text: 'El sistema de pagos se encuentra en mantenimiento. Por favor, intente más tarde.',
+            icon: 'warning',
+            confirmButtonColor: '#264395',
+            confirmButtonText: 'Entendido',
+            heightAuto: false
+        });
     }
 
     changeStatus(status: any) {
