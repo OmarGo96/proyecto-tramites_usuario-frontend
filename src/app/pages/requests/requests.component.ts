@@ -63,14 +63,78 @@ export class RequestsComponent implements OnInit {
     }
 
     generateCheckout(solicitud: any) {
-        Swal.fire({
+        /*Swal.fire({
             title: 'Sistema en mantenimiento',
             text: 'El sistema de pagos se encuentra en mantenimiento. Por favor, intente más tarde.',
             icon: 'warning',
             confirmButtonColor: '#264395',
             confirmButtonText: 'Entendido',
             heightAuto: false
-        });
+        });*/
+        this.spinner.show();
+        if (solicitud.Servicio.id === 7) {
+            const data = {licencia: solicitud.licencia_id.toString()};
+            this.licFuncService.generarPaseCaja(data).subscribe({
+                next: res => {
+                    this.spinner.hide();
+                    window.open(res.pase_caja, '_blank');
+                    setTimeout(() => {
+                        this.dialog.closeAll();
+                    }, 1000);
+                },
+                error: err => {
+                    this.spinner.hide();
+                    this.messagesService.errorAlert(err.error.errors);
+                }
+            });
+        } else if (solicitud.Servicio.id == 4) {
+            let data = {'clave': solicitud.Clave.clave};
+            this.predialService.generarPaseCaja(data).subscribe({
+                next: res => {
+                    this.spinner.hide();
+                    window.open(res.link, '_blank');
+                    setTimeout(() => {
+                        this.dialog.closeAll();
+                    }, 1000);
+                },
+                error: err => {
+                    this.spinner.hide();
+                    this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+                }
+            });
+        } else if (solicitud.Servicio.id !== 7 || solicitud.Servicio.id !== 4) {
+            this.requestService.obtenerPaseCaja(solicitud.id).subscribe({
+                next: res => {
+                    this.spinner.hide();
+                    let url = URL.createObjectURL(res);
+                    window.open(url, '_blank');
+                },
+                error: err => {
+                    this.spinner.hide();
+                    this.messagesService.errorAlert([{message: 'Ocurrio un problema al obtener el PDF. Intentalo más tarde.'}]);
+                }
+            });
+        } else {
+            const data = {
+                solicitud_id: solicitud.id.toString(),
+                grupo_tramite_id: solicitud.Servicio.grupo_tramite_id.toString(),
+                tramite_id: solicitud.Servicio.tramite_id.toString(),
+                importe: '2500'
+            }
+            this.requestService.generateCheckout(data).subscribe({
+                next: res => {
+                    this.spinner.hide();
+                    window.open(res.pase_caja, '_blank');
+                    setTimeout(() => {
+                        this.dialog.closeAll();
+                    }, 1000);
+                },
+                error: err => {
+                    this.spinner.hide();
+                    this.messagesService.errorAlert(err.error.errors);
+                }
+            });
+        }
     }
 
     paymentLink(solicitud: any) {

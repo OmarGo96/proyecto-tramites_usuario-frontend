@@ -82,13 +82,28 @@ export class EstadoCuentaModalComponent implements OnInit {
     }
 
     generarPaseCaja() {
-        Swal.fire({
+        /*Swal.fire({
             title: 'Sistema en mantenimiento',
             text: 'El sistema de pagos se encuentra en mantenimiento. Por favor, intente más tarde.',
             icon: 'warning',
             confirmButtonColor: '#264395',
             confirmButtonText: 'Entendido',
             heightAuto: false
+        });*/
+        this.spinner.show();
+        let data = {'clave': this.clave};
+        this.predialService.generarPaseCaja(data).subscribe({
+            next: res => {
+                this.spinner.hide();
+                window.open(res.link, '_blank');
+                setTimeout(() => {
+                    this.dialog.closeAll();
+                }, 1000);
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
         });
     }
 
@@ -105,18 +120,35 @@ export class EstadoCuentaModalComponent implements OnInit {
     }
 
     generatePaymentPass(): void {
-        Swal.fire({
+        /*Swal.fire({
             title: 'Sistema en mantenimiento',
             text: 'El sistema de pagos se encuentra en mantenimiento. Por favor, intente más tarde.',
             icon: 'warning',
             confirmButtonColor: '#264395',
             confirmButtonText: 'Entendido',
             heightAuto: false
+        });*/
+        this.spinner.show();
+        const data = {licencia: this.clave.toString()};
+        this.licfuncService.generarPaseCaja(data).subscribe({
+            next: res => {
+                this.spinner.hide();
+                window.open(res.pase_caja, '_blank');
+                setTimeout(() => {
+                    this.dialog.closeAll();
+                }, 1000);
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+            }
         });
     }
 
     // Generar pase de caja del contribuyente
-    makePayment(): void {
+    makePayment()
+        :
+        void {
         Swal.fire({
             title: 'Sistema en mantenimiento',
             text: 'El sistema de pagos se encuentra en mantenimiento. Por favor, intente más tarde.',
