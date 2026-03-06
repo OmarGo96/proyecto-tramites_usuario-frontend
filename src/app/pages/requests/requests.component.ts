@@ -9,7 +9,6 @@ import {NgxSpinnerService} from "ngx-spinner";
 import {RequestsStatus} from "../../const/status";
 import {LicfuncService} from "../../services/licfunc.service";
 import {PredialService} from "../../services/predial.service";
-import Swal from "sweetalert2";
 
 @Component({
     selector: 'app-requests',
@@ -63,14 +62,6 @@ export class RequestsComponent implements OnInit {
     }
 
     generateCheckout(solicitud: any) {
-        /*Swal.fire({
-            title: 'Sistema en mantenimiento',
-            text: 'El sistema de pagos se encuentra en mantenimiento. Por favor, intente más tarde.',
-            icon: 'warning',
-            confirmButtonColor: '#264395',
-            confirmButtonText: 'Entendido',
-            heightAuto: false
-        });*/
         this.spinner.show();
         if (solicitud.Servicio.id === 7) {
             const data = {licencia: solicitud.licencia_id.toString()};
@@ -138,13 +129,19 @@ export class RequestsComponent implements OnInit {
     }
 
     paymentLink(solicitud: any) {
-        Swal.fire({
-            title: 'Sistema en mantenimiento',
-            text: 'El sistema de pagos se encuentra en mantenimiento. Por favor, intente más tarde.',
-            icon: 'warning',
-            confirmButtonColor: '#264395',
-            confirmButtonText: 'Entendido',
-            heightAuto: false
+        this.spinner.show();
+        const data = {
+            solicitud_id: solicitud.id.toString()
+        };
+        this.requestService.paymentLink(data).subscribe({
+            next: res => {
+                this.spinner.hide();
+                window.open(res.link, '_blank');
+            },
+            error: err => {
+                this.spinner.hide();
+                this.messagesService.errorAlert(err.error.errors);
+            }
         });
     }
 
