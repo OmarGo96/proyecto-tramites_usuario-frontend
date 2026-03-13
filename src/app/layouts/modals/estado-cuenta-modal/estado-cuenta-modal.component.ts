@@ -46,7 +46,9 @@ export class EstadoCuentaModalComponent implements OnInit {
     }
 
     getTotalCost() {
-        return this.dataSource.data.map((element: any) => element.proImporte).reduce((acc: any, value: any) => acc + value, 0);
+        return this.dataSource.data
+            .map((element: any) => Number(element.proImporte) || 0)
+            .reduce((acc: number, value: number) => acc + value, 0);
     }
 
     createRequest(uuid: any) {
@@ -102,7 +104,10 @@ export class EstadoCuentaModalComponent implements OnInit {
     // Generar pase de caja del contribuyente
     realizarPago() {
         this.spinner.show();
-        let data = {'clave': this.clave};
+        const data = {
+            clave: this.clave,
+            total: this.getTotalCost().toString()
+        };
         this.predialService.realizarPago(data).subscribe({
             next: res => {
                 this.spinner.hide();
@@ -139,7 +144,10 @@ export class EstadoCuentaModalComponent implements OnInit {
     // Generar pase de caja del contribuyente
     makePayment(): void {
         this.spinner.show();
-        const data = {licencia: this.clave.toString()};
+        const data = {
+            licencia: this.clave.toString(),
+            total: this.getTotalCost().toString()
+        };
         this.licfuncService.realizarPago(data).subscribe({
             next: res => {
                 this.spinner.hide();
