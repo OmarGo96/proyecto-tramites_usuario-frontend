@@ -31,6 +31,7 @@ export class DocumentsModalComponent implements OnInit {
 
     ngOnInit(): void {
         this.user = this.usersService.getIdentity();
+        this.spinner.show();
         this.getExpedienteUnico();
     }
 
@@ -45,6 +46,7 @@ export class DocumentsModalComponent implements OnInit {
         const dialogRef = this.dialog.open(UploadModalComponent, config);
 
         dialogRef.afterClosed().subscribe(res => {
+            this.spinner.show();
             this.getDocuments()
         });
     }
@@ -60,6 +62,7 @@ export class DocumentsModalComponent implements OnInit {
         const dialogRef = this.dialog.open(ExpedienteUploadModalComponent, config);
 
         dialogRef.afterClosed().subscribe(res => {
+            this.spinner.show();
             this.getExpedienteUnico()
         });
     }
@@ -68,7 +71,6 @@ export class DocumentsModalComponent implements OnInit {
         this.documentsService.getExpedienteUnico(this.user.uuid).subscribe({
             next: res => {
                 this.expedienteUnico = res.documentacionExpediente;
-                this.spinner.hide();
                 this.getDocuments();
             },
             error: err => {
@@ -82,9 +84,11 @@ export class DocumentsModalComponent implements OnInit {
         this.documentsService.getRecords().subscribe({
             next: res => {
                 this.documents = res.documentacion;
+                this.spinner.hide();
             },
             error: err => {
                 this.messagesService.printStatusArrayNew(err.error.errors, 'error');
+                this.spinner.hide();
             }
         })
     }
