@@ -257,7 +257,10 @@ export class RequestsDetailComponent implements OnInit {
 
     selectDocument(requisitoId: any): void {
         const config = {
-            width: '100%'
+            width: '100%',
+            data: {
+                servicio_id: this.request.servicio_id
+            }
         }
 
         const dialogRef = this.dialog.open(DocumentsModalComponent, config);
@@ -273,7 +276,8 @@ export class RequestsDetailComponent implements OnInit {
         const config = {
             width: '100%',
             data: {
-                title: ''
+                title: '',
+                servicio_id: this.request.servicio_id
             },
         }
 
@@ -288,7 +292,10 @@ export class RequestsDetailComponent implements OnInit {
 
     selectPaymentDocument(documentId: any): void {
         const config = {
-            width: '100%'
+            width: '100%',
+            data: {
+                servicio_id: this.request.servicio_id
+            }
         }
 
         const dialogRef = this.dialog.open(DocumentsModalComponent, config);
@@ -302,7 +309,10 @@ export class RequestsDetailComponent implements OnInit {
 
     selectGiroDocument(documentId: any): void {
         const config = {
-            width: '100%'
+            width: '100%',
+            data: {
+                servicio_id: this.request.servicio_id
+            }
         }
 
         const dialogRef = this.dialog.open(DocumentsModalComponent, config);
@@ -335,7 +345,10 @@ export class RequestsDetailComponent implements OnInit {
 
     reSelectGiroDocumentToUpdate(documentoAnuenciaVal: any, documentacionAnuenciaId: any): void {
         const config = {
-            width: '100%'
+            width: '100%',
+            data: {
+                servicio_id: this.request.servicio_id
+            }
         }
 
         const dialogRef = this.dialog.open(DocumentsModalComponent, config);
@@ -368,7 +381,10 @@ export class RequestsDetailComponent implements OnInit {
 
     selectAnuenciaDocument(documentId: any): void {
         const config = {
-            width: '100%'
+            width: '100%',
+            data: {
+                servicio_id: this.request.servicio_id
+            }
         }
 
         const dialogRef = this.dialog.open(DocumentsModalComponent, config);
@@ -401,7 +417,10 @@ export class RequestsDetailComponent implements OnInit {
 
     reSelectAnuenciaDocumentToUpdate(documentoAnuenciaVal: any, documentacionAnuenciaId: any): void {
         const config = {
-            width: '100%'
+            width: '100%',
+            data: {
+                servicio_id: this.request.servicio_id
+            }
         }
 
         const dialogRef = this.dialog.open(DocumentsModalComponent, config);
@@ -434,7 +453,10 @@ export class RequestsDetailComponent implements OnInit {
 
     reSelectPaymentDocumentToUpdate(documentoPagoVal: any, documentacionPagoId: any): void {
         const config = {
-            width: '100%'
+            width: '100%',
+            data: {
+                servicio_id: this.request.servicio_id
+            }
         }
 
         const dialogRef = this.dialog.open(DocumentsModalComponent, config);
@@ -706,7 +728,10 @@ export class RequestsDetailComponent implements OnInit {
 
     selectComplementaryDocument(): void {
         const config = {
-            width: '100%'
+            width: '100%',
+            data: {
+                servicio_id: this.request.servicio_id
+            }
         }
 
         const dialogRef = this.dialog.open(DocumentsModalComponent, config);
@@ -738,7 +763,10 @@ export class RequestsDetailComponent implements OnInit {
 
     reSelectComplementaryDocumentToUpdate(documentacionAnuenciaId: any): void {
         const config = {
-            width: '100%'
+            width: '100%',
+            data: {
+                servicio_id: this.request.servicio_id
+            }
         }
 
         const dialogRef = this.dialog.open(DocumentsModalComponent, config);

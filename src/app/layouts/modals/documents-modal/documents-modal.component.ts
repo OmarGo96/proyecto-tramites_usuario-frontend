@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, Optional} from '@angular/core';
 import {DocumentsService} from "../../../services/documents.service";
 import {MessageService} from "../../../services/messages.service";
-import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {UploadModalComponent} from "../upload-modal/upload-modal.component";
 import {ExpedienteUploadModalComponent} from "../expediente-upload-modal/expediente-upload-modal.component";
 import {NgxSpinnerService} from "ngx-spinner";
@@ -18,6 +18,7 @@ export class DocumentsModalComponent implements OnInit {
 
     public expedienteUnico: any;
     private user: any;
+    private servicioId: any;
 
     constructor(
         private documentsService: DocumentsService,
@@ -25,8 +26,10 @@ export class DocumentsModalComponent implements OnInit {
         private usersService: UsersService,
         private spinner: NgxSpinnerService,
         private dialog: MatDialog,
-        public matDialogRef: MatDialogRef<any>
+        public matDialogRef: MatDialogRef<any>,
+        @Optional() @Inject(MAT_DIALOG_DATA) public data: any
     ) {
+        this.servicioId = this.data?.servicio_id;
     }
 
     ngOnInit(): void {
@@ -81,7 +84,7 @@ export class DocumentsModalComponent implements OnInit {
     }
 
     getDocuments(){
-        this.documentsService.getRecords().subscribe({
+        this.documentsService.getRecords(this.servicioId).subscribe({
             next: res => {
                 this.documents = res.documentacion;
                 this.spinner.hide();

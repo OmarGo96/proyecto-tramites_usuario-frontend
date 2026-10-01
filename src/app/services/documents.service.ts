@@ -30,8 +30,12 @@ export class DocumentsService {
         return this.httpClient.post(`${this.urlApi}/documentacion/${documentId}`, data,{headers: this.headers})
     }
 
-    public getRecords(): Observable <any> {
-        return this.httpClient.get(`${this.urlApi}/documentacion`, {headers: this.headers});
+    public getRecords(servicioId?: any): Observable <any> {
+        let url = `${this.urlApi}/documentacion`;
+        if (servicioId !== undefined && servicioId !== null) {
+            url += `?servicio_id=${servicioId}`;
+        }
+        return this.httpClient.get(url, {headers: this.headers});
     }
 
     public getExpedienteUnico(uuid: any): Observable <any> {
