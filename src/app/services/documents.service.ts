@@ -47,7 +47,7 @@ export class DocumentsService {
     }
 
     public getUserDocument(id: any): Observable<any> {
-        return this.httpClient.get(`${this.urlApi}/archivo_documentacion/${id}`, { responseType: 'blob' });
+        return this.httpClient.get(`${this.urlApi}/archivo/${id}`, { responseType: 'blob' });
     }
 
     public createDocumentoSolicitud(data: any): Observable<any>{
